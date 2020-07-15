@@ -24,8 +24,8 @@ exports.Validator = (req, res, next) => {
     next();
 };
 
-exports.authenticate = expressJwt({
+exports.jwtVerify = expressJwt({
     secret: process.env.JWT,
-    userProperty: "auth",
-    algorithms: ['RS256']
+    userProperty: "authenticate",
+    algorithms: ['HS256']
 })

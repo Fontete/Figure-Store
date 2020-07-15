@@ -9,6 +9,7 @@ const validator = require('express-validator')
 require('dotenv').config()
 
 const userRouter = require('./routes/user')
+const categoryRouter = require('./routes/categoy')
 
 const app = express()
 
@@ -30,6 +31,7 @@ app.use(cookieParser())
 app.use(validator())
 
 app.use("/users", userRouter)
+app.use("/categories", categoryRouter)
 
 const port = process.env.PORT
 

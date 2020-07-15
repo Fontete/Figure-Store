@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const schema = mongoose.Schema
 const crypto = require('crypto')
 const uuidv1 = require('uuidv1')
 
-const userSchema = new mongoose.Schema(
+const userSchema = new schema(
     {
         fullname: {
             type: String,
