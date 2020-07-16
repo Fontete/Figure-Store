@@ -20,13 +20,13 @@ router.delete(
 	userController.isAdmin,
 	productController.delete,
 )
-// router.update(
-// 	'/:productID/:userID',
-// 	method.jwtVerify,
-// 	userController.isMember,
-// 	userController.isAdmin,
-// 	productController.update,
-// )
+router.put(
+	'/:productID/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.isAdmin,
+	productController.update,
+)
 
 //params
 router.param('userID', userController.userByID)

@@ -113,3 +113,45 @@ exports.delete = (req, res) => {
 		})
 	})
 }
+
+exports.update = (req, res) => {
+	let form = new formidable.IncomingForm()
+	form.keepExtensions = true
+	form.parse(req, (err, form, files) => {
+		if (err) {
+			return res.status(400).json({
+				err: 'File cannot upload',
+			})
+		}
+
+		const {name, description, price, category, quantity, shipping} = form
+
+
+		// update product
+
+		let product = req.product
+		product = lodash.extend(req.product, form)
+
+		// if user upload image for product, check the size of image
+		if (files.image) {
+			// file size smaller than 1mb
+			if (files.image.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1mb',
+				})
+			}
+			product.image.data = fs.readFileSync(files.image.path)
+			product.image.contentType = files.image.type
+		}
+		product.save(err => {
+			if (err) {
+				return res.status(400).json({
+					err: error.errorHandler(err),
+				})
+			}
+			res.json({
+				message: 'Update successfully',
+			})
+		})
+	})
+}
