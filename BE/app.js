@@ -10,6 +10,7 @@ require('dotenv').config()
 
 const userRouter = require('./routes/user')
 const categoryRouter = require('./routes/categoy')
+const productRouter = require('./routes/product')
 
 const app = express()
 
@@ -32,6 +33,7 @@ app.use(validator())
 
 app.use("/users", userRouter)
 app.use("/categories", categoryRouter)
+app.use("/products", productRouter)
 
 const port = process.env.PORT
 
