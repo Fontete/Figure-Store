@@ -13,19 +13,19 @@ router.post(
 	productController.add,
 )
 router.get('/:productID/', productController.productDetail)
-router.delete(
-	'/:productID/:userID',
-	method.jwtVerify,
-	userController.isMember,
-	userController.isAdmin,
-	productController.delete,
-)
 router.put(
 	'/:productID/:userID',
 	method.jwtVerify,
 	userController.isMember,
 	userController.isAdmin,
 	productController.update,
+)
+router.delete(
+	'/:productID/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.isAdmin,
+	productController.delete,
 )
 
 //params

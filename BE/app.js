@@ -18,7 +18,8 @@ const app = express()
 connect(process.env.URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: true
 }).then(() => {
     console.log("Database is connecting")
 }).catch(err => {

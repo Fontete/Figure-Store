@@ -102,7 +102,7 @@ exports.delete = (req, res) => {
 	//         message: "Delete successfully"
 	//     })
 	// })
-	productModel.findByIdAndDelete(req.product._id, err => {
+	productModel.findOnedAndDelete(req.product._id, err => {
 		if (err) {
 			return res.status(400).json({
 				err: error.errorHandler,
