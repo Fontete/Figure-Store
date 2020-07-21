@@ -82,7 +82,7 @@ exports.userByID = async (req, res, next, id) => {
 }
 
 //enable this function when you use userID middleware
-exports.profile = async (req, res) => {
+exports.info = async (req, res) => {
 	res.json(req.profile)
 }
 
@@ -115,4 +115,26 @@ exports.isAdmin = (req, res, next) => {
 		})
 	}
 	next()
+}
+
+exports.profile = (req, res) => {
+	req.profile.hashed_password = undefined
+	req.profile.salt = undefined
+	return res.json(req.profile)
+}
+
+exports.update = (req, res) => {
+	userModel.findOneAndUpdate(
+		{_id: req.profile._id},
+		{$set: req.body},
+		{new: true},
+		(err) => {
+			if (err) {
+				return res.status(400).json({
+					err: 'Unauthorize',
+				})
+			}
+			res.json({message:"Update successfully"})
+		},
+	)
 }

@@ -10,7 +10,25 @@ router.post('/login', userController.logIn)
 router.get('/logout', userController.logOut)
 
 // User
-router.get('/:userID', method.jwtVerify, userController.profile)
+router.get(
+	'/private/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.isAdmin,
+	userController.info,
+)
+router.get(
+	'/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.profile,
+)
+router.put(
+	'/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.update,
+)
 
 //params
 //enable this line if you want to use userID middleware.
