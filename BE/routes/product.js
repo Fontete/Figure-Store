@@ -12,7 +12,12 @@ router.post(
 	userController.isAdmin,
 	productController.add,
 )
+// default = /
+// by sell = /?sortBy=sold&order=desc&limit=4
+// by arrival = ?sortBy=createdAt&order=desc&limit=4
+router.get('/', productController.productList)
 router.get('/:productID/', productController.productDetail)
+router.get('/related/:productID',productController.relatedList)
 router.put(
 	'/:productID/:userID',
 	method.jwtVerify,

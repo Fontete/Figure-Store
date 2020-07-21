@@ -4,6 +4,7 @@ const fs = require('fs')
 
 const productModel = require('../models/product')
 const error = require('../general/error')
+const router = require('../routes/product')
 
 exports.add = (req, res) => {
 	let form = new formidable.IncomingForm()
@@ -35,10 +36,10 @@ exports.add = (req, res) => {
 
 		// if user upload image for product, check the size of image
 		if (files.image) {
-			// file size smaller than 1mb
+			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1mb',
+					err: 'File size is more than 1 MB',
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
@@ -124,20 +125,17 @@ exports.update = (req, res) => {
 			})
 		}
 
-		const {name, description, price, category, quantity, shipping} = form
-
-
 		// update product
 
 		let product = req.product
-		product = lodash.extend(req.product, form)
+		product = lodash.extend(product, form)
 
 		// if user upload image for product, check the size of image
 		if (files.image) {
-			// file size smaller than 1mb
+			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1mb',
+					err: 'File size is more than 1MB',
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
@@ -154,4 +152,42 @@ exports.update = (req, res) => {
 			})
 		})
 	})
+}
+
+exports.productList = (req, res) => {
+	let order = req.query.order ? req.query.order : 'asc'
+	let sortBy = req.query.sortBy ? req.query.sortBy : '_id'
+	let limit = req.query.limit ? parseInt(req.query.limit) : 4
+
+	productModel
+		.find()
+		.select('-image')
+		.populate('category')
+		.sort([[sortBy, order]])
+		.limit(limit)
+		.exec((err, data) => {
+			if (err) {
+				return res.status(400).json({
+					err: 'Product is not existed',
+				})
+			}
+			res.json(data)
+		})
+}
+
+exports.relatedList = (req, res) => {
+	let limit = req.query.limit ? parseInt(req.query.limit) : 4
+	productModel
+		.find({_id: {$ne: req.product}, category: req.product.category})
+		.select('-image')
+		.populate('category', '_id name')
+		.limit(limit)
+		.exec((err, data) => {
+			if (err) {
+				return res.status(400).json({
+					err: 'Product is not existed',
+				})
+			}
+			res.json(data)
+		})
 }

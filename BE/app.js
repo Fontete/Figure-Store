@@ -19,11 +19,11 @@ connect(process.env.URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-    useFindAndModify: true
+    useFindAndModify: true,
 }).then(() => {
     console.log("Database is connecting")
 }).catch(err => {
-    console.error('Failed to connect database...')
+    console.error('Failed to connect database...', err)
 })
 
 //middlewares

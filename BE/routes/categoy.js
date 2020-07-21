@@ -12,7 +12,7 @@ router.post(
 	userController.isAdmin,
 	categoryController.add,
 )
-router.get('/', categoryController.listCategory)
+router.get('/', categoryController.categoryList)
 router.get('/:categoryID', categoryController.categoryDetail)
 router.put(
 	'/:categoryID/:userID',

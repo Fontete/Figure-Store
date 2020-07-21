@@ -28,7 +28,7 @@ exports.categoryByID = async (req, res, next, id) => {
 	})
 }
 
-exports.listCategory = (req, res) => {
+exports.categoryList = (req, res) => {
 	categoryModel.find().exec((err, data) => {
 		if (err) {
 			return res.status(400).json({
