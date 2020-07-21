@@ -154,6 +154,14 @@ exports.update = (req, res) => {
 	})
 }
 
+exports.image = (req, res, next) => {
+	if (req.product.image.data) {
+		res.set('Content-Type', req.product.image.contentType)
+		return res.send(req.product.image.data)
+	}
+	next()
+}
+
 exports.productList = (req, res) => {
 	let order = req.query.order ? req.query.order : 'asc'
 	let sortBy = req.query.sortBy ? req.query.sortBy : '_id'
@@ -186,6 +194,48 @@ exports.relatedList = (req, res) => {
 			if (err) {
 				return res.status(400).json({
 					err: 'Product is not existed',
+				})
+			}
+			res.json(data)
+		})
+}
+
+exports.searchList = (req, res) => {
+	let order = req.body.order ? req.body.order : 'desc'
+	let sortBy = req.body.sortBy ? req.body.sortBy : '_id'
+	let limit = req.body.limit ? parseInt(req.body.limit) : 100
+	let skip = parseInt(req.body.skip)
+	let findArgs = {}
+
+	// console.log(order, sortBy, limit, skip, req.body.filters);
+	// console.log("findArgs", findArgs);
+
+	for (let i in req.body.filters) {
+		if (req.body.filters[i].length > 0) {
+			if (i === 'price') {
+				// gte -  greater than price [price 1 - price 2]
+				// lte - less than
+				findArgs[i] = {
+					$gte: req.body.filters[i][0],
+					$lte: req.body.filters[i][1],
+				}
+			} else {
+				findArgs[i] = req.body.filters[i]
+			}
+		}
+	}
+
+	productModel
+		.find(findArgs)
+		.select('-image')
+		.populate('category')
+		.sort([[sortBy, order]])
+		.skip(skip)
+		.limit(limit)
+		.exec((err, data) => {
+			if (err) {
+				return res.status(400).json({
+					error: 'Product is not existed',
 				})
 			}
 			res.json(data)
