@@ -5,7 +5,13 @@ const uuidv1 = require('uuidv1')
 
 const userSchema = new schema(
 	{
-		fullname: {
+		firstName: {
+			type: String,
+			trim: true,
+			required: true,
+			maxlength: 32,
+		},
+		lastName: {
 			type: String,
 			trim: true,
 			required: true,
