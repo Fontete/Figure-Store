@@ -2,8 +2,8 @@ const expressJwt = require('express-jwt')
 
 //express-validator middleware is required
 exports.Validator = (req, res, next) => {
-	req.check('firstName', 'We need to know your first name').notEmpty()
-	req.check('lastName', 'We need to know your last name').notEmpty()
+	req.check('firstName', 'First name is required').notEmpty()
+	req.check('lastName', 'Last name is required').notEmpty()
 	req
 		.check('email', 'Email must be between 3 to 32 characters')
 		.matches(/.+\@.+\..+/) // regular expression for email type as abc@xyz.com
