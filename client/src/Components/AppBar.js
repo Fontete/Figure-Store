@@ -10,8 +10,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
 
-import {Link} from 'react-router-dom'
-
 const useStyles = makeStyles(theme => ({
 	grow: {
 		flexGrow: 1,
@@ -115,14 +113,14 @@ const AppSearchBar = () => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Link to="/">
+					<a href="/">
 						<img
+							href="/"
 							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
 							alt="logo"
 							height="48px"
 						></img>
-					</Link>
-
+					</a>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<SearchIcon />
@@ -138,18 +136,17 @@ const AppSearchBar = () => {
 					</div>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
-						<Link to="/register">
-							<IconButton
-								edge="end"
-								aria-label="account of current user"
-								aria-controls={menuId}
-								aria-haspopup="true"
-								onClick={handleProfileMenuOpen}
-								color="inherit"
-							>
-								<AccountCircle />
-							</IconButton>
-						</Link>
+						<IconButton
+							href="/login"
+							edge="end"
+							aria-label="account of current user"
+							aria-controls={menuId}
+							aria-haspopup="true"
+							onClick={handleProfileMenuOpen}
+							color="inherit"
+						>
+							<AccountCircle />
+						</IconButton>
 					</div>
 				</Toolbar>
 			</AppBar>
