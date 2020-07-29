@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import axios from 'axios'
 import {fade, makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -8,7 +8,10 @@ import InputBase from '@material-ui/core/InputBase'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
+import Typography from '@material-ui/core/Typography'
 import {Link, withRouter} from 'react-router-dom'
+
+import {isAuthenticated} from '../General/Method'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -122,25 +125,32 @@ const AppSearchBar = ({history}) => {
 						/>
 					</div>
 					<div className={classes.grow} />
-					<div className={classes.sectionDesktop}>
-						<IconButton
-							href="/login"
-							edge="end"
-							aria-label="account of current user"
-							aria-haspopup="true"
-							color="inherit"
-						>
-							<AccountCircle />
-						</IconButton>
-						<IconButton
-							edge="end"
-							aria-label="account of current user"
-							aria-haspopup="true"
-							color="inherit"
-							onClick={logout}
-						>
-							<AccountCircle />
-						</IconButton>
+					<div className={classes.sectionDesktop} justifyContent="center">
+						{!isAuthenticated() && (
+							<IconButton
+								href="/login"
+								edge="end"
+								aria-label="account of current user"
+								aria-haspopup="true"
+								color="inherit"
+							>
+								<AccountCircle />
+								<Typography>Sign In</Typography>
+							</IconButton>
+						)}
+
+						{isAuthenticated() && (
+							<IconButton
+								edge="end"
+								aria-label="account of current user"
+								aria-haspopup="true"
+								color="inherit"
+								onClick={logout}
+							>
+								<AccountCircle />
+								<Typography>Sign Out</Typography>
+							</IconButton>
+						)}
 					</div>
 				</Toolbar>
 			</AppBar>
