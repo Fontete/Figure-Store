@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react'
 import {BrowserRouter, Switch, Route, withRouter} from 'react-router-dom'
 import Home from './Pages/Home/Home'
-import Register from './Pages/Register/Register'
-import Login from './Pages/Login/Login'
+import Register from './Pages/User/Register'
+import Login from './Pages/User/Login'
 import AppBar from './Components/AppBar'
 
 const App = withRouter(({location}) => {
