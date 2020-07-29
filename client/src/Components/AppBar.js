@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
+import Link from '@material-ui/core/Link'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -113,14 +114,14 @@ const AppSearchBar = () => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<a href="/">
+					<Link href="/">
 						<img
 							href="/"
 							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
 							alt="logo"
 							height="48px"
 						></img>
-					</a>
+					</Link>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<SearchIcon />

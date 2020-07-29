@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -10,7 +11,12 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
+import Alert from '@material-ui/lab/Alert'
+import {Redirect} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core/styles'
+
+import Loading from '../../Components/Backdrop'
+import {authenticate} from '../../General/Method'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -49,6 +55,66 @@ const useStyles = makeStyles(theme => ({
 const Login = () => {
 	const classes = useStyles()
 
+	const [values, setValues] = useState({
+		email: '',
+		password: '',
+		error: '',
+		loading: false,
+		redirectToAuth: false,
+	})
+
+	const {email, password, loading, error, redirectToAuth} = values
+
+	//higher order function (function that returns other function)
+	const handleChange = input => e => {
+		setValues({...values, error: false, [input]: e.target.value})
+	}
+
+	const showLoading = () =>
+		loading && <Loading style={{display: loading ? '' : 'none'}} />
+
+	const inputData = {
+		email: email,
+		password: password,
+	}
+
+	const showError = () => (
+		<Alert severity="error" style={{display: error ? '' : 'none'}}>
+			{error}
+		</Alert>
+	)
+
+	const redirectUser = () => {
+		if (redirectToAuth) {
+			return <Redirect to="/" />
+		}
+	}
+
+	const fetchLoginAPI = body => {
+		axios
+			.post(process.env.REACT_APP_BASE_URL + 'users/login', body)
+			.then(data => {
+				authenticate(data, () => {
+					setValues({
+						...values,
+						redirectToAuth: true,
+					})
+				})
+			})
+			.catch(err => {
+				setValues({
+					...values,
+					error: err.response.data.err,
+					loading: false,
+				})
+			})
+	}
+
+	const submit = e => {
+		e.preventDefault() //prevent browser reload when the button is clicked
+		fetchLoginAPI(inputData)
+	}
+
 	return (
 		<Grid container component="main" className={classes.root}>
 			<CssBaseline />
@@ -61,6 +127,8 @@ const Login = () => {
 					<Typography component="h1" variant="h5">
 						Sign in
 					</Typography>
+					{showLoading()}
+					{showError()}
 					<form className={classes.form} noValidate>
 						<TextField
 							variant="outlined"
@@ -72,6 +140,8 @@ const Login = () => {
 							name="email"
 							autoComplete="email"
 							autoFocus
+							onChange={handleChange('email')}
+							value={email}
 						/>
 						<TextField
 							variant="outlined"
@@ -83,6 +153,8 @@ const Login = () => {
 							type="password"
 							id="password"
 							autoComplete="current-password"
+							onChange={handleChange('password')}
+							value={password}
 						/>
 						<FormControlLabel
 							control={<Checkbox value="remember" color="primary" />}
@@ -94,6 +166,7 @@ const Login = () => {
 							variant="contained"
 							color="primary"
 							className={classes.submit}
+							onClick={submit}
 						>
 							Sign In
 						</Button>
@@ -110,6 +183,7 @@ const Login = () => {
 							</Grid>
 						</Grid>
 					</form>
+					{redirectUser()}
 				</div>
 			</Grid>
 		</Grid>

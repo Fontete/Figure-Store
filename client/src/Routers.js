@@ -9,6 +9,7 @@ const Routers = () => {
 	return (
 		<BrowserRouter>
 			<AppBar />
+			<style>{'body { background-color:#0f4c75 }'}</style>
 			<Switch>
 				<Route path="/" exact component={Home} />
 				<Route path="/login" exact component={Login} />

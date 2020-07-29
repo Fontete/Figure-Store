@@ -49,12 +49,6 @@ const useStyles = makeStyles(theme => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
-	snackbar: {
-		width: '100%',
-		'& > * + *': {
-			marginTop: theme.spacing(2),
-		},
-	},
 	modal: {
 		display: 'flex',
 		alignItems: 'center',
@@ -92,11 +86,7 @@ const Register = () => {
 	}
 
 	const showError = () => (
-		<Alert
-			severity="error"
-			style={{display: values.error ? '' : 'none'}}
-			className={classes.alert}
-		>
+		<Alert severity="error" style={{display: error ? '' : 'none'}}>
 			{error}
 		</Alert>
 	)
@@ -136,7 +126,7 @@ const Register = () => {
 		password: password,
 	}
 
-	const fetchAPI = body => {
+	const fetchRegisterAPI = body => {
 		axios
 			.post(process.env.REACT_APP_BASE_URL + 'users/register', body)
 			.then(() => {
@@ -146,14 +136,13 @@ const Register = () => {
 				})
 			})
 			.catch(err => {
-				console.log(err.response.data)
-				setValues({...values, error: err.response.data.error, success: false})
+				setValues({...values, error: err.response.data.err, success: false})
 			})
 	}
 
 	const submit = e => {
-		e.preventDefault() //prevent browser relead when the button is clicked
-		fetchAPI(inputData)
+		e.preventDefault() //prevent browser reload when the button is clicked
+		fetchRegisterAPI(inputData)
 	}
 
 	return (
