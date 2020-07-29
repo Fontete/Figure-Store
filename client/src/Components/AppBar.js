@@ -1,15 +1,14 @@
 import React, {useState} from 'react'
+import axios from 'axios'
 import {fade, makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import InputBase from '@material-ui/core/InputBase'
-import MenuItem from '@material-ui/core/MenuItem'
-import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
-import Link from '@material-ui/core/Link'
+import {Link, withRouter} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -72,35 +71,22 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const AppSearchBar = () => {
+const AppSearchBar = ({history}) => {
 	const classes = useStyles()
-	const [anchorEl, setAnchorEl] = useState(null)
 
-	const isMenuOpen = Boolean(anchorEl)
-
-	const handleProfileMenuOpen = event => {
-		setAnchorEl(event.currentTarget)
+	const logout = () => {
+		if (typeof window !== 'undefined') {
+			localStorage.removeItem('jwt')
+			axios
+				.get(process.env.REACT_APP_BASE_URL + 'users/logout')
+				.then(() => {
+					history.push('/')
+				})
+				.catch(err => {
+					console.log(err.response.data)
+				})
+		}
 	}
-
-	const handleMenuClose = () => {
-		setAnchorEl(null)
-	}
-
-	const menuId = 'primary-search-account-menu'
-	const renderMenu = (
-		<Menu
-			anchorEl={anchorEl}
-			anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-			id={menuId}
-			keepMounted
-			transformOrigin={{vertical: 'top', horizontal: 'right'}}
-			open={isMenuOpen}
-			onClose={handleMenuClose}
-		>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
-		</Menu>
-	)
 
 	return (
 		<div className={classes.grow}>
@@ -114,7 +100,7 @@ const AppSearchBar = () => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Link href="/">
+					<Link to="/">
 						<img
 							href="/"
 							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
@@ -141,19 +127,25 @@ const AppSearchBar = () => {
 							href="/login"
 							edge="end"
 							aria-label="account of current user"
-							aria-controls={menuId}
 							aria-haspopup="true"
-							onClick={handleProfileMenuOpen}
 							color="inherit"
+						>
+							<AccountCircle />
+						</IconButton>
+						<IconButton
+							edge="end"
+							aria-label="account of current user"
+							aria-haspopup="true"
+							color="inherit"
+							onClick={logout}
 						>
 							<AccountCircle />
 						</IconButton>
 					</div>
 				</Toolbar>
 			</AppBar>
-			{renderMenu}
 		</div>
 	)
 }
 
-export default AppSearchBar
+export default withRouter(AppSearchBar)
