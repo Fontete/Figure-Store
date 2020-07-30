@@ -1,16 +1,19 @@
-import React from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import {fade, makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import InputBase from '@material-ui/core/InputBase'
-import MenuIcon from '@material-ui/icons/Menu'
+// import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+import DashboardIcon from '@material-ui/icons/Dashboard'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
 import Typography from '@material-ui/core/Typography'
-import {Link, withRouter} from 'react-router-dom'
-
+import Drawer from '@material-ui/core/Drawer'
+import MenuItem from '@material-ui/core/MenuItem'
+import Divider from '@material-ui/core/Divider'
+import {withRouter} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method'
 
 const useStyles = makeStyles(theme => ({
@@ -72,10 +75,57 @@ const useStyles = makeStyles(theme => ({
 	appBar: {
 		backgroundColor: '#1b262c',
 	},
+	paper: {
+		maxWidth: 250,
+		backgroundColor: '#1b262c',
+		color: '#fff',
+		width: 170,
+		justifyContent: 'space-strech',
+	},
 }))
 
 const AppSearchBar = ({history}) => {
 	const classes = useStyles()
+
+	const [anchorEl, setAnchorEl] = useState(null)
+
+	const handleClick = e => {
+		setAnchorEl(e.currentTarget)
+	}
+
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
+
+	const TempDrawer = () => {
+		return (
+			<Drawer
+				classes={{paper: classes.paper}}
+				docked={false}
+				open={anchorEl}
+				onClose={handleClose}
+			>
+				<MenuItem onClick={handleClose}>
+					<IconButton href="/" edge="end" color="inherit">
+						<img
+							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
+							alt="logo"
+							height="48"
+							width="100"
+						></img>
+					</IconButton>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleClose}>
+					<IconButton href="/user/dashboard" edge="end" color="inherit">
+						<DashboardIcon />
+						<Typography>Dashboard</Typography>
+					</IconButton>
+				</MenuItem>
+				<Divider />
+			</Drawer>
+		)
+	}
 
 	const logout = () => {
 		if (typeof window !== 'undefined') {
@@ -100,17 +150,15 @@ const AppSearchBar = ({history}) => {
 						className={classes.menuButton}
 						color="inherit"
 						aria-label="open drawer"
+						onClick={handleClick}
 					>
-						<MenuIcon />
-					</IconButton>
-					<Link to="/">
+						{/* <MenuIcon /> */}
 						<img
-							href="/"
 							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
 							alt="logo"
 							height="48px"
 						></img>
-					</Link>
+					</IconButton>
 					<div className={classes.search}>
 						<div className={classes.searchIcon}>
 							<SearchIcon />
@@ -154,6 +202,7 @@ const AppSearchBar = ({history}) => {
 					</div>
 				</Toolbar>
 			</AppBar>
+			{TempDrawer()}
 		</div>
 	)
 }
