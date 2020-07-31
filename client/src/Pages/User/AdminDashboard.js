@@ -4,7 +4,6 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import Grid from '@material-ui/core/Grid'
 import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 
@@ -97,77 +96,7 @@ const Dashboard = () => {
 		)
 	}
 
-	const PurchaseHistory = () => {
-		return (
-			<div style={{padding: '1.5em 10em 3em 10em'}}>
-				<Card className={classes.root} variant="outlined">
-					<CardContent>
-						<Typography variant="h4" color="inherit" gutterBottom>
-							Purchase History
-						</Typography>
-					</CardContent>
-					<Divider />
-					<Grid container xs={12}>
-						<Grid item xs={4}></Grid>
-						<Grid item xs={8}>
-							<CardContent>
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Firsname
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-								<Divider />
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Lastname
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-								<Divider />
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Email
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-								<Divider />
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Word of the Day
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-							</CardContent>
-						</Grid>
-					</Grid>
-				</Card>
-			</div>
-		)
-	}
-
-	return (
-		<div>
-			{Profile()}
-			{PurchaseHistory()}
-		</div>
-	)
+	return <div>{Profile()}</div>
 }
 
 export default Dashboard

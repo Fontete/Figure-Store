@@ -4,6 +4,11 @@ import Home from './Pages/Home/Home'
 import Register from './Pages/User/Register'
 import Login from './Pages/User/Login'
 import AppBar from './Components/AppBar'
+import UserDashboard from './Pages/User/UserDashboard'
+import AdminDashboard from './Pages/User/AdminDashboard'
+
+import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
+import AdminRoute from './General/ProtectedRoute/AdminRoute'
 
 const App = withRouter(({location}) => {
 	return (
@@ -16,6 +21,8 @@ const App = withRouter(({location}) => {
 				<Route path="/" exact component={Home} />
 				<Route path="/login" exact component={Login} />
 				<Route path="/register" exact component={Register} />
+				<PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+				<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
 			</Switch>
 		</Fragment>
 	)

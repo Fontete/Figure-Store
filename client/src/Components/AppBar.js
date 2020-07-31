@@ -143,7 +143,7 @@ const AppSearchBar = ({history}) => {
 
 	return (
 		<div className={classes.grow}>
-			<AppBar className={classes.appBar} position="static">
+			<AppBar className={classes.appBar} position="fixed">
 				<Toolbar>
 					<IconButton
 						edge="start"
@@ -173,7 +173,7 @@ const AppSearchBar = ({history}) => {
 						/>
 					</div>
 					<div className={classes.grow} />
-					<div className={classes.sectionDesktop} justifyContent="center">
+					<div className={classes.sectionDesktop}>
 						{!isAuthenticated() && (
 							<IconButton
 								href="/login"

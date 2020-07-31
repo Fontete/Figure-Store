@@ -16,7 +16,7 @@ import {Redirect} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core/styles'
 
 import Loading from '../../Components/Backdrop'
-import {authenticate} from '../../General/Method'
+import {authenticate, isAuthenticated} from '../../General/Method'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -86,6 +86,13 @@ const Login = () => {
 
 	const redirectUser = () => {
 		if (redirectToAuth) {
+			if (isAuthenticated() && isAuthenticated().data.user.role === 0) {
+				return <Redirect to="/admin/dashboard" />
+			} else {
+				return <Redirect to="/user/dashboard" />
+			}
+		}
+		if (isAuthenticated()) {
 			return <Redirect to="/" />
 		}
 	}
