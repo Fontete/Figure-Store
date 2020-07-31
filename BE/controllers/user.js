@@ -44,15 +44,16 @@ exports.logIn = async (req, res) => {
 				process.env.JWT,
 			)
 			res.cookie('token', token, {
-				expire: 60 * 60 * 24 * 7,
+				expire: new Date(),
 			})
 
-			const {_id, fullname, email, role} = user
+			const {_id, firstName, lastName, email, role} = user
 			return res.json({
 				token,
 				user: {
 					_id,
-					fullname,
+					firstName,
+					lastName,
 					email,
 					role,
 				},
@@ -128,13 +129,13 @@ exports.update = (req, res) => {
 		{_id: req.profile._id},
 		{$set: req.body},
 		{new: true},
-		(err) => {
+		err => {
 			if (err) {
 				return res.status(400).json({
 					err: 'Unauthorize',
 				})
 			}
-			res.json({message:"Update successfully"})
+			res.json({message: 'Update successfully'})
 		},
 	)
 }
