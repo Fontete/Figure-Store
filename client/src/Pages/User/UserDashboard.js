@@ -12,6 +12,9 @@ import {isAuthenticated} from '../../General/Method'
 
 const useStyles = makeStyles({
 	root: {
+		flexGrow: 1,
+	},
+	card: {
 		minWidth: 275,
 		backgroundColor: '#3282b8',
 	},
@@ -33,139 +36,149 @@ const Dashboard = () => {
 
 	const Profile = () => {
 		return (
-			<div style={{padding: '8em 40em 1.5em 40em'}}>
-				<Card className={classes.root} variant="outlined">
-					<CardContent>
-						<Typography variant="h4" color="inherit" gutterBottom>
-							Profile
-							<div style={{float: 'right'}}>
-								<IconButton edge="start" color="inherit">
+			<Grid container spacing={2} justify="center">
+				<Grid item xs={12} justify="center">
+					<Card className={classes.card} variant="outlined">
+						<CardContent>
+							<Typography variant="h3" color="inherit">
+								Profile
+								<IconButton
+									edge="start"
+									color="inherit"
+									style={{float: 'right'}}
+								>
 									<EditIcon />
 								</IconButton>
-							</div>
-						</Typography>
-					</CardContent>
-					<Divider />
-					<CardContent>
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-						>
-							Firstname
-						</Typography>
-						<Typography variant="h5" component="h2">
-							{isAuthenticated().data.user.firstName}
-						</Typography>
+							</Typography>
+						</CardContent>
 						<Divider />
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-						>
-							Lastname
-						</Typography>
-						<Typography variant="h5" component="h2">
-							{isAuthenticated().data.user.lastName}
-						</Typography>
+						<CardContent>
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Firstname
+							</Typography>
+							<Typography variant="h5" component="h2">
+								{isAuthenticated().data.user.firstName}
+							</Typography>
+							<Divider />
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Lastname
+							</Typography>
+							<Typography variant="h5" component="h2">
+								{isAuthenticated().data.user.lastName}
+							</Typography>
+							<Divider />
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Email
+							</Typography>
+							<Typography variant="h5" component="h2">
+								{isAuthenticated().data.user.email}
+							</Typography>
+							<Divider />
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Role
+							</Typography>
+							<Typography variant="h5" component="h2">
+								{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
+							</Typography>
+						</CardContent>
 						<Divider />
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-						>
-							Email
-						</Typography>
-						<Typography variant="h5" component="h2">
-							{isAuthenticated().data.user.email}
-						</Typography>
-						<Divider />
-						<Typography
-							className={classes.title}
-							color="textSecondary"
-							gutterBottom
-						>
-							Role
-						</Typography>
-						<Typography variant="h5" component="h2">
-							{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
-						</Typography>
-					</CardContent>
-					<Divider />
-				</Card>
-			</div>
+					</Card>
+				</Grid>
+			</Grid>
 		)
 	}
 
 	const PurchaseHistory = () => {
 		return (
-			<div style={{padding: '1.5em 10em 3em 10em'}}>
-				<Card className={classes.root} variant="outlined">
-					<CardContent>
-						<Typography variant="h4" color="inherit" gutterBottom>
-							Purchase History
-						</Typography>
-					</CardContent>
-					<Divider />
-					<Grid container xs={12}>
-						<Grid item xs={4}></Grid>
-						<Grid item xs={8}>
-							<CardContent>
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Firsname
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-								<Divider />
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Lastname
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-								<Divider />
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Email
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-								<Divider />
-								<Typography
-									className={classes.title}
-									color="textSecondary"
-									gutterBottom
-								>
-									Word of the Day
-								</Typography>
-								<Typography variant="h5" component="h2">
-									Hi
-								</Typography>
-							</CardContent>
-						</Grid>
+			<Card className={classes.card} variant="outlined">
+				<CardContent>
+					<Typography variant="h4" color="inherit">
+						Purchase History
+					</Typography>
+				</CardContent>
+				<Divider />
+				<Grid container xs={12}>
+					<Grid item xs={4}></Grid>
+					<Grid item xs={8}>
+						<CardContent>
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Firsname
+							</Typography>
+							<Typography variant="h5" component="h2">
+								Hi
+							</Typography>
+							<Divider />
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Lastname
+							</Typography>
+							<Typography variant="h5" component="h2">
+								Hi
+							</Typography>
+							<Divider />
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Email
+							</Typography>
+							<Typography variant="h5" component="h2">
+								Hi
+							</Typography>
+							<Divider />
+							<Typography
+								className={classes.title}
+								color="textSecondary"
+								gutterBottom
+							>
+								Word of the Day
+							</Typography>
+							<Typography variant="h5" component="h2">
+								Hi
+							</Typography>
+						</CardContent>
 					</Grid>
-				</Card>
-			</div>
+				</Grid>
+			</Card>
 		)
 	}
 
 	return (
-		<div>
-			{Profile()}
-			{PurchaseHistory()}
+		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
+			<Grid container spacing={3}>
+				<Grid item xs={4}></Grid>
+				<Grid item xs={4}>
+					{Profile()}
+				</Grid>
+				<Grid item xs={4}></Grid>
+				<Grid item xs={12}>
+					{PurchaseHistory()}
+				</Grid>
+			</Grid>
 		</div>
 	)
 }

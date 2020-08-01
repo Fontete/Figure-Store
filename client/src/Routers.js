@@ -9,6 +9,7 @@ import AdminDashboard from './Pages/User/AdminDashboard'
 
 import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
 import AdminRoute from './General/ProtectedRoute/AdminRoute'
+import AddCategory from './Pages/Product/AddCategory'
 
 const App = withRouter(({location}) => {
 	return (
@@ -23,6 +24,7 @@ const App = withRouter(({location}) => {
 				<Route path="/register" exact component={Register} />
 				<PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
 				<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
+				<AdminRoute path="/admin/category/add" exact component={AddCategory}/>
 			</Switch>
 		</Fragment>
 	)

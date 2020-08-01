@@ -97,7 +97,7 @@ const AppSearchBar = ({history}) => {
 		setAnchorEl(null)
 	}
 
-	const TempDrawer = () => {
+	const UserDrawer = () => {
 		return (
 			<Drawer
 				classes={{paper: classes.paper}}
@@ -120,6 +120,50 @@ const AppSearchBar = ({history}) => {
 					<IconButton href="/user/dashboard" edge="end" color="inherit">
 						<DashboardIcon />
 						<Typography>Dashboard</Typography>
+					</IconButton>
+				</MenuItem>
+				<Divider />
+			</Drawer>
+		)
+	}
+
+	const AdminDrawer = () => {
+		return (
+			<Drawer
+				classes={{paper: classes.paper}}
+				docked={false}
+				open={anchorEl}
+				onClose={handleClose}
+			>
+				<MenuItem onClick={handleClose}>
+					<IconButton href="/" edge="end" color="inherit">
+						<img
+							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
+							alt="logo"
+							height="48"
+							width="100"
+						></img>
+					</IconButton>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleClose}>
+					<IconButton href="/admin/dashboard" edge="end" color="inherit">
+						<DashboardIcon />
+						<Typography>Dashboard</Typography>
+					</IconButton>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleClose}>
+					<IconButton href="/admin/category/add" edge="end" color="inherit">
+						<DashboardIcon />
+						<Typography>Categories</Typography>
+					</IconButton>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleClose}>
+					<IconButton href="/admin/dashboard" edge="end" color="inherit">
+						<DashboardIcon />
+						<Typography>Products</Typography>
 					</IconButton>
 				</MenuItem>
 				<Divider />
@@ -202,7 +246,9 @@ const AppSearchBar = ({history}) => {
 					</div>
 				</Toolbar>
 			</AppBar>
-			{TempDrawer()}
+			{isAuthenticated() && isAuthenticated().data.user.role === 1
+				? UserDrawer()
+				: AdminDrawer()}
 		</div>
 	)
 }
