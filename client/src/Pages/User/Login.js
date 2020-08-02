@@ -104,6 +104,7 @@ const Login = () => {
 						...values,
 						redirectToAuth: true,
 					})
+					console.log(loading)
 				})
 			})
 			.catch(err => {

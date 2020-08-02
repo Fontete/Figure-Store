@@ -1,11 +1,10 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {Grid, TextField, Button, Paper} from '@material-ui/core'
-import {Link} from 'react-router-dom'
+import {Grid, TextField, Button, Paper, Snackbar} from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {isAuthenticated} from '../../General/Method'
-import SuccessSnackbar from '../../Components/SuccessSnackbar'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -29,6 +28,7 @@ const AddCategory = () => {
 	const classes = useStyles()
 
 	const [name, setName] = useState('')
+	const [response, setResponse] = useState()
 	const [error, setError] = useState(false)
 	const [success, setSuccess] = useState(false)
 
@@ -39,9 +39,51 @@ const AddCategory = () => {
 		name: name,
 	}
 
-	const handleChange = e => {
-		setError('')
+	const handleInputChange = e => {
 		setName(e.target.value)
+	}
+
+	const handleClose = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+
+		setSuccess(false)
+		setError(false)
+	}
+
+	const showSuccess = () => {
+		return (
+			<div className={classes.root}>
+				<Snackbar
+					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+					open={success}
+					autoHideDuration={3000}
+					onClose={handleClose}
+				>
+					<Alert onClose={handleClose} severity="success">
+						{response}
+					</Alert>
+				</Snackbar>
+			</div>
+		)
+	}
+
+	const showError = () => {
+		return (
+			<div className={classes.root}>
+				<Snackbar
+					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+					open={error}
+					autoHideDuration={3000}
+					onClose={handleClose}
+				>
+					<Alert onClose={handleClose} severity="error">
+						{response}
+					</Alert>
+				</Snackbar>
+			</div>
+		)
 	}
 
 	const fetchAddCategoryAPI = body => {
@@ -56,18 +98,17 @@ const AddCategory = () => {
 				},
 			)
 			.then(data => {
-				setError('')
 				setSuccess(true)
+				setResponse(data.data.message)
 			})
 			.catch(err => {
-				setError(err.response.data.error)
+				setError(true)
+				setResponse(err.response.data.err)
 			})
 	}
 
 	const submit = e => {
 		e.preventDefault()
-		setError('')
-		setSuccess(false)
 		fetchAddCategoryAPI(categoryName)
 	}
 
@@ -84,7 +125,7 @@ const AddCategory = () => {
 							id="name"
 							label="Category Name"
 							name="name"
-							onChange={handleChange}
+							onChange={handleInputChange}
 							value={name}
 							autoFocus
 						/>
@@ -109,6 +150,8 @@ const AddCategory = () => {
 				<Grid item xs={4}></Grid>
 				<Grid item xs={4}>
 					<Paper className={classes.paper} style={{backgroundColor: '#3282b8'}}>
+						{showSuccess()}
+						{showError()}
 						{AddForm()}
 					</Paper>
 				</Grid>
