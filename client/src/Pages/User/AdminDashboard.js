@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 
-import {isAuthenticated} from '../../General/Method'
+import {isAuthenticated} from '../../General/Method/Authenticate'
 
 const useStyles = makeStyles({
 	root: {
@@ -106,7 +106,7 @@ const Dashboard = () => {
 
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
-			<Grid container spacing={3}>
+			<Grid container spacing={2}>
 				<Grid item xs={4}></Grid>
 				<Grid item xs={4}>
 					{Profile()}

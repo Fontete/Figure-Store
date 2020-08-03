@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
-import {isAuthenticated} from '../Method'
+import {isAuthenticated} from '../Method/Authenticate'
 
 const PrivateRoute = ({component: Component, ...rest}) => {
 	return (

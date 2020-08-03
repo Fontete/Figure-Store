@@ -14,7 +14,7 @@ import Drawer from '@material-ui/core/Drawer'
 import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
 import {withRouter} from 'react-router-dom'
-import {isAuthenticated} from '../General/Method'
+import {isAuthenticated} from '../General/Method/Authenticate'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -161,7 +161,7 @@ const AppSearchBar = ({history}) => {
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/admin/dashboard" edge="end" color="inherit">
+					<IconButton href="/admin/product/add" edge="end" color="inherit">
 						<DashboardIcon />
 						<Typography>Products</Typography>
 					</IconButton>

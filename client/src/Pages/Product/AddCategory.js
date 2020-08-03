@@ -4,7 +4,7 @@ import {Grid, TextField, Button, Paper, Snackbar} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 
-import {isAuthenticated} from '../../General/Method'
+import {isAuthenticated} from '../../General/Method/Authenticate'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -146,7 +146,7 @@ const AddCategory = () => {
 
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
-			<Grid container spacing={3}>
+			<Grid container spacing={2}>
 				<Grid item xs={4}></Grid>
 				<Grid item xs={4}>
 					<Paper className={classes.paper} style={{backgroundColor: '#3282b8'}}>

@@ -13,8 +13,7 @@ import Alert from '@material-ui/lab/Alert'
 import {Redirect} from 'react-router-dom'
 import {makeStyles} from '@material-ui/core/styles'
 
-import Loading from '../../Components/Backdrop'
-import {authenticate, isAuthenticated} from '../../General/Method'
+import {authenticate, isAuthenticated} from '../../General/Method/Authenticate'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -57,19 +56,15 @@ const Login = () => {
 		email: '',
 		password: '',
 		error: '',
-		loading: false,
 		redirectToAuth: false,
 	})
 
-	const {email, password, loading, error, redirectToAuth} = values
+	const {email, password, error, redirectToAuth} = values
 
 	//higher order function (function that returns other function)
 	const handleChange = input => e => {
 		setValues({...values, error: false, [input]: e.target.value})
 	}
-
-	const showLoading = () =>
-		loading && <Loading style={{display: loading ? '' : 'none'}} />
 
 	const inputData = {
 		email: email,
@@ -104,14 +99,12 @@ const Login = () => {
 						...values,
 						redirectToAuth: true,
 					})
-					console.log(loading)
 				})
 			})
 			.catch(err => {
 				setValues({
 					...values,
 					error: err.response.data.err,
-					loading: false,
 				})
 			})
 	}
@@ -133,7 +126,6 @@ const Login = () => {
 					<Typography component="h1" variant="h5">
 						Sign in
 					</Typography>
-					{showLoading()}
 					{showError()}
 					<form className={classes.form} noValidate>
 						<TextField
