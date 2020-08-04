@@ -31,6 +31,12 @@ exports.add = (req, res) => {
 			})
 		}
 
+		if (quantity || price <= 0) {
+			return res.status(400).json({
+				err: 'Number must be larger than zero',
+			})
+		}
+
 		// add new product
 		let product = new productModel(form)
 
@@ -52,7 +58,7 @@ exports.add = (req, res) => {
 				})
 			}
 			res.json({
-				message: 'Create successfully',
+				message: 'Add successfully',
 			})
 		})
 	})
@@ -141,6 +147,13 @@ exports.update = (req, res) => {
 			product.image.data = fs.readFileSync(files.image.path)
 			product.image.contentType = files.image.type
 		}
+
+		if (quantity || price <= 0) {
+			return res.status(400).json({
+				err: 'Number must be larger than zero',
+			})
+		}
+
 		product.save(err => {
 			if (err) {
 				return res.status(400).json({

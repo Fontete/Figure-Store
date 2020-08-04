@@ -3,14 +3,14 @@ const error = require('../general/error')
 
 exports.add = (req, res) => {
 	const category = new categoryModel(req.body)
-	category.save(err => {
-		if (err) {
+	category.save((err, data) => {
+		if (err || !data) {
 			return res.status(403).json({
-				err: error.errorHandler(err),
+				err: 'Category name is required',
 			})
 		}
 		res.json({
-			message: 'Create successfully',
+			message: 'Add successfully',
 		})
 	})
 }
