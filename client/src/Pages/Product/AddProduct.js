@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {
 	Grid,
-	TextField,
 	Button,
 	Paper,
 	Snackbar,
@@ -12,7 +11,6 @@ import {
 	Typography,
 	Input,
 } from '@material-ui/core'
-import ImageIcon from '@material-ui/icons/Image'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 
@@ -43,7 +41,7 @@ const AddProduct = () => {
 		name: '',
 		description: '',
 		price: '',
-		categories: [],
+		categories: false,
 		category: '',
 		shipping: '',
 		quantity: '',
@@ -141,8 +139,23 @@ const AddProduct = () => {
 			})
 	}
 
+	const fetchListCategoryAPI = () => {
+		axios
+			.get(process.env.REACT_APP_BASE_URL + `categories`)
+			.then(data => {
+				setValues({
+					...values,
+					categories: data.data,
+					formData: new FormData(),
+				})
+			})
+			.catch(() => {
+				setValues({...values, error: true, response: 'No category is existed'})
+			})
+	}
+
 	useEffect(() => {
-		setValues({...values, formData: new FormData()})
+		fetchListCategoryAPI()
 	}, [])
 
 	const submit = e => {
@@ -157,7 +170,9 @@ const AddProduct = () => {
 					<form className={classes.form} onSubmit={submit}>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6"> Name</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Name
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
@@ -176,7 +191,9 @@ const AddProduct = () => {
 						</Grid>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6">Price</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Price
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
@@ -196,7 +213,9 @@ const AddProduct = () => {
 						</Grid>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6">Quantity</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Quantity
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
@@ -215,7 +234,9 @@ const AddProduct = () => {
 						</Grid>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6">Category</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Category
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
@@ -233,15 +254,20 @@ const AddProduct = () => {
 									onChange={handleInputChange('category')}
 									value={category}
 								>
-									<MenuItem value="5f285cbdb92d0b39fc69851f">Pokemon</MenuItem>
-									<MenuItem value={20}>Twenty</MenuItem>
-									<MenuItem value={30}>Thirty</MenuItem>
+									{categories &&
+										categories.map(c => (
+											<MenuItem key={c._id} value={c._id}>
+												{c.name}
+											</MenuItem>
+										))}
 								</Select>
 							</Grid>
 						</Grid>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6">Shipping</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Shipping
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
@@ -266,7 +292,9 @@ const AddProduct = () => {
 						</Grid>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6">Image</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Image
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={6} style={{padding: '0.2, 0, 0.2, 0'}}>
@@ -280,7 +308,9 @@ const AddProduct = () => {
 						</Grid>
 						<Grid container>
 							<Grid item xs={1}>
-								<Typography variant="h6">Description</Typography>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Description
+								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
