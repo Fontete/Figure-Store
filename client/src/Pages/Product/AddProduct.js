@@ -149,8 +149,8 @@ const AddProduct = () => {
 					formData: new FormData(),
 				})
 			})
-			.catch(() => {
-				setValues({...values, error: true, response: 'No category is existed'})
+			.catch(err => {
+				setValues({...values, error: true, response: err.response.data.err})
 			})
 	}
 
@@ -175,7 +175,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
 									style={{backgroundColor: '#bbe1fa', height: '4em'}}
 									required
@@ -196,7 +196,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
 									style={{backgroundColor: '#bbe1fa', height: '4em'}}
 									required
@@ -205,7 +205,6 @@ const AddProduct = () => {
 									name="price"
 									onChange={handleInputChange('price')}
 									value={price}
-									autoFocus
 									placeholder="Price..."
 									type="number"
 								/>
@@ -218,7 +217,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
 									style={{backgroundColor: '#bbe1fa', height: '4em'}}
 									required
@@ -239,7 +238,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Select
 									style={{
 										width: '100%',
@@ -270,7 +269,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Select
 									style={{
 										width: '100%',
@@ -297,7 +296,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={6} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={6} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
 									onChange={handleInputChange('image')}
 									type="file"
@@ -313,7 +312,7 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={12} style={{padding: '0.2, 0, 0.2, 0'}}>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<TextareaAutosize
 									style={{
 										width: '99%',
