@@ -5,7 +5,9 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import InputBase from '@material-ui/core/InputBase'
-// import MenuIcon from '@material-ui/icons/Menu'
+import CategoryIcon from '@material-ui/icons/Category'
+import NewestIcon from '@material-ui/icons/NewReleases'
+import HotIcon from '@material-ui/icons/TrendingUp'
 import SearchIcon from '@material-ui/icons/Search'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
@@ -13,7 +15,9 @@ import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
-import {withRouter} from 'react-router-dom'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import {Link, withRouter} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
 
 const useStyles = makeStyles(theme => ({
@@ -216,6 +220,26 @@ const AppSearchBar = ({history}) => {
 							inputProps={{'aria-label': 'search'}}
 						/>
 					</div>
+					<Tabs
+						variant="fullWidth"
+						indicatorColor="primary"
+						textColor="primary"
+						aria-label="icon label tabs example"
+					>
+						<Link style={{textDecoration: 'none'}} to="/trending">
+							<Tab
+								style={{color: '#fff'}}
+								icon={<HotIcon />}
+								label="Hot & Newest"
+							/>
+						</Link>
+						<Tab style={{color: '#fff'}} icon={<NewestIcon />} label="Newest" />
+						<Tab
+							style={{color: '#fff'}}
+							icon={<CategoryIcon />}
+							label="Categories"
+						/>
+					</Tabs>
 					<div className={classes.grow} />
 					<div className={classes.sectionDesktop}>
 						{!isAuthenticated() && (

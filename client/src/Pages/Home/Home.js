@@ -2,10 +2,12 @@ import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import {makeStyles} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
-import Fab from '@material-ui/core/Fab'
+import FormControl from '@material-ui/core/FormControl'
+import FormLabel from '@material-ui/core/FormLabel'
+import Typography from '@material-ui/core/Typography'
 
 import Card from './Card'
-import {Typography} from '@material-ui/core'
+import Checkbox from './Checkbox'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -16,32 +18,27 @@ const useStyles = makeStyles(theme => ({
 const Home = () => {
 	const classes = useStyles()
 
-	const [productBySell, setProductBySell] = useState()
-	const [productByDate, setProductByDate] = useState()
+	const [categories, setCategories] = useState()
+	const [product, setProduct] = useState()
 	const [error, setError] = useState(false)
 
-	const fetchListProductBySell = () => {
+	const fetchListCategoryAPI = () => {
 		axios
-			.get(
-				process.env.REACT_APP_BASE_URL +
-					`products?sortBy=sold&order=desc&limit=4`,
-			)
+			.get(process.env.REACT_APP_BASE_URL + `categories`)
 			.then(data => {
-				setProductBySell(data.data)
+				setCategories(data.data)
 			})
 			.catch(() => {
 				setError(true)
 			})
 	}
 
-	const fetchListProductByDate = () => {
+	const fetchListProductAPI = () => {
 		axios
-			.get(
-				process.env.REACT_APP_BASE_URL +
-					`products?sortBy=createdAt&order=desc&limit=4`,
-			)
+			.get(process.env.REACT_APP_BASE_URL + `products`)
 			.then(data => {
-				setProductByDate(data.data)
+				console.log(data)
+				setProduct(data.data)
 			})
 			.catch(() => {
 				setError(true)
@@ -49,50 +46,28 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		fetchListProductBySell()
-		fetchListProductByDate('createdAt')
+		fetchListCategoryAPI()
+		fetchListProductAPI()
 	}, [])
 
 	return (
 		<Fragment>
-			<div className={classes.root} style={{padding: '4em 6em 0em 6em'}}>
-				<Fab
-					color="primary"
-					variant="extended"
-					style={{
-						display: productBySell ? '' : 'none',
-						margin: '1em 0em 1em 0em',
-					}}
-				>
-					<Typography color="inherit" variant="h4" align="center">
-						Hot
-					</Typography>
-				</Fab>
+			<div className={classes.root} style={{padding: '8em 6em 0em 6em'}}>
 				<Grid container spacing={4}>
-					{productBySell &&
-						productBySell.map(product => (
-							<Card key={product._id} product={product} />
-						))}
-				</Grid>
-			</div>
-			<div className={classes.root} style={{padding: '0em 6em 0em 6em'}}>
-				<Fab
-					color="secondary"
-					variant="extended"
-					style={{
-						display: productBySell ? '' : 'none',
-						margin: '1em 0em 1em 0em',
-					}}
-				>
-					<Typography color="inherit" variant="h4" align="center">
-						New
-					</Typography>
-				</Fab>
-				<Grid container spacing={4}>
-					{productByDate &&
-						productByDate.map(product => (
-							<Card key={product._id} product={product} />
-						))}
+					<Grid container item xs={2}>
+						<FormControl component="fieldset">
+							<FormLabel component="legend" style={{color: '#fff'}}>
+								<Typography variant="h4">Categories</Typography>
+							</FormLabel>
+							<Checkbox categories={categories}/>
+						</FormControl>
+					</Grid>
+					<Grid container item xs={10} spacing={4}>
+						{product &&
+							product.map(product => (
+								<Card key={product._id} product={product} />
+							))}
+					</Grid>
 				</Grid>
 			</div>
 		</Fragment>
