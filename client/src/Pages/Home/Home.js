@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 
 import Card from './Card'
 import Checkbox from './Checkbox'
+import Radio from './Radio'
+import {prices} from './PriceRange'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -21,6 +23,7 @@ const Home = () => {
 	const [categories, setCategories] = useState()
 	const [product, setProduct] = useState()
 	const [error, setError] = useState(false)
+	const [filter, setFilter] = useState({filters: {category: [], price: []}})
 
 	const fetchListCategoryAPI = () => {
 		axios
@@ -37,12 +40,37 @@ const Home = () => {
 		axios
 			.get(process.env.REACT_APP_BASE_URL + `products`)
 			.then(data => {
-				console.log(data)
 				setProduct(data.data)
 			})
 			.catch(() => {
 				setError(true)
 			})
+	}
+
+	const handlePrice = value => {
+		const data = prices
+		let arr = []
+		for (let i in data) {
+			if (data[i]._id === parseInt(value)) {
+				arr = data[i].array
+			}
+		}
+		return arr
+	}
+
+	const loadProduct = newFilters => {
+		console.log(newFilters)
+	}
+
+	const productFilter = (filters, filterBy) => {
+		const newFilters = {...filter}
+		newFilters.filters[filterBy] = filters
+		if (filterBy === 'price') {
+			let price = handlePrice(filters)
+			newFilters.filters[filterBy] = price
+		}
+		loadProduct(filter.filters)
+		setFilter(newFilters)
 	}
 
 	useEffect(() => {
@@ -57,9 +85,21 @@ const Home = () => {
 					<Grid container item xs={2}>
 						<FormControl component="fieldset">
 							<FormLabel component="legend" style={{color: '#fff'}}>
-								<Typography variant="h4">Categories</Typography>
+								<Typography variant="h5">Categories</Typography>
 							</FormLabel>
-							<Checkbox categories={categories}/>
+							<Checkbox
+								categories={categories}
+								productFilters={filters => productFilter(filters, 'category')}
+							/>
+						</FormControl>
+						<FormControl component="fieldset">
+							<FormLabel component="legend" style={{color: '#fff'}}>
+								<Typography variant="h5">Prices</Typography>
+							</FormLabel>
+							<Radio
+								prices={prices}
+								productFilters={filters => productFilter(filters, 'price')}
+							/>
 						</FormControl>
 					</Grid>
 					<Grid container item xs={10} spacing={4}>
