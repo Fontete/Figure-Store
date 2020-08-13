@@ -57,14 +57,17 @@ const ProductCard = ({product: {_id, name, description, price}}) => {
 					<Typography align="center" variant="h6" color="primary" component="p">
 						${price}
 					</Typography>
-					{/* <Typography
+					<Typography
+						style={{height: '50px'}}
 						align="center"
-						variant="subtitle1"
-						color="primary"
+						variant="subtitle2"
+						color="textPrimary"
 						component="p"
 					>
-						{category}
-					</Typography> */}
+						{description.length > 50
+							? `${description.substring(0, 50)} ...`
+							: description}
+					</Typography>
 				</CardContent>
 				<CardActions style={{justifyContent: 'center'}} disableSpacing>
 					{/* <IconButton aria-label="add to favorites">

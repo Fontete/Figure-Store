@@ -86,7 +86,7 @@ const AddCategory = () => {
 		)
 	}
 
-	const fetchAddCategoryAPI = body => {
+	const fetchAddCategory = body => {
 		axios
 			.post(
 				process.env.REACT_APP_BASE_URL + `categories/create/${userID}`,
@@ -109,7 +109,7 @@ const AddCategory = () => {
 
 	const submit = e => {
 		e.preventDefault()
-		fetchAddCategoryAPI(categoryName)
+		fetchAddCategory(categoryName)
 	}
 
 	const AddForm = () => {

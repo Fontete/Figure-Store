@@ -124,7 +124,7 @@ const Register = () => {
 		password: password,
 	}
 
-	const fetchRegisterAPI = body => {
+	const fetchRegister = body => {
 		axios
 			.post(process.env.REACT_APP_BASE_URL + 'users/register', body)
 			.then(() => {
@@ -140,7 +140,7 @@ const Register = () => {
 
 	const submit = e => {
 		e.preventDefault() //prevent browser reload when the button is clicked
-		fetchRegisterAPI(inputData)
+		fetchRegister(inputData)
 	}
 
 	return (

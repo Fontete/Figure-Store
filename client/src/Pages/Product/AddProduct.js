@@ -120,7 +120,7 @@ const AddProduct = () => {
 		)
 	}
 
-	const fetchAddProductAPI = body => {
+	const fetchAddProduct = body => {
 		axios
 			.post(
 				process.env.REACT_APP_BASE_URL + `products/create/${userID}`,
@@ -139,7 +139,7 @@ const AddProduct = () => {
 			})
 	}
 
-	const fetchListCategoryAPI = () => {
+	const fetchListCategory = () => {
 		axios
 			.get(process.env.REACT_APP_BASE_URL + `categories`)
 			.then(data => {
@@ -155,12 +155,12 @@ const AddProduct = () => {
 	}
 
 	useEffect(() => {
-		fetchListCategoryAPI()
+		fetchListCategory()
 	}, [])
 
 	const submit = e => {
 		e.preventDefault()
-		fetchAddProductAPI(formData)
+		fetchAddProduct(formData)
 	}
 
 	const AddForm = () => {

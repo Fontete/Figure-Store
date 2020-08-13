@@ -14,18 +14,24 @@ import {prices} from './PriceRange'
 const useStyles = makeStyles(theme => ({
 	root: {
 		flexGrow: 1,
+		overflowY: 'scroll',
+		'&::-webkit-scrollbar': {
+			width: 0,
+		},
 	},
 }))
 
 const Home = () => {
 	const classes = useStyles()
 
+	const [limit, setLimit] = useState(8)
+	const [skip, setSkip] = useState(0)
 	const [categories, setCategories] = useState()
 	const [product, setProduct] = useState()
 	const [error, setError] = useState(false)
 	const [filter, setFilter] = useState({filters: {category: [], price: []}})
 
-	const fetchListCategoryAPI = () => {
+	const fetchListCategory = () => {
 		axios
 			.get(process.env.REACT_APP_BASE_URL + `categories`)
 			.then(data => {
@@ -36,14 +42,29 @@ const Home = () => {
 			})
 	}
 
-	const fetchListProductAPI = () => {
+	const fetchListProduct = (skip, limit, filters = {}) => {
+		const body = {skip, limit, filters}
 		axios
-			.get(process.env.REACT_APP_BASE_URL + `products`)
+			.post(process.env.REACT_APP_BASE_URL + `products/search`, body)
 			.then(data => {
 				setProduct(data.data)
+				setSkip(0)
 			})
-			.catch(() => {
-				setError(true)
+			.catch(err => {
+				setError(err.response.data.err)
+			})
+	}
+
+	const fetchMoreProduct = (skip, limit, filters = {}) => {
+		const body = {skip, limit, filters}
+		axios
+			.post(process.env.REACT_APP_BASE_URL + `products/search`, body)
+			.then(data => {
+				setProduct([...product, ...data.data])
+				setSkip(skip)
+			})
+			.catch(err => {
+				setError(err.response.data.err)
 			})
 	}
 
@@ -59,8 +80,26 @@ const Home = () => {
 	}
 
 	const loadProduct = newFilters => {
-		console.log(newFilters)
+		fetchListProduct(skip, limit, newFilters)
 	}
+
+	const handleScroll = e => {
+		const {offsetHeight, scrollTop, scrollHeight} = e.target
+		let toSkip = skip + limit
+
+		if (offsetHeight + scrollTop === scrollHeight) {
+			fetchMoreProduct(toSkip, limit, filter.filters)
+		}
+	}
+
+	// const loadMoreButton = () => {
+	// 	return (
+	// 		size > 0 && size >= limit && loadMore()
+	// 		<button onClick={loadMore} className="btn btn-warning mb-5">
+	// 			Load more
+	// 		</button>
+	// 	)
+	// }
 
 	const productFilter = (filters, filterBy) => {
 		const newFilters = {...filter}
@@ -74,16 +113,20 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		fetchListCategoryAPI()
-		fetchListProductAPI()
+		fetchListCategory()
+		loadProduct(skip, limit, filter.filters)
 	}, [])
 
 	return (
 		<Fragment>
-			<div className={classes.root} style={{padding: '8em 6em 0em 6em'}}>
+			<div
+				className={classes.root}
+				style={{padding: '8em 6em 0em 6em'}}
+				onScroll={handleScroll}
+			>
 				<Grid container spacing={4}>
 					<Grid container item xs={2}>
-						<FormControl component="fieldset">
+						<FormControl component="fieldset" style={{position: 'fixed'}}>
 							<FormLabel component="legend" style={{color: '#fff'}}>
 								<Typography variant="h5">Categories</Typography>
 							</FormLabel>
@@ -91,8 +134,6 @@ const Home = () => {
 								categories={categories}
 								productFilters={filters => productFilter(filters, 'category')}
 							/>
-						</FormControl>
-						<FormControl component="fieldset">
 							<FormLabel component="legend" style={{color: '#fff'}}>
 								<Typography variant="h5">Prices</Typography>
 							</FormLabel>
@@ -107,6 +148,7 @@ const Home = () => {
 							product.map(product => (
 								<Card key={product._id} product={product} />
 							))}
+						{/* {loadMoreButton()} */}
 					</Grid>
 				</Grid>
 			</div>

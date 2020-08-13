@@ -90,7 +90,7 @@ const Login = () => {
 		}
 	}
 
-	const fetchLoginAPI = body => {
+	const fetchLogin = body => {
 		axios
 			.post(process.env.REACT_APP_BASE_URL + 'users/login', body)
 			.then(data => {
@@ -111,7 +111,7 @@ const Login = () => {
 
 	const submit = e => {
 		e.preventDefault() //prevent browser reload when the button is clicked
-		fetchLoginAPI(inputData)
+		fetchLogin(inputData)
 	}
 
 	return (
