@@ -10,6 +10,7 @@ import Card from './Card'
 import Checkbox from './Checkbox'
 import Radio from './Radio'
 import {prices} from './PriceRange'
+import {Hidden} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -121,29 +122,32 @@ const Home = () => {
 		<Fragment>
 			<div
 				className={classes.root}
-				style={{padding: '8em 6em 0em 6em'}}
+				style={{padding: '8em 2em 0em 2em'}}
 				onScroll={handleScroll}
 			>
-				<Grid container spacing={4}>
-					<Grid container item xs={2}>
-						<FormControl component="fieldset" style={{position: 'fixed'}}>
-							<FormLabel component="legend" style={{color: '#fff'}}>
-								<Typography variant="h5">Categories</Typography>
-							</FormLabel>
-							<Checkbox
-								categories={categories}
-								productFilters={filters => productFilter(filters, 'category')}
-							/>
-							<FormLabel component="legend" style={{color: '#fff'}}>
-								<Typography variant="h5">Prices</Typography>
-							</FormLabel>
-							<Radio
-								prices={prices}
-								productFilters={filters => productFilter(filters, 'price')}
-							/>
-						</FormControl>
-					</Grid>
-					<Grid container item xs={10} spacing={4}>
+				<Grid container justify="center">
+					<Hidden xsDown={true} mdDown={true}>
+						<Grid container item sm={2}>
+							<FormControl component="fieldset" style={{position: 'fixed'}}>
+								<FormLabel component="legend" style={{color: '#fff'}}>
+									<Typography variant="h5">Categories</Typography>
+								</FormLabel>
+
+								<Checkbox
+									categories={categories}
+									productFilters={filters => productFilter(filters, 'category')}
+								/>
+								<FormLabel component="legend" style={{color: '#fff'}}>
+									<Typography variant="h5">Prices</Typography>
+								</FormLabel>
+								<Radio
+									prices={prices}
+									productFilters={filters => productFilter(filters, 'price')}
+								/>
+							</FormControl>
+						</Grid>
+					</Hidden>
+					<Grid container item sm={10} spacing={4}>
 						{product &&
 							product.map(product => (
 								<Card key={product._id} product={product} />

@@ -19,6 +19,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import {Link, withRouter} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -192,83 +193,89 @@ const AppSearchBar = ({history}) => {
 	return (
 		<div className={classes.grow}>
 			<AppBar className={classes.appBar} position="fixed">
-				<Toolbar>
-					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleClick}
-					>
-						{/* <MenuIcon /> */}
-						<img
-							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
-							alt="logo"
-							height="48px"
-						></img>
-					</IconButton>
-					<div className={classes.search}>
-						<div className={classes.searchIcon}>
-							<SearchIcon />
+				<Grid container>
+					<Toolbar>
+						<IconButton
+							edge="start"
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="open drawer"
+							onClick={handleClick}
+						>
+							{/* <MenuIcon /> */}
+							<img
+								src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
+								alt="logo"
+								height="48px"
+							></img>
+						</IconButton>
+						<div className={classes.search}>
+							<div className={classes.searchIcon}>
+								<SearchIcon />
+							</div>
+							<InputBase
+								placeholder="Search…"
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput,
+								}}
+								inputProps={{'aria-label': 'search'}}
+							/>
 						</div>
-						<InputBase
-							placeholder="Search…"
-							classes={{
-								root: classes.inputRoot,
-								input: classes.inputInput,
-							}}
-							inputProps={{'aria-label': 'search'}}
-						/>
-					</div>
-					<Tabs
-						variant="fullWidth"
-						indicatorColor="primary"
-						textColor="primary"
-						aria-label="icon label tabs example"
-					>
-						<Link style={{textDecoration: 'none'}} to="/trending">
+						<Tabs
+							variant="fullWidth"
+							indicatorColor="primary"
+							textColor="primary"
+							aria-label="icon label tabs example"
+						>
+							<Link style={{textDecoration: 'none'}} to="/trending">
+								<Tab
+									style={{color: '#fff'}}
+									icon={<HotIcon />}
+									label="Hot & Newest"
+								/>
+							</Link>
 							<Tab
 								style={{color: '#fff'}}
-								icon={<HotIcon />}
-								label="Hot & Newest"
+								icon={<NewestIcon />}
+								label="Newest"
 							/>
-						</Link>
-						<Tab style={{color: '#fff'}} icon={<NewestIcon />} label="Newest" />
-						<Tab
-							style={{color: '#fff'}}
-							icon={<CategoryIcon />}
-							label="Categories"
-						/>
-					</Tabs>
-					<div className={classes.grow} />
-					<div className={classes.sectionDesktop}>
-						{!isAuthenticated() && (
-							<IconButton
-								href="/login"
-								edge="end"
-								aria-label="account of current user"
-								aria-haspopup="true"
-								color="inherit"
-							>
-								<AccountCircle />
-								<Typography>Sign In</Typography>
-							</IconButton>
-						)}
+							<Tab
+								style={{color: '#fff'}}
+								icon={<CategoryIcon />}
+								label="Categories"
+							/>
+						</Tabs>
+						<div className={classes.grow} />
+						<div className={classes.sectionDesktop}>
+							{!isAuthenticated() && (
+								<IconButton
+									href="/login"
+									edge="end"
+									aria-label="account of current user"
+									aria-haspopup="true"
+									color="inherit"
+								>
+									<AccountCircle />
+									<Typography>Sign In</Typography>
+								</IconButton>
+							)}
 
-						{isAuthenticated() && (
-							<IconButton
-								edge="end"
-								aria-label="account of current user"
-								aria-haspopup="true"
-								color="inherit"
-								onClick={logout}
-							>
-								<AccountCircle />
-								<Typography>Sign Out</Typography>
-							</IconButton>
-						)}
-					</div>
-				</Toolbar>
+							{isAuthenticated() && (
+								<IconButton
+									edge="end"
+									aria-label="account of current user"
+									aria-haspopup="true"
+									color="inherit"
+									onClick={logout}
+								>
+									<AccountCircle />
+									<Typography>Sign Out</Typography>
+								</IconButton>
+							)}
+						</div>
+					</Toolbar>
+				</Grid>
 			</AppBar>
 			{isAuthenticated() && isAuthenticated().data.user.role === 1
 				? UserDrawer()

@@ -47,9 +47,10 @@ const ProductCard = ({product: {_id, name, description, price}}) => {
 	const url = process.env.REACT_APP_BASE_URL + `products/image/${_id}`
 
 	return (
-		<Grid item xs={3}>
+		<Grid item sm={4} md={4} xs={12}>
 			<Card className={classes.root}>
 				<CardMedia image={url} className={classes.media} />
+
 				<CardContent>
 					<Typography align="center" variant="h5" color="primary" component="p">
 						{name}
@@ -58,7 +59,6 @@ const ProductCard = ({product: {_id, name, description, price}}) => {
 						${price}
 					</Typography>
 					<Typography
-						style={{height: '50px'}}
 						align="center"
 						variant="subtitle2"
 						color="textPrimary"

@@ -55,7 +55,7 @@ const Trending = () => {
 
 	return (
 		<Fragment>
-			<div className={classes.root} style={{padding: '4em 6em 0em 6em'}}>
+			<div className={classes.root} style={{padding: '4em 2em 0em 2em'}}>
 				<Fab
 					color="secondary"
 					variant="extended"
@@ -75,7 +75,7 @@ const Trending = () => {
 						))}
 				</Grid>
 			</div>
-			<div className={classes.root} style={{padding: '0em 6em 0em 6em'}}>
+			<div className={classes.root} style={{padding: '0em 2em 0em 2em'}}>
 				<Fab
 					color="secondary"
 					variant="extended"
