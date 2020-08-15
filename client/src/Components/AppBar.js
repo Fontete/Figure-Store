@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import {Link, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
 import Grid from '@material-ui/core/Grid'
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 		},
 		marginRight: theme.spacing(2),
 		marginLeft: 0,
-		width: '100%',
+		width: '40%',
 		[theme.breakpoints.up('sm')]: {
 			marginLeft: theme.spacing(3),
 			width: 'auto',
@@ -62,19 +62,13 @@ const useStyles = makeStyles(theme => ({
 		color: 'inherit',
 	},
 	inputInput: {
-		padding: theme.spacing(1, 1, 1, 0),
+		padding: theme.spacing(2, 1, 1, 0),
 		// vertical padding + font size from searchIcon
 		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
 		transition: theme.transitions.create('width'),
-		width: '100%',
+		width: '50%',
 		[theme.breakpoints.up('md')]: {
 			width: '20ch',
-		},
-	},
-	sectionDesktop: {
-		display: 'none',
-		[theme.breakpoints.up('md')]: {
-			display: 'flex',
 		},
 	},
 	appBar: {
@@ -193,36 +187,45 @@ const AppSearchBar = ({history}) => {
 	return (
 		<div className={classes.grow}>
 			<AppBar className={classes.appBar} position="fixed">
-				<Grid container>
-					<Toolbar>
-						<IconButton
-							edge="start"
-							className={classes.menuButton}
-							color="inherit"
-							aria-label="open drawer"
-							onClick={handleClick}
-						>
-							{/* <MenuIcon /> */}
-							<img
-								src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
-								alt="logo"
-								height="48px"
-							></img>
-						</IconButton>
-						<div className={classes.search}>
-							<div className={classes.searchIcon}>
-								<SearchIcon />
-							</div>
-							<InputBase
-								placeholder="Search…"
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput,
+				<Toolbar>
+					<Grid container spacing={4}>
+						<Grid container item xs={10}>
+							<IconButton
+								edge="start"
+								className={classes.menuButton}
+								color="inherit"
+								aria-label="open drawer"
+								onClick={handleClick}
+							>
+								{/* <MenuIcon /> */}
+								<img
+									src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
+									alt="logo"
+									height="48px"
+								></img>
+							</IconButton>
+							<div
+								className={classes.search}
+								style={{
+									height: '70%',
+									marginTop: '0.75em',
+									marginBottom: '0.75em',
 								}}
-								inputProps={{'aria-label': 'search'}}
-							/>
-						</div>
-						<Tabs
+							>
+								<div className={classes.searchIcon}>
+									<SearchIcon />
+								</div>
+								<InputBase
+									placeholder="Search…"
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput,
+									}}
+									inputProps={{'aria-label': 'search'}}
+								/>
+							</div>
+						</Grid>
+						{/* <Tabs
 							variant="fullWidth"
 							indicatorColor="primary"
 							textColor="primary"
@@ -245,9 +248,9 @@ const AppSearchBar = ({history}) => {
 								icon={<CategoryIcon />}
 								label="Categories"
 							/>
-						</Tabs>
-						<div className={classes.grow} />
-						<div className={classes.sectionDesktop}>
+						</Tabs> */}
+
+						<Grid container item xs={2} justify="flex-end">
 							{!isAuthenticated() && (
 								<IconButton
 									href="/login"
@@ -260,7 +263,6 @@ const AppSearchBar = ({history}) => {
 									<Typography>Sign In</Typography>
 								</IconButton>
 							)}
-
 							{isAuthenticated() && (
 								<IconButton
 									edge="end"
@@ -273,9 +275,9 @@ const AppSearchBar = ({history}) => {
 									<Typography>Sign Out</Typography>
 								</IconButton>
 							)}
-						</div>
-					</Toolbar>
-				</Grid>
+						</Grid>
+					</Grid>
+				</Toolbar>
 			</AppBar>
 			{isAuthenticated() && isAuthenticated().data.user.role === 1
 				? UserDrawer()
