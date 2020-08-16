@@ -11,6 +11,7 @@ import Checkbox from './Checkbox'
 import Radio from './Radio'
 import {prices} from './PriceRange'
 import {Hidden} from '@material-ui/core'
+import Search from '../Home/Search'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -122,10 +123,16 @@ const Home = () => {
 		<Fragment>
 			<div
 				className={classes.root}
-				style={{padding: '8em 2em 0em 2em'}}
+				style={{padding: '5em 2em 0em 2em'}}
 				onScroll={handleScroll}
 			>
 				<Grid container justify="center">
+					<Hidden xsDown={true} mdDown={true}>
+						<Grid item sm={2}></Grid>
+					</Hidden>
+					<Grid item sm={10} alignItems="center" style={{marginBottom: '1em'}}>
+						<Search />
+					</Grid>
 					<Hidden xsDown={true} mdDown={true}>
 						<Grid container item sm={2}>
 							<FormControl component="fieldset" style={{position: 'fixed'}}>

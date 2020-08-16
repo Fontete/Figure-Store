@@ -204,7 +204,7 @@ const AppSearchBar = ({history}) => {
 									height="48px"
 								></img>
 							</IconButton>
-							<div
+							{/* <div
 								className={classes.search}
 								style={{
 									height: '70%',
@@ -223,7 +223,7 @@ const AppSearchBar = ({history}) => {
 									}}
 									inputProps={{'aria-label': 'search'}}
 								/>
-							</div>
+							</div> */}
 						</Grid>
 						{/* <Tabs
 							variant="fullWidth"
