@@ -31,7 +31,7 @@ exports.add = (req, res) => {
 			})
 		}
 
-		if (quantity || price <= 0) {
+		if (quantity <= 0 || price <= 0) {
 			return res.status(400).json({
 				err: 'Number must be larger than zero',
 			})
@@ -148,7 +148,7 @@ exports.update = (req, res) => {
 			product.image.contentType = files.image.type
 		}
 
-		if (quantity || price <= 0) {
+		if (quantity <= 0 || price <= 0) {
 			return res.status(400).json({
 				err: 'Number must be larger than zero',
 			})
@@ -178,7 +178,7 @@ exports.image = (req, res, next) => {
 exports.productList = (req, res) => {
 	let order = req.query.order ? req.query.order : 'asc'
 	let sortBy = req.query.sortBy ? req.query.sortBy : '_id'
-	let limit = req.query.limit ? parseInt(req.query.limit) : 4
+	let limit = req.query.limit ? parseInt(req.query.limit) : 100
 
 	productModel
 		.find()
@@ -213,33 +213,30 @@ exports.relatedList = (req, res) => {
 		})
 }
 
-exports.searchList = (req, res) => {
+exports.filterList = (req, res) => {
 	let order = req.body.order ? req.body.order : 'desc'
 	let sortBy = req.body.sortBy ? req.body.sortBy : '_id'
-	let limit = req.body.limit ? parseInt(req.body.limit) : 100
+	let limit = req.body.limit ? parseInt(req.body.limit) : 8
 	let skip = parseInt(req.body.skip)
-	let findArgs = {}
-
-	// console.log(order, sortBy, limit, skip, req.body.filters);
-	// console.log("findArgs", findArgs);
+	let priceRange = {}
 
 	for (let i in req.body.filters) {
 		if (req.body.filters[i].length > 0) {
 			if (i === 'price') {
 				// gte -  greater than price [price 1 - price 2]
 				// lte - less than
-				findArgs[i] = {
+				priceRange[i] = {
 					$gte: req.body.filters[i][0],
 					$lte: req.body.filters[i][1],
 				}
 			} else {
-				findArgs[i] = req.body.filters[i]
+				priceRange[i] = req.body.filters[i]
 			}
 		}
 	}
 
 	productModel
-		.find(findArgs)
+		.find(priceRange)
 		.select('-image')
 		.populate('category')
 		.sort([[sortBy, order]])
@@ -253,4 +250,27 @@ exports.searchList = (req, res) => {
 			}
 			res.json(data)
 		})
+}
+
+exports.searchList = (req, res) => {
+	const query = {}
+	// assign search value to query.name
+	if (req.query.search) {
+		query.name = {$regex: req.query.search, $options: 'i'}
+		// assign category value to query.category
+		if (req.query.category && req.query.category != 'All') {
+			query.category = req.query.category
+		}
+		// find the product based on query object with search and category properties
+		productModel
+			.find(query, (err, products) => {
+				if (err) {
+					return res.status(400).json({
+						error: errorHandler(err),
+					})
+				}
+				res.json(products)
+			})
+			.select('-photo')
+	}
 }

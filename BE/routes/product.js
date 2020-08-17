@@ -19,6 +19,7 @@ router.get('/', productController.productList)
 router.get('/:productID/', productController.productDetail)
 router.get('/related/:productID', productController.relatedList)
 router.get('/image/:productID', productController.image)
+router.get('/search', productController.searchList)
 router.put(
 	'/:productID/:userID',
 	method.jwtVerify,
@@ -33,7 +34,7 @@ router.delete(
 	userController.isAdmin,
 	productController.delete,
 )
-router.post('/search', productController.searchList)
+router.post('/filter', productController.filterList)
 
 //params
 router.param('userID', userController.userByID)
