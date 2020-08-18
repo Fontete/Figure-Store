@@ -11,7 +11,7 @@ import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
 import AdminRoute from './General/ProtectedRoute/AdminRoute'
 import AddCategory from './Pages/Product/AddCategory'
 import AddProduct from './Pages/Product/AddProduct'
-import Trending from './Pages/Home/TrendingProduct'
+import Product from './Pages/Home/Product'
 
 const App = withRouter(({location}) => {
 	return (
@@ -24,7 +24,7 @@ const App = withRouter(({location}) => {
 				<Route path="/" exact component={Home} />
 				<Route path="/login" exact component={Login} />
 				<Route path="/register" exact component={Register} />
-				<Route path="/trending" exact component={Trending} />
+				<Route path="/product" exact component={Product} />
 				<PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
 				<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
 				<AdminRoute path="/admin/category/add" exact component={AddCategory} />

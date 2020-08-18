@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
 const ProductCard = ({product: {_id, name, description, price}}) => {
 	const classes = useStyles()
 	const [anchorEl, setAnchorEl] = useState()
-
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget)
 	}
