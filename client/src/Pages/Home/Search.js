@@ -1,12 +1,21 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, Fragment} from 'react'
 import queryString from 'query-string'
 import axios from 'axios'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 import {fade, makeStyles} from '@material-ui/core/styles'
+import {
+	MuiThemeProvider,
+	createMuiTheme,
+	responsiveFontSizes,
+} from '@material-ui/core'
 
 import Card from './Card'
+
+let theme = createMuiTheme()
+theme = responsiveFontSizes(theme)
 
 const useStyles = makeStyles(theme => ({
 	search: {
@@ -51,25 +60,12 @@ const useStyles = makeStyles(theme => ({
 const Search = () => {
 	const classes = useStyles()
 	const [data, setData] = useState({
-		categories: '',
-		category: '',
 		search: '',
 		responses: '',
 		isSearch: false,
 	})
 
-	const {categories, category, search, responses, isSearch} = data
-
-	const fetchListCategory = () => {
-		axios
-			.get(process.env.REACT_APP_BASE_URL + `categories`)
-			.then(data => {
-				setData({...data, categories: data.data})
-			})
-			.catch(err => {
-				console.log(err.response.data.err)
-			})
-	}
+	const {search, responses, isSearch} = data
 
 	const fetchSearchProduct = params => {
 		const query = queryString.stringify(params)
@@ -94,28 +90,8 @@ const Search = () => {
 					marginBottom: '0.75em',
 				}}
 			>
-				<Grid container>
-					<Grid item sm={3} md={2} xs={2}>
-						<select
-							onChange={handleChange('category')}
-							style={{
-								height: '100%',
-								width: '100%',
-								border: 'inset',
-								backgroundColor: 'inherit',
-								borderRadius: '5%',
-							}}
-						>
-							<option value="All">All</option>
-							{categories &&
-								categories.map(c => (
-									<option key={c._id} value={c._id}>
-										{c.name}
-									</option>
-								))}
-						</select>
-					</Grid>
-					<Grid item sm={7} md={10} xs={10}>
+				<Grid container item>
+					<Grid item sm={8} md={6} xs={12}>
 						<div className={classes.searchIcon}>
 							<SearchIcon />
 						</div>
@@ -134,12 +110,28 @@ const Search = () => {
 		</form>
 	)
 
+	const searchMessage = (isSearch, responses) => {
+		if (isSearch && responses.length > 0) {
+			return `${responses.length} results was found`
+		}
+		if (isSearch && responses.length === 0) {
+			return 'No result was found'
+		}
+	}
+
 	const searchedProducts = (responses = []) => {
 		return (
 			<div>
-				{/* <h2 className="mt-4 mb-4">
-                    {searchMessage(searched, results)}
-                </h2> */}
+				<MuiThemeProvider theme={theme}>
+					<Typography
+						variant="subtitle1"
+						align="right"
+						gutterBottom
+						style={{margin: '1em 0 1em 0'}}
+					>
+						{searchMessage(isSearch, responses)}
+					</Typography>
+				</MuiThemeProvider>
 
 				<Grid container spacing={4}>
 					{responses &&
@@ -152,8 +144,7 @@ const Search = () => {
 	}
 
 	const searchData = () => {
-		search &&
-			fetchSearchProduct({search: search || undefined, category: category})
+		search && fetchSearchProduct({search: search || undefined})
 	}
 
 	const submit = e => {
@@ -165,16 +156,14 @@ const Search = () => {
 		setData({...data, [name]: event.target.value, isSearch: false})
 	}
 
-	useEffect(() => {
-		fetchListCategory()
-	}, [])
-
 	return (
 		<Fragment>
 			<Grid container>
-				<Grid item xs={12}>
+				<Grid item sm={2} md={3}></Grid>
+				<Grid item sm={8} md={6} xs={12}>
 					{searchForm()}
 				</Grid>
+				<Grid item sm={2} md={3}></Grid>
 				<Grid item xs={12}>
 					{searchedProducts(responses)}
 				</Grid>

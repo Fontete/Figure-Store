@@ -4,11 +4,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
-import InputBase from '@material-ui/core/InputBase'
-import CategoryIcon from '@material-ui/icons/Category'
-import NewestIcon from '@material-ui/icons/NewReleases'
-import HotIcon from '@material-ui/icons/TrendingUp'
-import SearchIcon from '@material-ui/icons/Search'
+import MenuIcon from '@material-ui/icons/Menu'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import AccountCircle from '@material-ui/icons/AccountCircleSharp'
 import Typography from '@material-ui/core/Typography'
@@ -146,7 +142,7 @@ const AppSearchBar = ({history}) => {
 			<AppBar className={classes.appBar} position="fixed">
 				<Toolbar>
 					<Grid container spacing={4}>
-						<Grid container item xs={10}>
+						<Grid container item xs={2}>
 							<IconButton
 								edge="start"
 								className={classes.menuButton}
@@ -154,12 +150,12 @@ const AppSearchBar = ({history}) => {
 								aria-label="open drawer"
 								onClick={handleClick}
 							>
-								{/* <MenuIcon /> */}
-								<img
+								<MenuIcon />
+								{/* <img
 									src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
 									alt="logo"
 									height="48px"
-								></img>
+								></img> */}
 							</IconButton>
 							{/* <div
 								className={classes.search}
@@ -206,7 +202,7 @@ const AppSearchBar = ({history}) => {
 								label="Categories"
 							/>
 						</Tabs> */}
-
+						<Grid container item xs={8}></Grid>
 						<Grid container item xs={2} justify="flex-end">
 							{!isAuthenticated() && (
 								<IconButton

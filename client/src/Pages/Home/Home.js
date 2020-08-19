@@ -63,10 +63,10 @@ const Home = () => {
 		<Fragment>
 			<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
 				<Grid container justify="center">
-					<Grid container item sm={12}>
+					<Grid container item xs={12} sm={12}>
 						<Search />
 					</Grid>
-					<Grid container item sm={12}>
+					<Grid container item xs={12} sm={12}>
 						<Fab
 							color="secondary"
 							variant="extended"
