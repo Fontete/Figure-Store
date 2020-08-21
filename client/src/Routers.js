@@ -11,7 +11,8 @@ import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
 import AdminRoute from './General/ProtectedRoute/AdminRoute'
 import AddCategory from './Pages/Product/AddCategory'
 import AddProduct from './Pages/Product/AddProduct'
-import Product from './Pages/Home/Product'
+import Shop from './Pages/Home/ListProduct'
+import Detail from './Pages/Home/ProductDetail'
 
 const App = withRouter(({location}) => {
 	return (
@@ -19,12 +20,13 @@ const App = withRouter(({location}) => {
 			{location.pathname !== '/login' && location.pathname !== '/register' && (
 				<AppBar />
 			)}
-			<style>{'body { background-color:#0f4c75 }'}</style>
+			<style>{'body { background-color:#ea5455 }'}</style>
 			<Switch>
 				<Route path="/" exact component={Home} />
 				<Route path="/login" exact component={Login} />
 				<Route path="/register" exact component={Register} />
-				<Route path="/product" exact component={Product} />
+				<Route path="/shop" exact component={Shop} />
+				<Route path="/product/:productId" exact component={Detail} />
 				<PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
 				<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
 				<AdminRoute path="/admin/category/add" exact component={AddCategory} />

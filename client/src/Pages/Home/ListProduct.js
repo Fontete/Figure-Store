@@ -30,7 +30,6 @@ const ShopPage = () => {
 	const [skip, setSkip] = useState(0)
 	const [categories, setCategories] = useState()
 	const [product, setProduct] = useState()
-	const [error, setError] = useState(false)
 	const [filter, setFilter] = useState({filters: {category: [], price: []}})
 
 	const fetchListCategory = () => {
@@ -39,8 +38,8 @@ const ShopPage = () => {
 			.then(data => {
 				setCategories(data.data)
 			})
-			.catch(() => {
-				setError(true)
+			.catch(err => {
+				console.log(err.response.data.err)
 			})
 	}
 
@@ -53,7 +52,7 @@ const ShopPage = () => {
 				setSkip(0)
 			})
 			.catch(err => {
-				setError(err.response.data.err)
+				console.log(err.response.data.err)
 			})
 	}
 
@@ -66,7 +65,7 @@ const ShopPage = () => {
 				setSkip(skip)
 			})
 			.catch(err => {
-				setError(err.response.data.err)
+				console.log(err.response.data.err)
 			})
 	}
 
@@ -150,7 +149,9 @@ const ShopPage = () => {
 					<Grid container item sm={10} spacing={4}>
 						{product &&
 							product.map(product => (
-								<Card key={product._id} product={product} />
+								<Grid item lg={3} sm={6} md={4} xs={12}>
+									<Card key={product._id} product={product} />
+								</Grid>
 							))}
 						{/* {loadMoreButton()} */}
 					</Grid>

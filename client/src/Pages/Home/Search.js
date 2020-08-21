@@ -136,7 +136,9 @@ const Search = () => {
 				<Grid container spacing={4}>
 					{responses &&
 						responses.map(product => (
-							<Card key={product._id} product={product} />
+							<Grid item lg={3} sm={6} md={4} xs={12}>
+								<Card key={product._id} product={product} />
+							</Grid>
 						))}
 				</Grid>
 			</div>

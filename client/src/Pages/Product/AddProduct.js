@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {
+	Card,
 	Grid,
 	Button,
 	Paper,
@@ -10,6 +11,7 @@ import {
 	Select,
 	Typography,
 	Input,
+	InputLabel,
 } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
@@ -45,7 +47,8 @@ const AddProduct = () => {
 		category: '',
 		shipping: '',
 		quantity: '',
-		photo: '',
+		image: '',
+		listImages: '',
 		success: false,
 		error: '',
 		createdProduct: '',
@@ -296,15 +299,39 @@ const AddProduct = () => {
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
-							<Grid item xs={6} style={{padding: '0.2 0 0.2 0'}}>
-								<Input
-									onChange={handleInputChange('image')}
-									type="file"
-									name="image"
-									accept="image/*"
-								/>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
+								<Grid item xs={12}>
+									<Card>
+										<Input
+											onChange={handleInputChange('image')}
+											type="file"
+											name="image"
+											accept="image/*"
+										/>
+									</Card>
+								</Grid>
+								<Grid item xs={3}></Grid>
+								<Grid item xs={3}></Grid>
+								<Grid item xs={3}></Grid>
 							</Grid>
 						</Grid>
+						{/* <Grid container>
+							<Grid item xs={3}>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									List Images
+								</Typography>
+							</Grid>
+							<Grid item xs={7}></Grid>
+							<Grid item xs={6} style={{padding: '0.2 0 0.2 0'}}>
+								<input
+									onChange={handleInputChange('listImages')}
+									type="file"
+									name="listImages"
+									accept="image/*"
+									multiple="multiple"
+								/>
+							</Grid>
+						</Grid> */}
 						<Grid container>
 							<Grid item xs={1}>
 								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>

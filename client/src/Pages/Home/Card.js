@@ -13,6 +13,10 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Fab from '@material-ui/core/Fab'
 import AddCardIcon from '@material-ui/icons/AddShoppingCart'
 import ViewDetailIcon from '@material-ui/icons/ViewList'
+import {Link} from 'react-router-dom'
+
+import moment from 'moment'
+import Badge from './InStockBadge'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -29,100 +33,108 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const ProductCard = ({product: {_id, name, description, price}}) => {
+const ProductCard = ({
+	product: {_id, name, description, quantity, price, category, createdAt},
+	showViewButton = true,
+}) => {
 	const classes = useStyles()
-	const [anchorEl, setAnchorEl] = useState()
-	const handleClick = event => {
-		setAnchorEl(event.currentTarget)
-	}
-
-	const handleClose = () => {
-		setAnchorEl(null)
-	}
-
-	const open = Boolean(anchorEl)
-	const id = open ? 'simple-popover' : undefined
+	const time = moment(createdAt).fromNow()
 
 	const url = process.env.REACT_APP_BASE_URL + `products/image/${_id}`
 
-	return (
-		<Grid item sm={6} md={4} xs={12}>
-			<Card className={classes.root}>
-				<CardMedia image={url} className={classes.media} />
+	const showProductButton = showViewButton => {
+		return (
+			showViewButton && (
+				<Fab color="secondary" className={classes.fab}>
+					<ViewDetailIcon />
+				</Fab>
+			)
+		)
+	}
 
-				<CardContent style={{height: '100px'}}>
-					<Typography align="center" variant="h5" color="primary" component="p">
-						{name}
-					</Typography>
-					<Typography align="center" variant="h6" color="primary" component="p">
-						${price}
-					</Typography>
-					<Typography
-						align="center"
-						variant="subtitle2"
-						color="textPrimary"
-						component="p"
-					>
-						{description.length > 50
-							? `${description.substring(0, 50)} ...`
-							: description}
-					</Typography>
-				</CardContent>
-				<CardActions style={{justifyContent: 'center'}} disableSpacing>
-					{/* <IconButton aria-label="add to favorites">
-						<Button variant="outlined" color="primary">
-							Buy
-						</Button>
-					</IconButton>
-					<IconButton>
-						<Button
-							aria-describedby={id}
-							variant="contained"
-							color="primary"
-							onClick={handleClick}
-						>
-							View More Detail
-						</Button>
-					</IconButton>
-					<Popover
-						id={id}
-						open={open}
-						anchorEl={anchorEl}
-						onClose={handleClose}
-						anchorOrigin={{
-							vertical: 'top',
-							horizontal: 'center',
-						}}
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'center',
-						}}
-					>
-						<Typography className={classes.typography}>
-							{description}.
-						</Typography>
-					</Popover> */}
-					<Tooltip
-						title="Add to cart"
-						aria-label="add"
-						style={{marginRight: '0.5em'}}
-					>
-						<Fab color="primary" className={classes.fab}>
-							<AddCardIcon />
-						</Fab>
-					</Tooltip>
-					<Tooltip
-						title="View detail"
-						aria-label="view"
-						style={{marginLeft: '0.5em'}}
-					>
-						<Fab color="secondary" className={classes.fab}>
-							<ViewDetailIcon />
-						</Fab>
-					</Tooltip>
-				</CardActions>
-			</Card>
-		</Grid>
+	const showSTock = quantity => {
+		return quantity > 0 ? (
+			<Badge message="In Stock" quantity={quantity}></Badge>
+		) : (
+			<Badge message="Out Of Stock" quantity={quantity}></Badge>
+		)
+	}
+
+	return (
+		<Card className={classes.root}>
+			<Link to={`/product/${_id}`}>
+				<CardMedia image={url} className={classes.media} />
+			</Link>
+			<CardContent>
+				<Typography
+					style={{wordWrap: 'break-word'}}
+					align="center"
+					variant="h4"
+					color="secondary"
+					component="p"
+				>
+					{name}
+				</Typography>
+				<Typography align="center" variant="h6" color="primary" component="p">
+					${price}
+				</Typography>
+				<Typography
+					align="center"
+					variant="caption"
+					color="secondary"
+					component="p"
+				>
+					{showSTock(quantity)}
+				</Typography>
+				<Typography
+					style={{wordWrap: 'break-word'}}
+					align="center"
+					variant="subtitle2"
+					color="textPrimary"
+					component="p"
+				>
+					{description.length > 50
+						? `${description.substring(0, 50)} ...`
+						: description}
+				</Typography>
+				<Typography
+					align="center"
+					variant="caption"
+					color="primary"
+					component="p"
+				>
+					Category: {category.name}
+				</Typography>
+				<Typography
+					align="center"
+					variant="subtitle2"
+					color="primary"
+					component="p"
+				>
+					Added on {time}
+				</Typography>
+			</CardContent>
+			<CardActions style={{justifyContent: 'center'}} disableSpacing>
+				<Tooltip
+					title="Add to cart"
+					aria-label="add"
+					style={{marginRight: '0.5em'}}
+				>
+					<Fab color="primary" className={classes.fab}>
+						<AddCardIcon />
+					</Fab>
+				</Tooltip>
+				<Tooltip
+					title="View detail"
+					aria-label="view"
+					style={{marginLeft: '0.5em'}}
+				>
+					<Link to={`/product/${_id}`}>
+						{showProductButton(showViewButton)}
+					</Link>
+				</Tooltip>
+			</CardActions>
+		</Card>
 	)
 }
 export default ProductCard
