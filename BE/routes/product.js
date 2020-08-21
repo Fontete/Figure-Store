@@ -5,27 +5,13 @@ const productController = require('../controllers/product')
 const userController = require('../controllers/user')
 const method = require('../general/method')
 
+router.get('/:productID/', productController.productDetail)
 router.post(
 	'/create/:userID',
 	method.jwtVerify,
 	userController.isMember,
 	userController.isAdmin,
 	productController.add,
-)
-// default = /
-// by sell = /?sortBy=sold&order=desc&limit=4
-// by arrival = ?sortBy=createdAt&order=desc&limit=4
-router.get('/', productController.productList)
-router.get('/:productID/', productController.productDetail)
-router.get('/related/:productID', productController.relatedList)
-router.get('/image/:productID', productController.image)
-router.get('/search', productController.searchList)
-router.put(
-	'/:productID/:userID',
-	method.jwtVerify,
-	userController.isMember,
-	userController.isAdmin,
-	productController.update,
 )
 router.delete(
 	'/:productID/:userID',
@@ -34,7 +20,21 @@ router.delete(
 	userController.isAdmin,
 	productController.delete,
 )
+router.put(
+	'/:productID/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.isAdmin,
+	productController.update,
+)
+router.get('/', productController.productList)
+router.get('/list/search', productController.searchList)
+router.get('/related/:productID', productController.relatedList)
+// default = /
+// by sell = /?sortBy=sold&order=desc&limit=4
+// by arrival = ?sortBy=createdAt&order=desc&limit=4
 router.post('/filter', productController.filterList)
+router.get('/image/:productID', productController.image)
 
 //params
 router.param('userID', userController.userByID)

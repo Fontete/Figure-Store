@@ -9,6 +9,7 @@ const router = require('../routes/product')
 exports.add = (req, res) => {
 	let form = new formidable.IncomingForm()
 	form.keepExtensions = true
+	form.multiples = true
 	form.parse(req, (err, form, files) => {
 		if (err) {
 			return res.status(400).json({
@@ -40,17 +41,37 @@ exports.add = (req, res) => {
 		// add new product
 		let product = new productModel(form)
 
-		// if user upload image for product, check the size of image
 		if (files.image) {
 			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
 					err: 'File size is more than 1 MB',
+					err: `${files.image.name} size is more than 1 MB`,
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
 			product.image.contentType = files.image.type
 		}
+
+		// let listImages = []
+
+		// // if user upload image for product, check the size of image
+		// if (files.image) {
+		// 	for (let i = 0; i < files.image.length; i++) {
+		// 		// file size smaller than 1MB
+		// 		if (files.image[i].size > 1000000) {
+		// 			return res.status(400).json({
+		// 				err: `${files.image[i].name} size is more than 1 MB`,
+		// 			})
+		// 		}
+		// 		const singleImage = {
+		// 			data: fs.readFileSync(files.image[i].path),
+		// 			contentType: files.image[i].type,
+		// 		}
+		// 		listImages.push(singleImage)
+		// 	}
+		// 	product.image = listImages
+		// }
 		product.save(err => {
 			if (err) {
 				return res.status(400).json({
@@ -66,15 +87,18 @@ exports.add = (req, res) => {
 
 //productID middleware
 exports.productByID = async (req, res, next, id) => {
-	productModel.findById(id).exec((err, product) => {
-		if (err || !product) {
-			return res.status(400).json({
-				err: 'Product is not existed',
-			})
-		}
-		req.product = product
-		next()
-	})
+	productModel
+		.findById(id)
+		.populate('category')
+		.exec((err, product) => {
+			if (err || !product) {
+				return res.status(400).json({
+					err: 'Product is not existed',
+				})
+			}
+			req.product = product
+			next()
+		})
 }
 
 //enable this function when you use productID middleware
@@ -124,6 +148,7 @@ exports.delete = (req, res) => {
 exports.update = (req, res) => {
 	let form = new formidable.IncomingForm()
 	form.keepExtensions = true
+	form.multiples = true
 	form.parse(req, (err, form, files) => {
 		if (err) {
 			return res.status(400).json({
@@ -136,17 +161,34 @@ exports.update = (req, res) => {
 		let product = req.product
 		product = lodash.extend(product, form)
 
-		// if user upload image for product, check the size of image
 		if (files.image) {
 			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1MB',
+					err: `${files.image.name} size is more than 1 MB`,
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
 			product.image.contentType = files.image.type
 		}
+
+		// // if user upload image for product, check the size of image
+		// if (files.image) {
+		// 	for (let i = 0; i < files.image.length; i++) {
+		// 		// file size smaller than 1MB
+		// 		if (files.image[i].size > 1000000) {
+		// 			return res.status(400).json({
+		// 				err: `${files.image[i].name} size is more than 1 MB`,
+		// 			})
+		// 		}
+		// 		const singleImage = {
+		// 			data: fs.readFileSync(files.image[i].path),
+		// 			contentType: files.image[i].type,
+		// 		}
+		// 		listImages.push(singleImage)
+		// 	}
+		// 	product.image = listImages
+		// }
 
 		if (quantity <= 0 || price <= 0) {
 			return res.status(400).json({
@@ -168,6 +210,17 @@ exports.update = (req, res) => {
 }
 
 exports.image = (req, res, next) => {
+	//let listImage = []
+	// if (req.product.image) {
+	// 	req.product.image.map(image => {
+	// 		if (image.data) {
+	//listImage.push(image.data)
+	// 			res.set('Content-Type', image.contentType)
+	// 			res.send(image.data)
+	// 		}
+	// 	})
+	// }
+	// next()
 	if (req.product.image.data) {
 		res.set('Content-Type', req.product.image.contentType)
 		return res.send(req.product.image.data)
@@ -256,12 +309,9 @@ exports.searchList = (req, res) => {
 	const query = {}
 	// assign search value to query.name
 	if (req.query.search) {
+		// option i to match upercase or lowercase
 		query.name = {$regex: req.query.search, $options: 'i'}
-		// assign category value to query.category
-		if (req.query.category && req.query.category != 'All') {
-			query.category = req.query.category
-		}
-		// find the product based on query object with search and category properties
+		// find the product based on query object
 		productModel
 			.find(query, (err, products) => {
 				if (err) {
@@ -271,6 +321,6 @@ exports.searchList = (req, res) => {
 				}
 				res.json(products)
 			})
-			.select('-photo')
+			.select('-image')
 	}
 }
