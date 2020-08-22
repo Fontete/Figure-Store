@@ -13,10 +13,11 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Fab from '@material-ui/core/Fab'
 import AddCardIcon from '@material-ui/icons/AddShoppingCart'
 import ViewDetailIcon from '@material-ui/icons/ViewList'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 
 import moment from 'moment'
 import Badge from './InStockBadge'
+import {addProduct} from '../../General/Method/CartHandler'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -38,8 +39,10 @@ const ProductCard = ({
 	showViewButton = true,
 }) => {
 	const classes = useStyles()
-	const time = moment(createdAt).fromNow()
 
+	const [redirect, setRedirect] = useState(false)
+
+	const time = moment(createdAt).fromNow()
 	const url = process.env.REACT_APP_BASE_URL + `products/image/${_id}`
 
 	const showProductButton = showViewButton => {
@@ -60,8 +63,32 @@ const ProductCard = ({
 		)
 	}
 
+	const addToCart = () => {
+		addProduct(
+			{
+				_id,
+				name,
+				description,
+				quantity,
+				price,
+				category,
+				createdAt,
+			},
+			() => {
+				setRedirect(true)
+			},
+		)
+	}
+
+	const isRedirect = redirect => {
+		if (redirect) {
+			return <Redirect to="/cart" />
+		}
+	}
+
 	return (
 		<Card className={classes.root}>
+			{isRedirect(redirect)}
 			<Link to={`/product/${_id}`}>
 				<CardMedia image={url} className={classes.media} />
 			</Link>
@@ -120,7 +147,7 @@ const ProductCard = ({
 					aria-label="add"
 					style={{marginRight: '0.5em'}}
 				>
-					<Fab color="primary" className={classes.fab}>
+					<Fab onClick={addToCart} color="primary" className={classes.fab}>
 						<AddCardIcon />
 					</Fab>
 				</Tooltip>

@@ -13,9 +13,12 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
 import Grid from '@material-ui/core/Grid'
+
+import {total} from '../General/Method/CartHandler'
+import Badge from '../Pages/Home/AddToCartBadge'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -202,19 +205,25 @@ const AppSearchBar = ({history}) => {
 								label="Categories"
 							/>
 						</Tabs> */}
-						<Grid container item xs={8}></Grid>
-						<Grid container item xs={2} justify="flex-end">
-							{!isAuthenticated() && (
-								<IconButton
-									href="/login"
-									edge="end"
-									aria-label="account of current user"
-									aria-haspopup="true"
-									color="inherit"
-								>
-									<AccountCircle />
-									<Typography>Sign In</Typography>
+						<Grid container item xs={4}></Grid>
+						<Grid container item xs={6} justify="flex-end">
+							<Link to="/cart">
+								<IconButton>
+									<Badge quantity={total()} />
 								</IconButton>
+							</Link>
+							{!isAuthenticated() && (
+								<Link to="/login" style={{textDecoration: 'none'}}>
+									<IconButton
+										edge="end"
+										aria-label="account of current user"
+										aria-haspopup="true"
+										color="inherit"
+									>
+										<AccountCircle style={{color: '#fff'}} />
+										<Typography style={{color: '#fff'}}>Sign In</Typography>
+									</IconButton>
+								</Link>
 							)}
 							{isAuthenticated() && (
 								<IconButton

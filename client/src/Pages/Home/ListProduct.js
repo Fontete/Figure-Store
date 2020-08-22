@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 const ShopPage = () => {
 	const classes = useStyles()
 
-	const [limit, setLimit] = useState(8)
+	const [limit, setLimit] = useState(6)
 	const [skip, setSkip] = useState(0)
 	const [categories, setCategories] = useState()
 	const [product, setProduct] = useState()
@@ -93,15 +93,6 @@ const ShopPage = () => {
 		}
 	}
 
-	// const loadMoreButton = () => {
-	// 	return (
-	// 		size > 0 && size >= limit && loadMore()
-	// 		<button onClick={loadMore} className="btn btn-warning mb-5">
-	// 			Load more
-	// 		</button>
-	// 	)
-	// }
-
 	const productFilter = (filters, filterBy) => {
 		const newFilters = {...filter}
 		newFilters.filters[filterBy] = filters
@@ -149,11 +140,10 @@ const ShopPage = () => {
 					<Grid container item sm={10} spacing={4}>
 						{product &&
 							product.map(product => (
-								<Grid item lg={3} sm={6} md={4} xs={12}>
+								<Grid item lg={4} sm={6} md={4} xs={12}>
 									<Card key={product._id} product={product} />
 								</Grid>
 							))}
-						{/* {loadMoreButton()} */}
 					</Grid>
 				</Grid>
 			</div>

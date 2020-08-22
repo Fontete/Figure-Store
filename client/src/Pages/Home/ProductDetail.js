@@ -49,7 +49,7 @@ const Detail = props => {
 	useEffect(() => {
 		const productId = props.match.params.productId
 		fetchProductDetail(productId)
-	}, [])
+	}, [props])
 	return (
 		<Fragment>
 			<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
