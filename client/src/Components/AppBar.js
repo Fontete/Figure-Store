@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 			width: 0,
 		},
 		overflowX: 'hidden',
-		backgroundColor:'#0f3460'
+		backgroundColor: '#0f3460',
 	},
 }))
 
@@ -265,6 +265,7 @@ const AppSearchBar = ({history}) => {
 							{!isAuthenticated() && (
 								<Link to="/login" style={{textDecoration: 'none'}}>
 									<IconButton
+										title="Sign In"
 										edge="end"
 										aria-label="account of current user"
 										aria-haspopup="true"
@@ -277,6 +278,7 @@ const AppSearchBar = ({history}) => {
 							)}
 							{isAuthenticated() && (
 								<IconButton
+									title="Sign Out"
 									edge="end"
 									aria-label="account of current user"
 									aria-haspopup="true"

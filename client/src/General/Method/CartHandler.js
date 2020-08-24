@@ -36,7 +36,7 @@ export const productsInCart = () => {
 	return []
 }
 
-export const updateItem = (productId, count) => {
+export const updateProduct = (productId, count) => {
 	let cart = []
 	if (typeof window !== 'undefined') {
 		if (localStorage.getItem('cart')) {
@@ -53,7 +53,7 @@ export const updateItem = (productId, count) => {
 	}
 }
 
-export const removeItem = productId => {
+export const removeProduct = productId => {
 	let cart = []
 	if (typeof window !== 'undefined') {
 		if (localStorage.getItem('cart')) {

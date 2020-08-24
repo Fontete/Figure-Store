@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button'
 import Popover from '@material-ui/core/Popover'
 import Tooltip from '@material-ui/core/Tooltip'
 import Fab from '@material-ui/core/Fab'
-import AddCardIcon from '@material-ui/icons/AddShoppingCart'
+import AddCartIcon from '@material-ui/icons/AddShoppingCart'
 import ViewDetailIcon from '@material-ui/icons/ViewList'
 import {Link, Redirect} from 'react-router-dom'
 
@@ -40,8 +40,6 @@ const ProductCard = ({
 }) => {
 	const classes = useStyles()
 
-	const [redirect, setRedirect] = useState(false)
-
 	const time = moment(createdAt).fromNow()
 	const url = process.env.REACT_APP_BASE_URL + `products/image/${_id}`
 
@@ -64,31 +62,19 @@ const ProductCard = ({
 	}
 
 	const addToCart = () => {
-		addProduct(
-			{
-				_id,
-				name,
-				description,
-				quantity,
-				price,
-				category,
-				createdAt,
-			},
-			() => {
-				setRedirect(true)
-			},
-		)
-	}
-
-	const isRedirect = redirect => {
-		if (redirect) {
-			return <Redirect to="/cart" />
-		}
+		addProduct({
+			_id,
+			name,
+			description,
+			quantity,
+			price,
+			category,
+			createdAt,
+		})
 	}
 
 	return (
 		<Card className={classes.root}>
-			{isRedirect(redirect)}
 			<Link to={`/product/${_id}`}>
 				<CardMedia image={url} className={classes.media} />
 			</Link>
@@ -148,7 +134,7 @@ const ProductCard = ({
 					style={{marginRight: '0.5em'}}
 				>
 					<Fab onClick={addToCart} color="primary" className={classes.fab}>
-						<AddCardIcon />
+						<AddCartIcon />
 					</Fab>
 				</Tooltip>
 				<Tooltip
