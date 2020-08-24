@@ -250,7 +250,7 @@ exports.productList = (req, res) => {
 }
 
 exports.relatedList = (req, res) => {
-	let limit = req.query.limit ? parseInt(req.query.limit) : 4
+	let limit = req.query.limit ? parseInt(req.query.limit) : 12
 	productModel
 		.find({_id: {$ne: req.product}, category: req.product.category})
 		.select('-image')

@@ -10,6 +10,7 @@ require('dotenv').config()
 const userRouter = require('./routes/user')
 const categoryRouter = require('./routes/categoy')
 const productRouter = require('./routes/product')
+const paymentRouter = require('./routes/payment')
 
 const app = express()
 
@@ -37,6 +38,7 @@ app.use(cors())
 app.use('/users', userRouter)
 app.use('/categories', categoryRouter)
 app.use('/products', productRouter)
+app.use('/payments', paymentRouter)
 
 const port = process.env.PORT
 
