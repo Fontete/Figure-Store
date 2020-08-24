@@ -16,9 +16,11 @@ import Tab from '@material-ui/core/Tab'
 import {withRouter, Link} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
 import Grid from '@material-ui/core/Grid'
+import Popover from '@material-ui/core/Popover'
 
 import {total} from '../General/Method/CartHandler'
-import Badge from '../Pages/Home/AddToCartBadge'
+import Badge from '../Pages/Shop/AddToCartBadge'
+import Cart from '../Pages/Shop/Cart'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -37,11 +39,25 @@ const useStyles = makeStyles(theme => ({
 		width: 170,
 		justifyContent: 'space-strech',
 	},
+	popover: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: '20%',
+		},
+		overflowY: 'scroll',
+		'&::-webkit-scrollbar': {
+			width: 0,
+		},
+		overflowX: 'hidden',
+		backgroundColor:'#0f3460'
+	},
 }))
 
 const AppSearchBar = ({history}) => {
 	const classes = useStyles()
-
+	//Drawer
 	const [anchorEl, setAnchorEl] = useState(null)
 
 	const handleClick = e => {
@@ -50,6 +66,18 @@ const AppSearchBar = ({history}) => {
 
 	const handleClose = () => {
 		setAnchorEl(null)
+	}
+	//Popover
+	const [popoverAnchorEl, setPopoverAnchorEl] = useState(null)
+	const open = Boolean(popoverAnchorEl)
+	const id = open ? 'simple-popover' : undefined
+
+	const handleCart = event => {
+		setPopoverAnchorEl(event.currentTarget)
+	}
+
+	const handlePopoverClose = () => {
+		setPopoverAnchorEl(null)
 	}
 
 	const UserDrawer = () => {
@@ -123,6 +151,29 @@ const AppSearchBar = ({history}) => {
 				</MenuItem>
 				<Divider />
 			</Drawer>
+		)
+	}
+
+	const CartPopover = () => {
+		return (
+			<Popover
+				classes={{paper: classes.popover}}
+				style={{maxHeight: '400px'}}
+				id={id}
+				open={open}
+				anchorEl={popoverAnchorEl}
+				onClose={handlePopoverClose}
+				anchorOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'left',
+				}}
+			>
+				<Cart />
+			</Popover>
 		)
 	}
 
@@ -205,13 +256,12 @@ const AppSearchBar = ({history}) => {
 								label="Categories"
 							/>
 						</Tabs> */}
-						<Grid container item xs={4}></Grid>
-						<Grid container item xs={6} justify="flex-end">
-							<Link to="/cart">
-								<IconButton>
-									<Badge quantity={total()} />
-								</IconButton>
-							</Link>
+						<Grid container item xs={3}></Grid>
+						<Grid container item xs={7} justify="flex-end">
+							<IconButton onClick={handleCart}>
+								<Badge quantity={total()} />
+							</IconButton>
+							{CartPopover()}
 							{!isAuthenticated() && (
 								<Link to="/login" style={{textDecoration: 'none'}}>
 									<IconButton

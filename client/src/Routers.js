@@ -1,18 +1,18 @@
 import React, {Fragment} from 'react'
 import {BrowserRouter, Switch, Route, withRouter} from 'react-router-dom'
-import Home from './Pages/Home/Home'
+import Home from './Pages/Shop/Home'
 import Register from './Pages/User/Register'
 import Login from './Pages/User/Login'
 import AppBar from './Components/AppBar'
 import UserDashboard from './Pages/User/UserDashboard'
 import AdminDashboard from './Pages/User/AdminDashboard'
+import AddCategory from './Pages/Admin/AddCategory'
+import AddProduct from './Pages/Admin/AddProduct'
+import Shop from './Pages/Shop/ListProduct'
+import Detail from './Pages/Shop/ProductDetail'
 
 import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
 import AdminRoute from './General/ProtectedRoute/AdminRoute'
-import AddCategory from './Pages/Product/AddCategory'
-import AddProduct from './Pages/Product/AddProduct'
-import Shop from './Pages/Home/ListProduct'
-import Detail from './Pages/Home/ProductDetail'
 
 const App = withRouter(({location}) => {
 	return (
