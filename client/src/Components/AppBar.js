@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -11,8 +11,8 @@ import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+// import Tabs from '@material-ui/core/Tabs'
+// import Tab from '@material-ui/core/Tab'
 import {withRouter, Link} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
 import Grid from '@material-ui/core/Grid'
@@ -45,6 +45,12 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('lg')]: {
 			width: '20%',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: '40%',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: '30%',
 		},
 		overflowY: 'scroll',
 		'&::-webkit-scrollbar': {

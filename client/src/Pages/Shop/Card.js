@@ -61,18 +61,6 @@ const ProductCard = ({
 		)
 	}
 
-	const addToCart = () => {
-		addProduct({
-			_id,
-			name,
-			description,
-			quantity,
-			price,
-			category,
-			createdAt,
-		})
-	}
-
 	return (
 		<Card className={classes.root}>
 			<Link to={`/product/${_id}`}>
@@ -133,7 +121,21 @@ const ProductCard = ({
 					aria-label="add"
 					style={{marginRight: '0.5em'}}
 				>
-					<Fab onClick={addToCart} color="primary" className={classes.fab}>
+					<Fab
+						onClick={() => {
+							addProduct({
+								_id,
+								name,
+								description,
+								quantity,
+								price,
+								category,
+								createdAt,
+							})
+						}}
+						color="primary"
+						className={classes.fab}
+					>
 						<AddCartIcon />
 					</Fab>
 				</Tooltip>

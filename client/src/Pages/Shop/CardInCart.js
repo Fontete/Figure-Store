@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import BuyIcon from '@material-ui/icons/ShoppingBasket'
 import View from '@material-ui/icons/ViewList'
 import Remove from '@material-ui/icons/RemoveShoppingCart'
 import InputBase from '@material-ui/core/InputBase'
@@ -85,9 +84,6 @@ const CardInCart = ({product, setRun = f => f, run = undefined}) => {
 					</Typography>
 				</CardContent>
 				<div className={classes.controls}>
-					<IconButton title="Purchase" aria-label="purchase">
-						<BuyIcon />
-					</IconButton>
 					<IconButton
 						title="Remove from cart"
 						aria-label="remove"
