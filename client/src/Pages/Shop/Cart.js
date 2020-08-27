@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {Typography, Grid, Button} from '@material-ui/core'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 import CartItem from './CardInCart'
 import {productsInCart} from '../../General/Method/CartHandler'
-import Checkout from './Checkout'
 
 const Cart = () => {
 	const [product, setProduct] = useState([])
@@ -18,6 +17,12 @@ const Cart = () => {
 					: `You have ${product.length} products in cart`}
 			</Typography>
 		)
+	}
+
+	const totalPurchase = () => {
+		return product.reduce((currentValue, nextValue) => {
+			return currentValue + nextValue.count * nextValue.price
+		}, 0)
 	}
 
 	useEffect(() => {
@@ -52,16 +57,25 @@ const Cart = () => {
 				)}
 				<Grid container xs={12} spacing={0} justify="flex-end">
 					<Grid container item xs={12} justify="flex-end">
-						<Checkout products={product} />
-					</Grid>
-					<Grid container item xs={12} justify="flex-end">
-						<Button
-							style={{maxWidth: '80px'}}
-							variant="contained"
+						<Typography
+							style={{padding: '8px 3px 5px 3px'}}
 							color="secondary"
+							variant="body1"
 						>
-							<Typography variant="caption">Checkout</Typography>
-						</Button>
+							Total: ${totalPurchase()}
+						</Typography>
+						<Link
+							to={{pathname: '/checkout', state: product}}
+							style={{textDecoration: 'none'}}
+						>
+							<Button
+								style={{maxWidth: '80px', margin: '3px 3px 5px 3px'}}
+								variant="contained"
+								color="secondary"
+							>
+								<Typography variant="caption">Checkout</Typography>
+							</Button>
+						</Link>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -69,4 +83,4 @@ const Cart = () => {
 	)
 }
 
-export default Cart
+export default withRouter(Cart)

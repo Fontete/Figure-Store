@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {makeStyles} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -110,44 +110,42 @@ const ShopPage = () => {
 	}, [])
 
 	return (
-		<Fragment>
-			<div
-				className={classes.root}
-				style={{padding: '6em 2em 0em 2em'}}
-				onScroll={handleScroll}
-			>
-				<Grid container justify="center">
-					<Hidden xsDown={true} mdDown={true}>
-						<Grid container item sm={2}>
-							<FormControl component="fieldset" style={{position: 'fixed'}}>
-								<FormLabel component="legend" style={{color: '#fff'}}>
-									<Typography variant="h5">Categories</Typography>
-								</FormLabel>
-								<Checkbox
-									categories={categories}
-									productFilters={filters => productFilter(filters, 'category')}
-								/>
-								<FormLabel component="legend" style={{color: '#fff'}}>
-									<Typography variant="h5">Prices</Typography>
-								</FormLabel>
-								<Radio
-									prices={prices}
-									productFilters={filters => productFilter(filters, 'price')}
-								/>
-							</FormControl>
-						</Grid>
-					</Hidden>
-					<Grid container item sm={10} spacing={4}>
-						{product &&
-							product.map(product => (
-								<Grid item lg={4} sm={6} md={4} xs={12}>
-									<Card key={product._id} product={product} />
-								</Grid>
-							))}
+		<div
+			className={classes.root}
+			style={{padding: '6em 2em 0em 2em'}}
+			onScroll={handleScroll}
+		>
+			<Grid container justify="center">
+				<Hidden xsDown={true} mdDown={true}>
+					<Grid container item sm={2}>
+						<FormControl component="fieldset" style={{position: 'fixed'}}>
+							<FormLabel component="legend" style={{color: '#fff'}}>
+								<Typography variant="h5">Categories</Typography>
+							</FormLabel>
+							<Checkbox
+								categories={categories}
+								productFilters={filters => productFilter(filters, 'category')}
+							/>
+							<FormLabel component="legend" style={{color: '#fff'}}>
+								<Typography variant="h5">Prices</Typography>
+							</FormLabel>
+							<Radio
+								prices={prices}
+								productFilters={filters => productFilter(filters, 'price')}
+							/>
+						</FormControl>
 					</Grid>
+				</Hidden>
+				<Grid container item sm={10} spacing={4}>
+					{product &&
+						product.map(product => (
+							<Grid item lg={4} sm={6} md={4} xs={12}>
+								<Card key={product._id} product={product} />
+							</Grid>
+						))}
 				</Grid>
-			</div>
-		</Fragment>
+			</Grid>
+		</div>
 	)
 }
 

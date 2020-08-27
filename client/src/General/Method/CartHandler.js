@@ -43,6 +43,7 @@ export const updateProduct = (productId, count) => {
 			cart = JSON.parse(localStorage.getItem('cart'))
 		}
 
+		// eslint-disable-next-line array-callback-return
 		cart.map((product, i) => {
 			if (product._id === productId) {
 				cart[i].count = count
@@ -60,6 +61,7 @@ export const removeProduct = productId => {
 			cart = JSON.parse(localStorage.getItem('cart'))
 		}
 
+		// eslint-disable-next-line array-callback-return
 		cart.map((product, i) => {
 			if (product._id === productId) {
 				cart.splice(i, 1)

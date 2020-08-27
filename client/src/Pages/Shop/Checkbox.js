@@ -2,6 +2,7 @@ import React, {useState, Fragment} from 'react'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import Box from '@material-ui/core/Box'
 
 const CheckboxLabels = ({categories, productFilters}) => {
 	const [isChecked, setIsChecked] = useState([])
@@ -33,7 +34,7 @@ const CheckboxLabels = ({categories, productFilters}) => {
 									name="checked"
 								/>
 							}
-							label={c.name}
+							label={<Box>{c.name}</Box>}
 						/>
 					</FormGroup>
 				))}

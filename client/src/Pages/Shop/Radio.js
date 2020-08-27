@@ -1,6 +1,7 @@
 import React, {useState, Fragment} from 'react'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
+import Box from '@material-ui/core/Box'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 const RadioButtonsGroup = ({prices, productFilters}) => {
@@ -18,7 +19,7 @@ const RadioButtonsGroup = ({prices, productFilters}) => {
 					<RadioGroup key={p._id} aria-label="prices" value={value}>
 						<FormControlLabel
 							control={<Radio />}
-							label={p.name}
+							label={<Box>{p.name}</Box>}
 							name={p}
 							onChange={handleChange}
 							value={`${p._id}`}

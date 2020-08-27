@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {makeStyles} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -59,57 +59,55 @@ const Home = () => {
 	}, [])
 
 	return (
-		<Fragment>
-			<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
-				<Grid container justify="center">
-					<Grid container item xs={12} sm={12}>
-						<Search />
-					</Grid>
-					<Grid container item xs={12} sm={12}>
-						<Fab
-							color="secondary"
-							variant="extended"
-							style={{
-								margin: '1em 0em 0.5em 0em',
-							}}
-						>
-							<Typography color="inherit" variant="h4" align="center">
-								Hot
-							</Typography>
-						</Fab>
-						<Grid container spacing={4}>
-							{productBySell &&
-								productBySell.map(product => (
-									<Grid item lg={3} sm={6} md={4} xs={12}>
-										<Card key={product._id} product={product} />
-									</Grid>
-								))}
-						</Grid>
-					</Grid>
-					<Grid container item sm={12}>
-						<Fab
-							color="secondary"
-							variant="extended"
-							style={{
-								margin: '0.5em 0em 0.5em 0em',
-							}}
-						>
-							<Typography color="inherit" variant="h4" align="center">
-								Newest
-							</Typography>
-						</Fab>
-						<Grid container spacing={4}>
-							{productByDate &&
-								productByDate.map(product => (
-									<Grid item lg={3} sm={6} md={4} xs={12}>
-										<Card key={product._id} product={product} />
-									</Grid>
-								))}
-						</Grid>
+		<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
+			<Grid container justify="center">
+				<Grid container item xs={12} sm={12}>
+					<Search />
+				</Grid>
+				<Grid container item xs={12} sm={12}>
+					<Fab
+						color="secondary"
+						variant="extended"
+						style={{
+							margin: '1em 0em 0.5em 0em',
+						}}
+					>
+						<Typography color="inherit" variant="h4" align="center">
+							Hot
+						</Typography>
+					</Fab>
+					<Grid container spacing={4}>
+						{productBySell &&
+							productBySell.map(product => (
+								<Grid item lg={3} sm={6} md={4} xs={12}>
+									<Card key={product._id} product={product} />
+								</Grid>
+							))}
 					</Grid>
 				</Grid>
-			</div>
-		</Fragment>
+				<Grid container item sm={12}>
+					<Fab
+						color="secondary"
+						variant="extended"
+						style={{
+							margin: '0.5em 0em 0.5em 0em',
+						}}
+					>
+						<Typography color="inherit" variant="h4" align="center">
+							Newest
+						</Typography>
+					</Fab>
+					<Grid container spacing={4}>
+						{productByDate &&
+							productByDate.map(product => (
+								<Grid item lg={3} sm={6} md={4} xs={12}>
+									<Card key={product._id} product={product} />
+								</Grid>
+							))}
+					</Grid>
+				</Grid>
+			</Grid>
+		</div>
 	)
 }
 

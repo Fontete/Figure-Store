@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -43,14 +43,14 @@ const useStyles = makeStyles(theme => ({
 		[theme.breakpoints.up('xs')]: {
 			width: 'auto',
 		},
-		[theme.breakpoints.up('lg')]: {
-			width: '20%',
-		},
 		[theme.breakpoints.up('sm')]: {
-			width: '40%',
+			width: '50%',
 		},
 		[theme.breakpoints.up('md')]: {
-			width: '30%',
+			width: '40%',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: '25%',
 		},
 		overflowY: 'scroll',
 		'&::-webkit-scrollbar': {
@@ -211,32 +211,7 @@ const AppSearchBar = ({history}) => {
 								onClick={handleClick}
 							>
 								<MenuIcon />
-								{/* <img
-									src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
-									alt="logo"
-									height="48px"
-								></img> */}
 							</IconButton>
-							{/* <div
-								className={classes.search}
-								style={{
-									height: '70%',
-									marginTop: '0.75em',
-									marginBottom: '0.75em',
-								}}
-							>
-								<div className={classes.searchIcon}>
-									<SearchIcon />
-								</div>
-								<InputBase
-									placeholder="Search…"
-									classes={{
-										root: classes.inputRoot,
-										input: classes.inputInput,
-									}}
-									inputProps={{'aria-label': 'search'}}
-								/>
-							</div> */}
 						</Grid>
 						{/* <Tabs
 							variant="fullWidth"
