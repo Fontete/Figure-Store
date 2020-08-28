@@ -1,4 +1,3 @@
-const userModel = require('../models/user')
 const braintree = require('braintree')
 require('dotenv').config
 
@@ -17,4 +16,21 @@ exports.generateToken = (req, res) => {
 			res.send(response)
 		}
 	})
+}
+
+exports.purchaseProcess = (req, res) => {
+	gateway.transaction.sale(
+		{
+			amount: req.body.amount,
+			paymentMethodNonce: req.body.paymentMethodNonce,
+			options: {
+				submitForSettlement: true,
+			},
+		},
+		(err, result) => {
+			if (err) {
+				res.status(500).json(err)
+			} else res.json(result)
+		},
+	)
 }

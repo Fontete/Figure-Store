@@ -3,19 +3,13 @@ const router = express.Router()
 
 const method = require('../general/method')
 const userController = require('../controllers/user')
-const paymentController = require('../controllers/payment')
+const orderController = require('../controllers/order')
 
-router.get(
-	'/token/:userID',
-	method.jwtVerify,
-	userController.isMember,
-	paymentController.generateToken,
-)
 router.post(
-	'/purchase/:userID',
+	'/create/:userID',
 	method.jwtVerify,
 	userController.isMember,
-	paymentController.purchaseProcess,
+	orderController.create,
 )
 
 //params

@@ -4,7 +4,6 @@ const fs = require('fs')
 
 const productModel = require('../models/product')
 const error = require('../general/error')
-const router = require('../routes/product')
 
 exports.add = (req, res) => {
 	let form = new formidable.IncomingForm()

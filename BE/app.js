@@ -11,6 +11,7 @@ const userRouter = require('./routes/user')
 const categoryRouter = require('./routes/categoy')
 const productRouter = require('./routes/product')
 const paymentRouter = require('./routes/payment')
+const orderRouter = require('./routes/order')
 
 const app = express()
 
@@ -30,7 +31,18 @@ connect(process.env.URI, {
 
 //middlewares
 app.use(morgan('dev'))
-app.use(bodyParser.json())
+app.use(
+	bodyParser.json({
+		limit: '50mb',
+	}),
+)
+app.use(
+	bodyParser.urlencoded({
+		limit: '50mb',
+		extended: true,
+		parameterLimit: 50000,
+	}),
+)
 app.use(cookieParser())
 app.use(validator())
 app.use(cors())
@@ -39,6 +51,7 @@ app.use('/users', userRouter)
 app.use('/categories', categoryRouter)
 app.use('/products', productRouter)
 app.use('/payments', paymentRouter)
+app.use('/orders', orderRouter)
 
 const port = process.env.PORT
 
