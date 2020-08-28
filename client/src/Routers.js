@@ -13,6 +13,7 @@ import Detail from './Pages/Shop/ProductDetail'
 
 import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
 import AdminRoute from './General/ProtectedRoute/AdminRoute'
+import CheckoutRoute from './General/ProtectedRoute/CheckoutRoute'
 import Checkout from './Pages/Shop/Checkout'
 
 const App = withRouter(({location}) => {
@@ -28,7 +29,7 @@ const App = withRouter(({location}) => {
 				<Route path="/register" exact component={Register} />
 				<Route path="/shop" exact component={Shop} />
 				<Route path="/product/:productId" exact component={Detail} />
-				<Route path="/checkout" exact component={Checkout} />
+				<CheckoutRoute path="/checkout" exact component={Checkout} />
 				<PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
 				<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
 				<AdminRoute path="/admin/category/add" exact component={AddCategory} />

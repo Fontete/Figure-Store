@@ -31,7 +31,7 @@ const Cart = () => {
 
 	return (
 		<Grid container item xs={12} sm={12} justify="center">
-			<Grid container item spacing={0} xs={12} justify="flex-end">
+			<Grid container item spacing={0} xs={12} justify="center">
 				{showProduct()}
 			</Grid>
 			<Grid container xs={12} spacing={1} justify="center">
@@ -58,18 +58,28 @@ const Cart = () => {
 				<Grid container xs={12} spacing={0} justify="flex-end">
 					<Grid container item xs={12} justify="flex-end">
 						<Typography
-							style={{padding: '8px 3px 5px 3px'}}
+							style={{
+								padding: '8px 3px 5px 3px',
+								display: product.length === 0 ? 'none' : '',
+							}}
 							color="secondary"
 							variant="body1"
 						>
 							Total: ${totalPurchase()}
 						</Typography>
 						<Link
-							to={{pathname: '/checkout', state: product}}
+							to={{
+								pathname: '/checkout',
+								state: product,
+							}}
 							style={{textDecoration: 'none'}}
 						>
 							<Button
-								style={{maxWidth: '80px', margin: '3px 3px 5px 3px'}}
+								style={{
+									maxWidth: '80px',
+									margin: '3px 3px 5px 3px',
+									display: product.length === 0 ? 'none' : '',
+								}}
 								variant="contained"
 								color="secondary"
 							>

@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import DropIn from 'braintree-web-drop-in-react'
-import {Grid, Button, Typography, Snackbar} from '@material-ui/core'
+import {Grid, Button, Typography, Snackbar, TextField} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
+import {Redirect} from 'react-router-dom'
 
-// import {isAuthenticated} from '../../General/Method/Authenticate'
+import {emptyCart} from '../../General/Method/CartHandler'
+
+import {isAuthenticated} from '../../General/Method/Authenticate'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -13,13 +16,13 @@ const useStyles = makeStyles(theme => ({
 			width: 'auto',
 		},
 		[theme.breakpoints.up('sm')]: {
-			width: '50%',
+			width: 'auto',
 		},
 		[theme.breakpoints.up('md')]: {
-			width: '40%',
+			width: 'auto',
 		},
 		[theme.breakpoints.up('lg')]: {
-			width: '25%',
+			width: 'auto',
 		},
 		overflowY: 'scroll',
 		'&::-webkit-scrollbar': {
@@ -40,18 +43,16 @@ const Checkout = props => {
 		hidden: '',
 	})
 
-	//For must be member to purchasing
-	// const userID = isAuthenticated() && isAuthenticated().data.user._id
-	// const bearerToken = isAuthenticated() && isAuthenticated().data.token
+	const userID = isAuthenticated() && isAuthenticated().data.user._id
+	const bearerToken = isAuthenticated() && isAuthenticated().data.token
 
 	const fetchBraintreeToken = () => {
 		axios
-			// .get(process.env.REACT_APP_BASE_URL + `payments/token/${userID}`, {
-			// 	headers: {
-			// 		Authorization: `Bearer ${bearerToken}`,
-			// 	},
-			// })
-			.get(process.env.REACT_APP_BASE_URL + `payments/token`)
+			.get(process.env.REACT_APP_BASE_URL + `payments/token/${userID}`, {
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			})
 			.then(data => {
 				setData({...data, paymentToken: data.data.clientToken})
 			})
@@ -62,37 +63,41 @@ const Checkout = props => {
 
 	const fetchpurchaseProcess = body => {
 		axios
-			.post(process.env.REACT_APP_BASE_URL + `payments/purchase`, body)
-			.then(data => {
-				console.log(data)
-				setData({...data, success: true, hidden: true})
+			.post(
+				process.env.REACT_APP_BASE_URL + `payments/purchase/${userID}`,
+				body,
+				{
+					headers: {
+						Authorization: `Bearer ${bearerToken}`,
+					},
+				},
+			)
+			.then(res => {
+				const orderData = {
+					products: props.location.state,
+					transaction_id: res.data.transaction_id,
+					amount: res.data.amount,
+					address: data.address,
+				}
+				fetchCreateOrder({order: orderData})
 			})
 			.catch(err => console.log(err.response.data.err))
 	}
 
-	const dropIn = () => {
-		return (
-			<div>
-				{data.paymentToken !== null && (
-					<Grid container justify="center">
-						<Grid item xs={12}>
-							<DropIn
-								options={{authorization: data.paymentToken}}
-								onInstance={instance => (data.instance = instance)}
-							/>
-						</Grid>
-						<Button
-							style={{display: data.hidden ? 'none' : ''}}
-							variant="contained"
-							color="secondary"
-							onClick={purchaseHandle}
-						>
-							<Typography variant="caption">Purchase</Typography>
-						</Button>
-					</Grid>
-				)}
-			</div>
-		)
+	const fetchCreateOrder = body => {
+		axios
+			.post(process.env.REACT_APP_BASE_URL + `orders/create/${userID}`, body, {
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			})
+			.then(() => {
+				setData({...data, success: true, hidden: true})
+				emptyCart(() => {
+					console.log('empty')
+				})
+			})
+			.catch(err => console.log(err.response.data.err))
 	}
 
 	const totalPurchase = () => {
@@ -103,10 +108,15 @@ const Checkout = props => {
 
 	const purchaseHandle = () => {
 		let nonce
-		let getNonce = data.instance
+		data.instance
 			.requestPaymentMethod()
 			.then(data => {
 				nonce = data.nonce
+				console.log(
+					'send nonce and total to process: ',
+					nonce,
+					totalPurchase(props.location.state),
+				)
 				const paymentData = {
 					paymentMethodNonce: nonce,
 					amount: totalPurchase(props.location.state),
@@ -123,8 +133,52 @@ const Checkout = props => {
 		if (reason === 'clickaway') {
 			return
 		}
-
 		setData({...data, success: false})
+	}
+
+	const handleAddress = e => {
+		setData({...data, address: e.target.value})
+	}
+
+	const dropIn = () => {
+		return (
+			<div>
+				{data.paymentToken !== null && (
+					<Grid container justify="center">
+						<Grid item xs={12}>
+							<TextField
+								id="standard-basic"
+								label="Shipping Address"
+								variant="outlined"
+								onChange={handleAddress}
+								value={data.address}
+								fullWidth
+								required
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<DropIn
+								options={{
+									authorization: data.paymentToken,
+									// paypal: {
+									// 	flow: 'vault',
+									// },
+								}}
+								onInstance={instance => (data.instance = instance)}
+							/>
+						</Grid>
+						<Button
+							style={{display: data.hidden ? 'none' : ''}}
+							variant="contained"
+							color="secondary"
+							onClick={purchaseHandle}
+						>
+							<Typography variant="caption">Purchase</Typography>
+						</Button>
+					</Grid>
+				)}
+			</div>
+		)
 	}
 
 	const showSuccess = () => {
@@ -150,6 +204,7 @@ const Checkout = props => {
 		<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
 			{showSuccess()}
 			{dropIn()}
+			{/* {data.success && <Redirect to="/" />} */}
 		</div>
 	)
 }
