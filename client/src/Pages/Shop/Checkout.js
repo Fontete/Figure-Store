@@ -7,8 +7,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Redirect} from 'react-router-dom'
 
 import {emptyCart} from '../../General/Method/CartHandler'
-
 import {isAuthenticated} from '../../General/Method/Authenticate'
+import Loading from '../../Components/Backdrop'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -40,7 +40,9 @@ const Checkout = props => {
 		error: '',
 		instance: {},
 		address: '',
-		hidden: '',
+		hidden: false,
+		loading: false,
+		redirect: false,
 	})
 
 	const userID = isAuthenticated() && isAuthenticated().data.user._id
@@ -73,6 +75,7 @@ const Checkout = props => {
 				},
 			)
 			.then(res => {
+				setData({loading: true})
 				const orderData = {
 					products: props.location.state,
 					transaction_id: res.data.transaction_id,
@@ -93,9 +96,7 @@ const Checkout = props => {
 			})
 			.then(() => {
 				setData({...data, success: true, hidden: true})
-				emptyCart(() => {
-					console.log('empty')
-				})
+				emptyCart(() => {})
 			})
 			.catch(err => console.log(err.response.data.err))
 	}
@@ -108,32 +109,27 @@ const Checkout = props => {
 
 	const purchaseHandle = () => {
 		let nonce
-		data.instance
-			.requestPaymentMethod()
-			.then(data => {
-				nonce = data.nonce
-				console.log(
-					'send nonce and total to process: ',
-					nonce,
-					totalPurchase(props.location.state),
-				)
-				const paymentData = {
-					paymentMethodNonce: nonce,
-					amount: totalPurchase(props.location.state),
-				}
-				fetchpurchaseProcess(paymentData)
-			})
-			.catch(err => {
-				console.log(err)
-				setData({...data, error: err.message})
-			})
+		data.instance &&
+			data.instance
+				.requestPaymentMethod()
+				.then(() => {
+					const paymentData = {
+						paymentMethodNonce: nonce,
+						amount: totalPurchase(props.location.state),
+					}
+					fetchpurchaseProcess(paymentData)
+				})
+				.catch(err => {
+					console.log(err)
+					setData({...data, error: err.message})
+				})
 	}
 
 	const handleClose = reason => {
 		if (reason === 'clickaway') {
 			return
 		}
-		setData({...data, success: false})
+		setData({...data, success: false, redirect: true})
 	}
 
 	const handleAddress = e => {
@@ -160,15 +156,20 @@ const Checkout = props => {
 							<DropIn
 								options={{
 									authorization: data.paymentToken,
-									// paypal: {
-									// 	flow: 'vault',
-									// },
+									paypal: {
+										flow: 'checkout',
+										amount: '10.00',
+										currency: 'USD',
+									},
 								}}
 								onInstance={instance => (data.instance = instance)}
 							/>
 						</Grid>
 						<Button
-							style={{display: data.hidden ? 'none' : ''}}
+							style={{
+								display: data.hidden ? 'none' : '',
+								margin: '3px',
+							}}
 							variant="contained"
 							color="secondary"
 							onClick={purchaseHandle}
@@ -196,15 +197,18 @@ const Checkout = props => {
 		)
 	}
 
+	const showLoading = loading => loading && <Loading loading={data.loading} />
+
 	useEffect(() => {
 		fetchBraintreeToken()
 	}, [])
 
 	return (
 		<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
+			{showLoading(data.loading)}
 			{showSuccess()}
 			{dropIn()}
-			{/* {data.success && <Redirect to="/" />} */}
+			{data.redirect && <Redirect to="/" />}
 		</div>
 	)
 }
