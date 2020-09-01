@@ -35,6 +35,10 @@ router.get('/related/:productID', productController.relatedList)
 // by arrival = ?sortBy=createdAt&order=desc&limit=4
 router.post('/filter', productController.filterList)
 router.get('/image/:productID', productController.image)
+router.get('/image2/:productID', productController.image2)
+router.get('/image3/:productID', productController.image3)
+router.get('/image4/:productID', productController.image4)
+router.get('/image5/:productID', productController.image5)
 
 //params
 router.param('userID', userController.userByID)

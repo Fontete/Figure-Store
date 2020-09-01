@@ -51,26 +51,51 @@ exports.add = (req, res) => {
 			product.image.data = fs.readFileSync(files.image.path)
 			product.image.contentType = files.image.type
 		}
+		if (files.image2) {
+			// file size smaller than 1MB
+			if (files.image2.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image2.name} size is more than 1 MB`,
+				})
+			}
+			product.image2.data = fs.readFileSync(files.image2.path)
+			product.image2.contentType = files.image2.type
+		}
+		if (files.image3) {
+			// file size smaller than 1MB
+			if (files.image2.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image3.name} size is more than 1 MB`,
+				})
+			}
+			product.image3.data = fs.readFileSync(files.image3.path)
+			product.image3.contentType = files.image3.type
+		}
+		if (files.image4) {
+			// file size smaller than 1MB
+			if (files.image4.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image4.name} size is more than 1 MB`,
+				})
+			}
+			product.image4.data = fs.readFileSync(files.image4.path)
+			product.image4.contentType = files.image4.type
+		}
+		if (files.image5) {
+			// file size smaller than 1MB
+			if (files.image5.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image5.name} size is more than 1 MB`,
+				})
+			}
+			product.image5.data = fs.readFileSync(files.image5.path)
+			product.image5.contentType = files.image5.type
+		}
 
-		// let listImages = []
-
-		// // if user upload image for product, check the size of image
-		// if (files.image) {
-		// 	for (let i = 0; i < files.image.length; i++) {
-		// 		// file size smaller than 1MB
-		// 		if (files.image[i].size > 1000000) {
-		// 			return res.status(400).json({
-		// 				err: `${files.image[i].name} size is more than 1 MB`,
-		// 			})
-		// 		}
-		// 		const singleImage = {
-		// 			data: fs.readFileSync(files.image[i].path),
-		// 			contentType: files.image[i].type,
-		// 		}
-		// 		listImages.push(singleImage)
-		// 	}
-		// 	product.image = listImages
-		// }
 		product.save(err => {
 			if (err) {
 				return res.status(400).json({
@@ -104,6 +129,10 @@ exports.productByID = async (req, res, next, id) => {
 exports.productDetail = (req, res) => {
 	//the size of imgae may affect the performance, so we not respone the image
 	req.product.image = undefined
+	req.product.image2 = undefined
+	req.product.image3 = undefined
+	req.product.image4 = undefined
+	req.product.image5 = undefined
 	return res.json(req.product)
 }
 
@@ -155,6 +184,12 @@ exports.update = (req, res) => {
 			})
 		}
 
+		if (quantity <= 0 || price <= 0) {
+			return res.status(400).json({
+				err: 'Number must be larger than zero',
+			})
+		}
+
 		// update product
 
 		let product = req.product
@@ -164,35 +199,56 @@ exports.update = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
+					err: 'File size is more than 1 MB',
 					err: `${files.image.name} size is more than 1 MB`,
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
 			product.image.contentType = files.image.type
 		}
-
-		// // if user upload image for product, check the size of image
-		// if (files.image) {
-		// 	for (let i = 0; i < files.image.length; i++) {
-		// 		// file size smaller than 1MB
-		// 		if (files.image[i].size > 1000000) {
-		// 			return res.status(400).json({
-		// 				err: `${files.image[i].name} size is more than 1 MB`,
-		// 			})
-		// 		}
-		// 		const singleImage = {
-		// 			data: fs.readFileSync(files.image[i].path),
-		// 			contentType: files.image[i].type,
-		// 		}
-		// 		listImages.push(singleImage)
-		// 	}
-		// 	product.image = listImages
-		// }
-
-		if (quantity <= 0 || price <= 0) {
-			return res.status(400).json({
-				err: 'Number must be larger than zero',
-			})
+		if (files.image2) {
+			// file size smaller than 1MB
+			if (files.image2.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image2.name} size is more than 1 MB`,
+				})
+			}
+			product.image2.data = fs.readFileSync(files.image2.path)
+			product.image2.contentType = files.image2.type
+		}
+		if (files.image3) {
+			// file size smaller than 1MB
+			if (files.image2.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image3.name} size is more than 1 MB`,
+				})
+			}
+			product.image3.data = fs.readFileSync(files.image3.path)
+			product.image3.contentType = files.image3.type
+		}
+		if (files.image4) {
+			// file size smaller than 1MB
+			if (files.image4.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image4.name} size is more than 1 MB`,
+				})
+			}
+			product.image4.data = fs.readFileSync(files.image4.path)
+			product.image4.contentType = files.image4.type
+		}
+		if (files.image5) {
+			// file size smaller than 1MB
+			if (files.image5.size > 1000000) {
+				return res.status(400).json({
+					err: 'File size is more than 1 MB',
+					err: `${files.image5.name} size is more than 1 MB`,
+				})
+			}
+			product.image5.data = fs.readFileSync(files.image5.path)
+			product.image5.contentType = files.image5.type
 		}
 
 		product.save(err => {
@@ -209,20 +265,41 @@ exports.update = (req, res) => {
 }
 
 exports.image = (req, res, next) => {
-	//let listImage = []
-	// if (req.product.image) {
-	// 	req.product.image.map(image => {
-	// 		if (image.data) {
-	//listImage.push(image.data)
-	// 			res.set('Content-Type', image.contentType)
-	// 			res.send(image.data)
-	// 		}
-	// 	})
-	// }
-	// next()
 	if (req.product.image.data) {
 		res.set('Content-Type', req.product.image.contentType)
 		return res.send(req.product.image.data)
+	}
+	next()
+}
+
+exports.image2 = (req, res, next) => {
+	if (req.product.image2.data) {
+		res.set('Content-Type', req.product.image2.contentType)
+		return res.send(req.product.image2.data)
+	}
+	next()
+}
+
+exports.image3 = (req, res, next) => {
+	if (req.product.image3.data) {
+		res.set('Content-Type', req.product.image3.contentType)
+		return res.send(req.product.image3.data)
+	}
+	next()
+}
+
+exports.image4 = (req, res, next) => {
+	if (req.product.image4.data) {
+		res.set('Content-Type', req.product.image4.contentType)
+		return res.send(req.product.image4.data)
+	}
+	next()
+}
+
+exports.image5 = (req, res, next) => {
+	if (req.product.image5.data) {
+		res.set('Content-Type', req.product.image5.contentType)
+		return res.send(req.product.image5.data)
 	}
 	next()
 }
