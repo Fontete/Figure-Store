@@ -139,3 +139,31 @@ exports.update = (req, res) => {
 		},
 	)
 }
+
+exports.orderHistory = (req, res, next) => {
+	let history = []
+	req.body.order.products.map(i => {
+		history.push({
+			_id: i._id,
+			name: i.name,
+			description: i.description,
+			category: i.category,
+			quantity: i.quantity,
+			transaction_id: req.body.order.transaction_id,
+			amount: req.body.order.amount,
+			createdAt: req.body.order.createdAt,
+			currency: req.body.order.currency,
+		})
+	})
+	userModel.findOneAndUpdate(
+		{_id: req.profile._id},
+		{$push: {history: history}},
+		{new: true},
+		(err, data) => {
+			if (err) {
+				return res.status(400).json({err: 'Update purchase history failed'})
+			}
+			next()
+		},
+	)
+}

@@ -323,3 +323,20 @@ exports.searchList = (req, res) => {
 			.select('-image')
 	}
 }
+
+exports.updateQuantity = (req, res, next) => {
+	let bulk = req.body.order.products.map(i => {
+		return {
+			updateOne: {
+				filter: {_id: i._id},
+				update: {$inc: {quantity: -i.count, sold: +i.count}},
+			},
+		}
+	})
+	productModel.bulkWrite(bulk, {}, (err, data) => {
+		if (err) {
+			return res.status(400).json({err: 'Update quantity failed'})
+		}
+		next()
+	})
+}
