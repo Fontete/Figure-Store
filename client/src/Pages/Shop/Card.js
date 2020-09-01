@@ -53,11 +53,19 @@ const ProductCard = ({
 		)
 	}
 
+	const handleOutOfStock = quantity => {
+		if (quantity === 0) {
+			return true
+		} else {
+			return false
+		}
+	}
+
 	const showSTock = quantity => {
 		return quantity > 0 ? (
-			<Badge message="In Stock" quantity={quantity}></Badge>
+			<Badge message=" In Stock" quantity={quantity}></Badge>
 		) : (
-			<Badge message="Out Of Stock" quantity={quantity}></Badge>
+			<Badge message="Out Of Stock"></Badge>
 		)
 	}
 
@@ -133,6 +141,7 @@ const ProductCard = ({
 								createdAt,
 							})
 						}}
+						disabled={handleOutOfStock(quantity)}
 						color="primary"
 						className={classes.fab}
 					>

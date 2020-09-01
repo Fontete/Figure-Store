@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import DropIn from 'braintree-web-drop-in-react'
-import {Grid, Button, Typography, Snackbar, TextField} from '@material-ui/core'
+import {Grid, Button, Typography, Snackbar} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 import {Redirect} from 'react-router-dom'
@@ -38,8 +38,8 @@ const Checkout = props => {
 		success: false,
 		paymentToken: null,
 		error: '',
+		response: '',
 		instance: {},
-		address: '',
 		hidden: false,
 		loading: false,
 		redirect: false,
@@ -75,21 +75,25 @@ const Checkout = props => {
 				},
 			)
 			.then(res => {
+				console.log(res)
 				setData({loading: true})
 				const orderData = {
 					products: props.location.state,
-					transaction_id: res.data.transaction_id,
-					amount: res.data.amount,
-					address: data.address,
+					transaction_id: res.data.transaction.id,
+					amount: res.data.transaction.amount,
+					createdAt: res.data.transaction.createdAt,
+					currency: res.data.transaction.currencyIsoCode,
 				}
 				fetchCreateOrder({order: orderData})
 			})
-			.catch(err => console.log(err.response.data.err))
+			.catch(err => {
+				console.log(err.response.data.err)
+			})
 	}
 
 	const fetchCreateOrder = body => {
 		axios
-			.post(process.env.REACT_APP_BASE_URL + `orders/create/${userID}`, body, {
+			.post(process.env.REACT_APP_BASE_URL + `orders/${userID}`, body, {
 				headers: {
 					Authorization: `Bearer ${bearerToken}`,
 				},
@@ -112,7 +116,8 @@ const Checkout = props => {
 		data.instance &&
 			data.instance
 				.requestPaymentMethod()
-				.then(() => {
+				.then(data => {
+					nonce = data.nonce
 					const paymentData = {
 						paymentMethodNonce: nonce,
 						amount: totalPurchase(props.location.state),
@@ -121,45 +126,44 @@ const Checkout = props => {
 				})
 				.catch(err => {
 					console.log(err)
-					setData({...data, error: err.message})
+					setData({...data, error: true, response: err.message})
 				})
 	}
 
-	const handleClose = reason => {
+	const handleCloseSuccess = reason => {
 		if (reason === 'clickaway') {
 			return
 		}
 		setData({...data, success: false, redirect: true})
 	}
 
-	const handleAddress = e => {
-		setData({...data, address: e.target.value})
+	const handleCloseError = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+		setData({...data, error: false})
 	}
 
 	const dropIn = () => {
 		return (
-			<div>
+			<Fragment>
 				{data.paymentToken !== null && (
 					<Grid container justify="center">
-						<Grid item xs={12}>
-							<TextField
-								id="standard-basic"
-								label="Shipping Address"
-								variant="outlined"
-								onChange={handleAddress}
-								value={data.address}
-								fullWidth
-								required
-							/>
-						</Grid>
 						<Grid item xs={12}>
 							<DropIn
 								options={{
 									authorization: data.paymentToken,
+									card: false,
 									paypal: {
 										flow: 'checkout',
 										amount: '10.00',
 										currency: 'USD',
+										enableShippingAddress: true,
+										buttonStyle: {
+											color: 'gold',
+											shape: 'rect',
+											size: 'medium',
+										},
 									},
 								}}
 								onInstance={instance => (data.instance = instance)}
@@ -178,7 +182,22 @@ const Checkout = props => {
 						</Button>
 					</Grid>
 				)}
-			</div>
+			</Fragment>
+		)
+	}
+
+	const showError = () => {
+		return (
+			<Snackbar
+				anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+				open={data.error}
+				autoHideDuration={3000}
+				onClose={handleCloseError}
+			>
+				<Alert onClose={handleCloseError} severity="error">
+					{data.response}
+				</Alert>
+			</Snackbar>
 		)
 	}
 
@@ -188,9 +207,9 @@ const Checkout = props => {
 				anchorOrigin={{vertical: 'top', horizontal: 'center'}}
 				open={data.success}
 				autoHideDuration={3000}
-				onClose={handleClose}
+				onClose={handleCloseSuccess}
 			>
-				<Alert onClose={handleClose} severity="success">
+				<Alert onClose={handleCloseSuccess} severity="success">
 					Thank you for your payment
 				</Alert>
 			</Snackbar>
@@ -207,6 +226,7 @@ const Checkout = props => {
 		<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
 			{showLoading(data.loading)}
 			{showSuccess()}
+			{showError()}
 			{dropIn()}
 			{data.redirect && <Redirect to="/" />}
 		</div>

@@ -46,7 +46,11 @@ const CardInCart = ({product, setRun = f => f, run = undefined}) => {
 
 	const handleChange = productId => e => {
 		setRun(!run)
-		setCount(e.target.value < 1 ? 1 : e.target.value)
+		setCount(
+			e.target.value < 1 || e.target.value > product.quantity
+				? 1
+				: e.target.value,
+		)
 		if (e.target.value >= 1) {
 			updateProduct(productId, e.target.value)
 		}
