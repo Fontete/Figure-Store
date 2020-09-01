@@ -23,6 +23,20 @@ const useStyles = makeStyles(theme => ({
 		flexGrow: 1,
 	},
 	paper: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			marginLeft: '40em',
+			marginRight: '40em',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: 'auto',
+		},
 		padding: theme.spacing(2),
 		textAlign: 'center',
 		color: theme.palette.text.secondary,
@@ -48,7 +62,6 @@ const AddProduct = () => {
 		shipping: '',
 		quantity: '',
 		image: '',
-		listImages: '',
 		success: false,
 		error: '',
 		createdProduct: '',
@@ -76,9 +89,20 @@ const AddProduct = () => {
 	const token = isAuthenticated().data.token
 
 	const handleInputChange = name => event => {
-		const value = name === 'image' ? event.target.files[0] : event.target.value
+		const value =
+			name === 'image' ||
+			name === 'image2' ||
+			name === 'image3' ||
+			name === 'image4' ||
+			name === 'image5'
+				? event.target.files[0]
+				: event.target.value
+
 		formData.set(name, value)
-		setValues({...values, [name]: value})
+		setValues({
+			...values,
+			[name]: value,
+		})
 	}
 
 	const handleClose = reason => {
@@ -246,7 +270,6 @@ const AddProduct = () => {
 									style={{
 										width: '100%',
 										backgroundColor: '#bbe1fa',
-										height: '4em',
 									}}
 									label="Category"
 									variant="filled"
@@ -277,7 +300,6 @@ const AddProduct = () => {
 									style={{
 										width: '100%',
 										backgroundColor: '#bbe1fa',
-										height: '4em',
 									}}
 									label="Category"
 									variant="filled"
@@ -295,43 +317,151 @@ const AddProduct = () => {
 						<Grid container>
 							<Grid item xs={1}>
 								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
-									Image
+									Images
 								</Typography>
 							</Grid>
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Grid item xs={12}>
-									<Card>
-										<Input
+									<Card style={{height: '80px', backgroundColor: '#e8ded2'}}>
+										<Grid container xs={12} justify="center">
+											<Grid item xs={2}>
+												<Typography
+													color="secondary"
+													align="center"
+													variant="caption"
+												>
+													Image 1
+												</Typography>
+											</Grid>
+											<Grid item xs={2}>
+												<Typography
+													color="primary"
+													align="center"
+													variant="caption"
+												>
+													Image 2
+												</Typography>
+											</Grid>
+											<Grid item xs={2}>
+												<Typography
+													color="primary"
+													align="center"
+													variant="caption"
+												>
+													Image 3
+												</Typography>
+											</Grid>
+											<Grid item xs={2}>
+												<Typography
+													color="primary"
+													align="center"
+													variant="caption"
+												>
+													Image 4
+												</Typography>
+											</Grid>
+											<Grid item xs={2}>
+												<Typography
+													color="primary"
+													align="center"
+													variant="caption"
+												>
+													Image 5
+												</Typography>
+											</Grid>
+										</Grid>
+										<Grid container xs={12} justify="center">
+											<Grid item xs={2}>
+												<label for="file">
+													<img
+														src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRGA1L3T04Ixnzozll3s8RLlR7VsGQ8OA-Mzg&usqp=CAU"
+														alt="main"
+														height="50px"
+													/>
+												</label>
+											</Grid>
+											<Grid item xs={2}>
+												<label for="file2">
+													<img
+														src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRGA1L3T04Ixnzozll3s8RLlR7VsGQ8OA-Mzg&usqp=CAU"
+														alt="main"
+														height="50px"
+													/>
+												</label>
+											</Grid>
+											<Grid item xs={2}>
+												<label for="file3">
+													<img
+														src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRGA1L3T04Ixnzozll3s8RLlR7VsGQ8OA-Mzg&usqp=CAU"
+														alt="main"
+														height="50px"
+													/>
+												</label>
+											</Grid>
+											<Grid item xs={2}>
+												<label for="file4">
+													<img
+														src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRGA1L3T04Ixnzozll3s8RLlR7VsGQ8OA-Mzg&usqp=CAU"
+														alt="main"
+														height="50px"
+													/>
+												</label>
+											</Grid>
+											<Grid item xs={2}>
+												<label for="file5">
+													<img
+														src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRGA1L3T04Ixnzozll3s8RLlR7VsGQ8OA-Mzg&usqp=CAU"
+														alt="main"
+														height="50px"
+													/>
+												</label>
+											</Grid>
+										</Grid>
+										<input
+											style={{display: 'none'}}
+											id="file"
 											onChange={handleInputChange('image')}
+											type="file"
+											name="image"
+											accept="image/*"
+										/>
+										<input
+											style={{display: 'none'}}
+											id="file2"
+											onChange={handleInputChange('image2')}
+											type="file"
+											name="image"
+											accept="image/*"
+										/>
+										<input
+											style={{display: 'none'}}
+											id="file3"
+											onChange={handleInputChange('image3')}
+											type="file"
+											name="image"
+											accept="image/*"
+										/>
+										<input
+											style={{display: 'none'}}
+											id="file4"
+											onChange={handleInputChange('image4')}
+											type="file"
+											name="image"
+											accept="image/*"
+										/>
+										<input
+											style={{display: 'none'}}
+											id="file5"
+											onChange={handleInputChange('image5')}
 											type="file"
 											name="image"
 											accept="image/*"
 										/>
 									</Card>
 								</Grid>
-								<Grid item xs={3}></Grid>
-								<Grid item xs={3}></Grid>
-								<Grid item xs={3}></Grid>
 							</Grid>
 						</Grid>
-						{/* <Grid container>
-							<Grid item xs={3}>
-								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
-									List Images
-								</Typography>
-							</Grid>
-							<Grid item xs={7}></Grid>
-							<Grid item xs={6} style={{padding: '0.2 0 0.2 0'}}>
-								<input
-									onChange={handleInputChange('listImages')}
-									type="file"
-									name="listImages"
-									accept="image/*"
-									multiple="multiple"
-								/>
-							</Grid>
-						</Grid> */}
 						<Grid container>
 							<Grid item xs={1}>
 								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
@@ -372,15 +502,13 @@ const AddProduct = () => {
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
 			<Grid container spacing={2}>
-				<Grid item xs={4}></Grid>
-				<Grid item xs={4}>
+				<Grid item xs={12}>
 					<Paper className={classes.paper} style={{backgroundColor: '#3282b8'}}>
 						{showSuccess()}
 						{showError()}
 						{AddForm()}
 					</Paper>
 				</Grid>
-				<Grid item xs={4}></Grid>
 			</Grid>
 		</div>
 	)

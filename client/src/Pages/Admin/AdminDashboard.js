@@ -10,11 +10,26 @@ import IconButton from '@material-ui/core/IconButton'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	root: {
 		flexGrow: 1,
 	},
 	card: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			marginLeft: '40em',
+			marginRight: '40em',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: 'auto',
+		},
+
 		minWidth: 275,
 		backgroundColor: '#3282b8',
 	},
@@ -29,7 +44,7 @@ const useStyles = makeStyles({
 	pos: {
 		marginBottom: 12,
 	},
-})
+}))
 
 const Dashboard = () => {
 	const classes = useStyles()
@@ -107,11 +122,9 @@ const Dashboard = () => {
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
 			<Grid container spacing={2}>
-				<Grid item xs={4}></Grid>
-				<Grid item xs={4}>
+				<Grid item xs={12}>
 					{Profile()}
 				</Grid>
-				<Grid item xs={4}></Grid>
 				<Grid item xs={12}></Grid>
 			</Grid>
 		</div>

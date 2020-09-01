@@ -11,6 +11,20 @@ const useStyles = makeStyles(theme => ({
 		flexGrow: 1,
 	},
 	paper: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			marginLeft:'40em',
+			marginRight:'40em'
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: 'auto',
+		},
 		padding: theme.spacing(2),
 		textAlign: 'center',
 		color: theme.palette.text.secondary,
@@ -147,16 +161,14 @@ const AddCategory = () => {
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
 			<Grid container spacing={2}>
-				<Grid item xs={4}></Grid>
-				<Grid item xs={4}>
+				<Grid item xs={12}>
 					<Paper className={classes.paper} style={{backgroundColor: '#3282b8'}}>
 						{showSuccess()}
 						{showError()}
 						{AddForm()}
 					</Paper>
 				</Grid>
-				<Grid item xs={4}></Grid>
-				<Grid item xs={3}>
+				{/* <Grid item xs={3}>
 					<Paper className={classes.paper}>xs=3</Paper>
 				</Grid>
 				<Grid item xs={3}>
@@ -167,7 +179,7 @@ const AddCategory = () => {
 				</Grid>
 				<Grid item xs={3}>
 					<Paper className={classes.paper}>xs=3</Paper>
-				</Grid>
+				</Grid> */}
 			</Grid>
 		</div>
 	)
