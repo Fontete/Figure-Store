@@ -95,21 +95,25 @@ const AppSearchBar = ({history}) => {
 				onClose={handleClose}
 			>
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/" edge="end" color="inherit">
-						<img
-							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
-							alt="logo"
-							height="48"
-							width="100"
-						></img>
-					</IconButton>
+					<Link to="/" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<img
+								src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
+								alt="logo"
+								height="48"
+								width="100"
+							></img>
+						</IconButton>
+					</Link>
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/user/dashboard" edge="end" color="inherit">
-						<DashboardIcon />
-						<Typography>Dashboard</Typography>
-					</IconButton>
+					<Link to="/user/profile" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<DashboardIcon style={{color: '#fff'}} />
+							<Typography style={{color: '#fff'}}>Profile</Typography>
+						</IconButton>
+					</Link>
 				</MenuItem>
 				<Divider />
 			</Drawer>
@@ -125,35 +129,52 @@ const AppSearchBar = ({history}) => {
 				onClose={handleClose}
 			>
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/" edge="end" color="inherit">
-						<img
-							src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
-							alt="logo"
-							height="48"
-							width="100"
-						></img>
-					</IconButton>
+					<Link to="/" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<img
+								src="https://w0.pngwave.com/png/233/192/seven-deadly-sins-symbol-computer-icons-symbol-png-clip-art.png"
+								alt="logo"
+								height="48"
+								width="100"
+							></img>
+						</IconButton>
+					</Link>
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/admin/dashboard" edge="end" color="inherit">
-						<DashboardIcon />
-						<Typography>Dashboard</Typography>
-					</IconButton>
+					<Link to="/admin/profile" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<DashboardIcon style={{color: '#fff'}} />
+							<Typography style={{color: '#fff'}}>Profile</Typography>
+						</IconButton>
+					</Link>
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/admin/category/add" edge="end" color="inherit">
-						<DashboardIcon />
-						<Typography>Categories</Typography>
-					</IconButton>
+					<Link to="/admin/category/add" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<DashboardIcon style={{color: '#fff'}} />
+							<Typography style={{color: '#fff'}}>Categories</Typography>
+						</IconButton>
+					</Link>
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<IconButton href="/admin/product/add" edge="end" color="inherit">
-						<DashboardIcon />
-						<Typography>Products</Typography>
-					</IconButton>
+					<Link to="/admin/product/add" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<DashboardIcon style={{color: '#fff'}} />
+							<Typography style={{color: '#fff'}}>Products</Typography>
+						</IconButton>
+					</Link>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleClose}>
+					<Link to="/admin/product/orders" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<DashboardIcon style={{color: '#fff'}} />
+							<Typography style={{color: '#fff'}}>Orders</Typography>
+						</IconButton>
+					</Link>
 				</MenuItem>
 				<Divider />
 			</Drawer>

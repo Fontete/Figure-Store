@@ -51,7 +51,7 @@ const CardInCart = ({product, setRun = f => f, run = undefined}) => {
 				? 1
 				: e.target.value,
 		)
-		if (e.target.value >= 1) {
+		if (e.target.value >= 1 && e.target.value <= product.quantity) {
 			updateProduct(productId, e.target.value)
 		}
 	}
@@ -73,8 +73,12 @@ const CardInCart = ({product, setRun = f => f, run = undefined}) => {
 	}
 
 	return (
-		<Card className={classes.root}>
-			<CardMedia className={classes.cover} image={url} />
+		<Card style={{border: '3px solid black'}} className={classes.root}>
+			<CardMedia
+				style={{borderRight: '3px solid black'}}
+				className={classes.cover}
+				image={url}
+			/>
 			<div className={classes.details}>
 				<CardContent className={classes.content}>
 					<Typography component="h5" variant="h5">

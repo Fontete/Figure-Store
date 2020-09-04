@@ -10,11 +10,25 @@ import IconButton from '@material-ui/core/IconButton'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	root: {
 		flexGrow: 1,
 	},
 	card: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			marginLeft: '40em',
+			marginRight: '40em',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: 'auto',
+		},
 		minWidth: 275,
 		backgroundColor: '#3282b8',
 	},
@@ -29,78 +43,70 @@ const useStyles = makeStyles({
 	pos: {
 		marginBottom: 12,
 	},
-})
+}))
 
 const Dashboard = () => {
 	const classes = useStyles()
 
 	const Profile = () => {
 		return (
-			<Grid container spacing={2} justify="center">
-				<Grid item xs={12} justify="center">
-					<Card className={classes.card} variant="outlined">
-						<CardContent>
-							<Typography variant="h3" color="inherit">
-								Profile
-								<IconButton
-									edge="start"
-									color="inherit"
-									style={{float: 'right'}}
-								>
-									<EditIcon />
-								</IconButton>
-							</Typography>
-						</CardContent>
-						<Divider />
-						<CardContent>
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Firstname
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.firstName}
-							</Typography>
-							<Divider />
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Lastname
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.lastName}
-							</Typography>
-							<Divider />
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Email
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.email}
-							</Typography>
-							<Divider />
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Role
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
-							</Typography>
-						</CardContent>
-						<Divider />
-					</Card>
-				</Grid>
-			</Grid>
+			<Card className={classes.card} variant="outlined">
+				<CardContent>
+					<Typography variant="h3" color="inherit">
+						Profile
+						<IconButton edge="start" color="inherit" style={{float: 'right'}}>
+							<EditIcon />
+						</IconButton>
+					</Typography>
+				</CardContent>
+				<Divider />
+				<CardContent>
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Firstname
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.firstName}
+					</Typography>
+					<Divider />
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Lastname
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.lastName}
+					</Typography>
+					<Divider />
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Email
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.email}
+					</Typography>
+					<Divider />
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Role
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
+					</Typography>
+				</CardContent>
+				<Divider />
+			</Card>
 		)
 	}
 
@@ -169,12 +175,10 @@ const Dashboard = () => {
 
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
-			<Grid container spacing={2}>
-				<Grid item xs={4}></Grid>
-				<Grid item xs={4}>
+			<Grid container spacing={2} xs={12} justify="center">
+				<Grid item xs={12}>
 					{Profile()}
 				</Grid>
-				<Grid item xs={4}></Grid>
 				<Grid item xs={12}>
 					{PurchaseHistory()}
 				</Grid>

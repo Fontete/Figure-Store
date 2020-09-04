@@ -51,77 +51,69 @@ const Dashboard = () => {
 
 	const Profile = () => {
 		return (
-			<Grid container spacing={2} justify="center">
-				<Grid item xs={12} justify="center">
-					<Card className={classes.card} variant="outlined">
-						<CardContent>
-							<Typography variant="h3" color="inherit">
-								Profile
-								<IconButton
-									edge="start"
-									color="inherit"
-									style={{float: 'right'}}
-								>
-									<EditIcon />
-								</IconButton>
-							</Typography>
-						</CardContent>
-						<Divider />
-						<CardContent>
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Firstname
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.firstName}
-							</Typography>
-							<Divider />
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Lastname
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.lastName}
-							</Typography>
-							<Divider />
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Email
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.email}
-							</Typography>
-							<Divider />
-							<Typography
-								className={classes.title}
-								color="textSecondary"
-								gutterBottom
-							>
-								Role
-							</Typography>
-							<Typography variant="h5" component="h2">
-								{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
-							</Typography>
-						</CardContent>
-						<Divider />
-					</Card>
-				</Grid>
-			</Grid>
+			<Card className={classes.card} variant="outlined">
+				<CardContent>
+					<Typography variant="h3" color="inherit">
+						Profile
+						<IconButton edge="start" color="inherit" style={{float: 'right'}}>
+							<EditIcon />
+						</IconButton>
+					</Typography>
+				</CardContent>
+				<Divider />
+				<CardContent>
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Firstname
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.firstName}
+					</Typography>
+					<Divider />
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Lastname
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.lastName}
+					</Typography>
+					<Divider />
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Email
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.email}
+					</Typography>
+					<Divider />
+					<Typography
+						className={classes.title}
+						color="textSecondary"
+						gutterBottom
+					>
+						Role
+					</Typography>
+					<Typography variant="h5" component="h2">
+						{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
+					</Typography>
+				</CardContent>
+				<Divider />
+			</Card>
 		)
 	}
 
 	return (
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
-			<Grid container spacing={2}>
+			<Grid container spacing={2} justify="center">
 				<Grid item xs={12}>
 					{Profile()}
 				</Grid>

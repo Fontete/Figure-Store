@@ -80,9 +80,9 @@ const Login = () => {
 	const redirectUser = () => {
 		if (redirectToAuth) {
 			if (isAuthenticated() && isAuthenticated().data.user.role === 0) {
-				return <Redirect to="/admin/dashboard" />
+				return <Redirect to="/admin/profile" />
 			} else {
-				return <Redirect to="/user/dashboard" />
+				return <Redirect to="/user/profile" />
 			}
 		}
 		if (isAuthenticated()) {

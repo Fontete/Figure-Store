@@ -15,6 +15,7 @@ import PrivateRoute from './General/ProtectedRoute/PrivateRoute'
 import AdminRoute from './General/ProtectedRoute/AdminRoute'
 import CheckoutRoute from './General/ProtectedRoute/CheckoutRoute'
 import Checkout from './Pages/Shop/Checkout'
+import Orders from './Pages/Admin/Orders'
 
 const App = withRouter(({location}) => {
 	return (
@@ -22,7 +23,7 @@ const App = withRouter(({location}) => {
 			{location.pathname !== '/login' &&
 				location.pathname !== '/register' &&
 				location.pathname !== '/checkout' && <AppBar />}
-			<style>{'body { background-color:#ea5455 }'}</style>
+			{/* <style>{'body { background-color:#ea5455 }'}</style> */}
 			<Switch>
 				<Route path="/" exact component={Home} />
 				<Route path="/login" exact component={Login} />
@@ -30,10 +31,11 @@ const App = withRouter(({location}) => {
 				<Route path="/shop" exact component={Shop} />
 				<Route path="/product/:productId" exact component={Detail} />
 				<CheckoutRoute path="/checkout" exact component={Checkout} />
-				<PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
-				<AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
+				<PrivateRoute path="/user/profile" exact component={UserDashboard} />
+				<AdminRoute path="/admin/profile" exact component={AdminDashboard} />
 				<AdminRoute path="/admin/category/add" exact component={AddCategory} />
 				<AdminRoute path="/admin/product/add" exact component={AddProduct} />
+				<AdminRoute path="/admin/product/orders" exact component={Orders} />
 			</Switch>
 		</Fragment>
 	)

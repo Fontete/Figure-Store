@@ -1,8 +1,8 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import DropIn from 'braintree-web-drop-in-react'
-import {Grid, Button, Typography, Snackbar} from '@material-ui/core'
-import Alert from '@material-ui/lab/Alert'
+import {Grid, Button, Typography, Snackbar, TextField} from '@material-ui/core'
+import {Alert,AlertTitle} from '@material-ui/lab'
 import {makeStyles} from '@material-ui/core/styles'
 import {Redirect} from 'react-router-dom'
 
@@ -43,6 +43,7 @@ const Checkout = props => {
 		hidden: false,
 		loading: false,
 		redirect: false,
+		address: '',
 	})
 
 	const userID = isAuthenticated() && isAuthenticated().data.user._id
@@ -75,7 +76,6 @@ const Checkout = props => {
 				},
 			)
 			.then(res => {
-				console.log(res)
 				setData({loading: true})
 				const orderData = {
 					products: props.location.state,
@@ -83,6 +83,7 @@ const Checkout = props => {
 					amount: res.data.transaction.amount,
 					createdAt: res.data.transaction.createdAt,
 					currency: res.data.transaction.currencyIsoCode,
+					address: data.address,
 				}
 				fetchCreateOrder({order: orderData})
 			})
@@ -103,6 +104,21 @@ const Checkout = props => {
 				emptyCart(() => {})
 			})
 			.catch(err => console.log(err.response.data.err))
+	}
+
+	const handleAddress = event => {
+		setData({
+			...data,
+			address:
+				event.target.value === '' ? (
+					<Alert severity="error">
+						<AlertTitle>Error</AlertTitle>
+						<strong>Shipping address required!</strong>
+					</Alert>
+				) : (
+					event.target.value
+				),
+		})
 	}
 
 	const totalPurchase = () => {
@@ -150,10 +166,22 @@ const Checkout = props => {
 				{data.paymentToken !== null && (
 					<Grid container justify="center">
 						<Grid item xs={12}>
+							<TextField
+								label="Shipping Address"
+								required
+								fullWidth
+								id="address"
+								variant="outlined"
+								autoFocus
+								value={data.address}
+								onChange={handleAddress}
+							></TextField>
+						</Grid>
+						<Grid item xs={12}>
 							<DropIn
 								options={{
 									authorization: data.paymentToken,
-									card: false,
+									// card: false,
 									paypal: {
 										flow: 'checkout',
 										amount: '10.00',

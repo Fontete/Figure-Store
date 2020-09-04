@@ -66,9 +66,13 @@ const ProductCard = ({
 	}
 
 	return (
-		<Card className={classes.root}>
+		<Card style={{border: '3px solid black'}} className={classes.root}>
 			<Link to={`/product/${_id}`}>
-				<CardMedia image={url} className={classes.media} />
+				<CardMedia
+					style={{borderBottom: '1px solid black'}}
+					image={url}
+					className={classes.media}
+				/>
 			</Link>
 			<CardContent>
 				<Typography
