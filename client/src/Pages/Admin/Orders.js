@@ -9,6 +9,7 @@ import {
 	MenuList,
 	MenuItem,
 	Divider,
+	FormControl,
 } from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import moment from 'moment'
@@ -39,16 +40,26 @@ const useStyles = makeStyles(theme => ({
 	},
 	typography: {
 		[theme.breakpoints.up('xs')]: {
-			fontSize: 25,
+			fontSize: 22,
+		},
+	},
+	typography2: {
+		[theme.breakpoints.up('xs')]: {
+			fontSize: 20,
+		},
+	},
+	typography3: {
+		[theme.breakpoints.up('xs')]: {
+			fontSize: 12,
 		},
 		[theme.breakpoints.up('sm')]: {
-			fontSize: 'auto',
+			fontSize: 14,
 		},
 		[theme.breakpoints.up('md')]: {
-			fontSize: 'auto',
+			fontSize: 16,
 		},
 		[theme.breakpoints.up('lg')]: {
-			fontSize: 'auto',
+			fontSize: 18,
 		},
 	},
 }))
@@ -56,6 +67,7 @@ const useStyles = makeStyles(theme => ({
 const Orders = () => {
 	const classes = useStyles()
 	const [orders, setOrders] = useState([])
+	const [status, setStatus] = useState([])
 	const userID = isAuthenticated().data.user._id
 	const token = isAuthenticated().data.token
 
@@ -74,7 +86,39 @@ const Orders = () => {
 			})
 	}
 
-	console.log(orders)
+	const fetchListStatus = () => {
+		axios
+			.get(process.env.REACT_APP_BASE_URL + `orders/status/${userID}`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then(data => {
+				setStatus(data.data)
+			})
+			.catch(err => {
+				console.log(err.response.data.err)
+			})
+	}
+
+	const fetchUpdateStatus = (orderID, body) => {
+		axios
+			.put(
+				process.env.REACT_APP_BASE_URL + `orders/${orderID}/status/${userID}`,
+				body,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				},
+			)
+			.then(() => {
+				fetchOrdersList()
+			})
+			.catch(err => {
+				console.log(err.response.data.err)
+			})
+	}
 
 	const length = () => {
 		if (orders.length > 0) {
@@ -94,8 +138,43 @@ const Orders = () => {
 		}
 	}
 
+	const showProducts = (key, value) => {
+		return (
+			<Typography className={classes.typography3} variant="inherit">
+				{key}
+				{value}
+			</Typography>
+		)
+	}
+
+	const handleStatusChange = (e, orderId) => {
+		fetchUpdateStatus(orderId, {status: e.target.value})
+	}
+
+	const listStatus = o => (
+		<Fragment style={{justifyContent: 'flex-start'}}>
+			<Typography variant="inherit" align="center">
+				{o.status}
+			</Typography>
+			<FormControl style={{marginLeft: '5px'}}>
+				<select onChange={e => handleStatusChange(e, o._id)}>
+					<option>Update Status</option>
+					{status &&
+						status.map((s, i) => {
+							return (
+								<option key={i} value={s}>
+									{s}
+								</option>
+							)
+						})}
+				</select>
+			</FormControl>
+		</Fragment>
+	)
+
 	useEffect(() => {
 		fetchOrdersList()
+		fetchListStatus()
 	}, [])
 
 	return (
@@ -123,14 +202,13 @@ const Orders = () => {
 										<MenuList style={{margin: '0 0 2em 0'}}>
 											<div style={{border: '1px solid indigo'}}>
 												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography variant="inherit" align="center">
-														{o.status}
-													</Typography>
+													{listStatus(o)}
 												</MenuItem>
+
 												<Divider />
 												<MenuItem style={{justifyContent: 'flex-start'}}>
 													<Typography variant="inherit" align="center">
-														Transaction ID: {o.transaction_id}
+														TransactionID: {o.transaction_id}
 													</Typography>
 												</MenuItem>
 												<Divider />
@@ -160,12 +238,51 @@ const Orders = () => {
 												<Divider />
 												<MenuItem style={{justifyContent: 'flex-start'}}>
 													<strong>
-														<Typography variant="h5" align="center">
+														<Typography
+															className={classes.typography2}
+															variant="h5"
+															align="center"
+														>
 															Total items in the orders: {o.products.length}
 														</Typography>
 													</strong>
 												</MenuItem>
-												<Divider />
+												<div style={{justifyContent: 'flex-start'}}>
+													{o.products &&
+														o.products.map(p => {
+															return (
+																<MenuList key={p._id}>
+																	<MenuItem>
+																		<strong>
+																			{showProducts('ProductID: ', p._id)}
+																		</strong>
+																	</MenuItem>
+																	<div
+																		style={{
+																			border: '1px solid black',
+																			margin: '5px',
+																		}}
+																	>
+																		<MenuItem>
+																			{showProducts('Name: ', p.name)}
+																		</MenuItem>
+																		<MenuItem>
+																			{showProducts('Price: ', p.price)}
+																		</MenuItem>
+																		<MenuItem>
+																			{showProducts('Quantity: ', p.count)}
+																		</MenuItem>
+																		<MenuItem>
+																			{showProducts(
+																				'Total: ',
+																				`$${p.count * p.price}`,
+																			)}
+																		</MenuItem>
+																	</div>
+																</MenuList>
+															)
+														})}
+												</div>
 											</div>
 										</MenuList>
 									</Fragment>

@@ -2,7 +2,7 @@ import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import DropIn from 'braintree-web-drop-in-react'
 import {Grid, Button, Typography, Snackbar, TextField} from '@material-ui/core'
-import {Alert,AlertTitle} from '@material-ui/lab'
+import {Alert} from '@material-ui/lab'
 import {makeStyles} from '@material-ui/core/styles'
 import {Redirect} from 'react-router-dom'
 
@@ -109,15 +109,7 @@ const Checkout = props => {
 	const handleAddress = event => {
 		setData({
 			...data,
-			address:
-				event.target.value === '' ? (
-					<Alert severity="error">
-						<AlertTitle>Error</AlertTitle>
-						<strong>Shipping address required!</strong>
-					</Alert>
-				) : (
-					event.target.value
-				),
+			address: event.target.value,
 		})
 	}
 
