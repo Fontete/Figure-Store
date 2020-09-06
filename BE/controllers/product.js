@@ -44,8 +44,7 @@ exports.add = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image.name} size is more than 1 MB`,
+					err: `Image 1: ${files.image.name} size is more than 1 MB`,
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
@@ -55,8 +54,7 @@ exports.add = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image2.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image2.name} size is more than 1 MB`,
+					err: `Image 2: ${files.image2.name} size is more than 1 MB`,
 				})
 			}
 			product.image2.data = fs.readFileSync(files.image2.path)
@@ -66,8 +64,7 @@ exports.add = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image2.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image3.name} size is more than 1 MB`,
+					err: `Image 3: ${files.image3.name} size is more than 1 MB`,
 				})
 			}
 			product.image3.data = fs.readFileSync(files.image3.path)
@@ -77,8 +74,7 @@ exports.add = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image4.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image4.name} size is more than 1 MB`,
+					err: `Image 4: ${files.image4.name} size is more than 1 MB`,
 				})
 			}
 			product.image4.data = fs.readFileSync(files.image4.path)
@@ -88,8 +84,7 @@ exports.add = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image5.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image5.name} size is more than 1 MB`,
+					err: `Image 5: ${files.image5.name} size is more than 1 MB`,
 				})
 			}
 			product.image5.data = fs.readFileSync(files.image5.path)
@@ -199,8 +194,7 @@ exports.update = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image.name} size is more than 1 MB`,
+					err: `Image 1: ${files.image.name} size is more than 1 MB`,
 				})
 			}
 			product.image.data = fs.readFileSync(files.image.path)
@@ -210,8 +204,7 @@ exports.update = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image2.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image2.name} size is more than 1 MB`,
+					err: `Image 2: ${files.image2.name} size is more than 1 MB`,
 				})
 			}
 			product.image2.data = fs.readFileSync(files.image2.path)
@@ -221,8 +214,7 @@ exports.update = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image2.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image3.name} size is more than 1 MB`,
+					err: ` Image 3: ${files.image3.name} size is more than 1 MB`,
 				})
 			}
 			product.image3.data = fs.readFileSync(files.image3.path)
@@ -232,8 +224,7 @@ exports.update = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image4.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image4.name} size is more than 1 MB`,
+					err: `Image 4: ${files.image4.name} size is more than 1 MB`,
 				})
 			}
 			product.image4.data = fs.readFileSync(files.image4.path)
@@ -243,8 +234,7 @@ exports.update = (req, res) => {
 			// file size smaller than 1MB
 			if (files.image5.size > 1000000) {
 				return res.status(400).json({
-					err: 'File size is more than 1 MB',
-					err: `${files.image5.name} size is more than 1 MB`,
+					err: `Image 5: ${files.image5.name} size is more than 1 MB`,
 				})
 			}
 			product.image5.data = fs.readFileSync(files.image5.path)
