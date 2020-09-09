@@ -10,6 +10,18 @@ import Search from './Search'
 
 const useStyles = makeStyles(theme => ({
 	root: {
+		[theme.breakpoints.up('xs')]: {
+			padding: '6em 2em 0em 2em',
+		},
+		[theme.breakpoints.up('sm')]: {
+			padding: '6em 2em 0em 2em',
+		},
+		[theme.breakpoints.up('md')]: {
+			padding: '6em 2em 0em 2em',
+		},
+		[theme.breakpoints.up('lg')]: {
+			padding: '6em 8em 0em 8em',
+		},
 		flexGrow: 1,
 		overflowY: 'scroll',
 		'&::-webkit-scrollbar': {
@@ -59,7 +71,7 @@ const Home = () => {
 	}, [])
 
 	return (
-		<div className={classes.root} style={{padding: '6em 2em 0em 2em'}}>
+		<div className={classes.root}>
 			<Grid container justify="center">
 				<Grid container item xs={12} sm={12}>
 					<Search />

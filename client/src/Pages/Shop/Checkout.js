@@ -23,6 +23,8 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('lg')]: {
 			width: 'auto',
+			marginLeft: '40em',
+			marginRight: '40em',
 		},
 		overflowY: 'scroll',
 		'&::-webkit-scrollbar': {
@@ -159,6 +161,8 @@ const Checkout = props => {
 					<Grid container justify="center">
 						<Grid item xs={12}>
 							<TextField
+								color="secondary"
+								style={{backgroundColor: '#C0C0C0', marginTop: '4em'}}
 								label="Shipping Address"
 								required
 								fullWidth

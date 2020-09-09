@@ -14,6 +14,18 @@ import {Hidden} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
+		[theme.breakpoints.up('xs')]: {
+			padding: '6em 2em 0em 2em',
+		},
+		[theme.breakpoints.up('sm')]: {
+			padding: '6em 2em 0em 2em',
+		},
+		[theme.breakpoints.up('md')]: {
+			padding: '6em 2em 0em 2em',
+		},
+		[theme.breakpoints.up('lg')]: {
+			padding: '6em 8em 0em 8em',
+		},
 		flexGrow: 1,
 		overflowY: 'scroll',
 		'&::-webkit-scrollbar': {
@@ -110,24 +122,24 @@ const ShopPage = () => {
 	}, [])
 
 	return (
-		<div
-			className={classes.root}
-			style={{padding: '6em 2em 0em 2em'}}
-			onScroll={handleScroll}
-		>
+		<div className={classes.root} onScroll={handleScroll}>
 			<Grid container justify="center">
 				<Hidden xsDown={true} mdDown={true}>
 					<Grid container item sm={2}>
 						<FormControl component="fieldset" style={{position: 'fixed'}}>
 							<FormLabel component="legend" style={{color: '#fff'}}>
-								<Typography variant="h5">Categories</Typography>
+								<Typography variant="h5" color="primary">
+									Categories
+								</Typography>
 							</FormLabel>
 							<Checkbox
 								categories={categories}
 								productFilters={filters => productFilter(filters, 'category')}
 							/>
 							<FormLabel component="legend" style={{color: '#fff'}}>
-								<Typography variant="h5">Prices</Typography>
+								<Typography variant="h5" color="primary">
+									Prices
+								</Typography>
 							</FormLabel>
 							<Radio
 								prices={prices}

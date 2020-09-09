@@ -85,9 +85,9 @@ const Login = () => {
 				return <Redirect to="/user/profile" />
 			}
 		}
-		if (isAuthenticated()) {
-			return <Redirect to="/" />
-		}
+		// if (isAuthenticated()) {
+		// 	return <Redirect to="/" />
+		// }
 	}
 
 	const fetchLogin = body => {

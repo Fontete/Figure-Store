@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
+import {Link} from 'react-router-dom'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
 
@@ -23,8 +24,6 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('md')]: {
 			width: 'auto',
-			marginLeft: '40em',
-			marginRight: '40em',
 		},
 		[theme.breakpoints.up('lg')]: {
 			width: 'auto',
@@ -55,9 +54,14 @@ const Dashboard = () => {
 				<CardContent>
 					<Typography variant="h3" color="inherit">
 						Profile
-						<IconButton edge="start" color="inherit" style={{float: 'right'}}>
-							<EditIcon />
-						</IconButton>
+						<Link
+							to={`/profile/${isAuthenticated().data.user._id}`}
+							style={{textDecoration: 'none'}}
+						>
+							<IconButton edge="start" color="inherit" style={{float: 'right'}}>
+								<EditIcon style={{color: 'black'}} />
+							</IconButton>
+						</Link>
 					</Typography>
 				</CardContent>
 				<Divider />
@@ -70,7 +74,9 @@ const Dashboard = () => {
 						Firstname
 					</Typography>
 					<Typography variant="h5" component="h2">
-						{isAuthenticated().data.user.firstName}
+						{isAuthenticated().user
+							? isAuthenticated().user.data.firstName
+							: isAuthenticated().data.user.firstName}
 					</Typography>
 					<Divider />
 					<Typography
@@ -81,7 +87,9 @@ const Dashboard = () => {
 						Lastname
 					</Typography>
 					<Typography variant="h5" component="h2">
-						{isAuthenticated().data.user.lastName}
+						{isAuthenticated().user
+							? isAuthenticated().user.data.lastName
+							: isAuthenticated().data.user.lastName}
 					</Typography>
 					<Divider />
 					<Typography
@@ -92,7 +100,9 @@ const Dashboard = () => {
 						Email
 					</Typography>
 					<Typography variant="h5" component="h2">
-						{isAuthenticated().data.user.email}
+						{isAuthenticated().user
+							? isAuthenticated().user.data.email
+							: isAuthenticated().data.user.email}
 					</Typography>
 					<Divider />
 					<Typography
@@ -103,7 +113,13 @@ const Dashboard = () => {
 						Role
 					</Typography>
 					<Typography variant="h5" component="h2">
-						{isAuthenticated().data.user.role === 0 ? 'Admin' : 'Member'}
+						{isAuthenticated().user
+							? isAuthenticated().user.data.role === 0
+								? 'Admin'
+								: 'Member'
+							: isAuthenticated().data.user.role === 0
+							? 'Admin'
+							: 'Member'}
 					</Typography>
 				</CardContent>
 				<Divider />

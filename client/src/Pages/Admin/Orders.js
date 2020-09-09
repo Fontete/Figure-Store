@@ -153,7 +153,7 @@ const Orders = () => {
 
 	const listStatus = o => (
 		<Fragment style={{justifyContent: 'flex-start'}}>
-			<Typography variant="inherit" align="center">
+			<Typography color="secondary" variant="inherit" align="center">
 				{o.status}
 			</Typography>
 			<FormControl style={{marginLeft: '5px'}}>

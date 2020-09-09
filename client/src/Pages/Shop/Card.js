@@ -66,10 +66,10 @@ const ProductCard = ({
 	}
 
 	return (
-		<Card style={{border: '3px solid black'}} className={classes.root}>
+		<Card style={{border: '3px solid #C0C0C0'}} className={classes.root}>
 			<Link to={`/product/${_id}`}>
 				<CardMedia
-					style={{borderBottom: '1px solid black'}}
+					style={{borderBottom: '1px solid #C0C0C0'}}
 					image={url}
 					className={classes.media}
 				/>

@@ -61,7 +61,7 @@ const CardInCart = ({product, setRun = f => f, run = undefined}) => {
 			<InputBase
 				color="inherit"
 				style={{
-					backgroundColor: '#f1f1e8',
+					backgroundColor: '#A9A9A9',
 					maxWidth: '50px',
 					maxHeight: '20px',
 				}}
@@ -73,9 +73,9 @@ const CardInCart = ({product, setRun = f => f, run = undefined}) => {
 	}
 
 	return (
-		<Card style={{border: '3px solid black'}} className={classes.root}>
+		<Card style={{border: '3px solid #000000'}} className={classes.root}>
 			<CardMedia
-				style={{borderRight: '3px solid black'}}
+				style={{borderRight: '3px solid #000000	'}}
 				className={classes.cover}
 				image={url}
 			/>
