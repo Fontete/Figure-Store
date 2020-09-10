@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('md')]: {
 			width: 'auto',
-			marginLeft:'40em',
-			marginRight:'40em'
+			marginLeft: '40em',
+			marginRight: '40em',
 		},
 		[theme.breakpoints.up('lg')]: {
 			width: 'auto',
@@ -168,18 +168,6 @@ const AddCategory = () => {
 						{AddForm()}
 					</Paper>
 				</Grid>
-				{/* <Grid item xs={3}>
-					<Paper className={classes.paper}>xs=3</Paper>
-				</Grid>
-				<Grid item xs={3}>
-					<Paper className={classes.paper}>xs=3</Paper>
-				</Grid>
-				<Grid item xs={3}>
-					<Paper className={classes.paper}>xs=3</Paper>
-				</Grid>
-				<Grid item xs={3}>
-					<Paper className={classes.paper}>xs=3</Paper>
-				</Grid> */}
 			</Grid>
 		</div>
 	)
