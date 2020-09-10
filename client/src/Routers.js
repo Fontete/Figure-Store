@@ -16,6 +16,8 @@ import AdminRoute from './General/ProtectedRoute/AdminRoute'
 import Checkout from './Pages/Shop/Checkout'
 import Orders from './Pages/Admin/Orders'
 import Profile from './Pages/User/Profile'
+import ManageProduct from './Pages/Admin/ManageProduct'
+import UpdateProduct from './Pages/Admin/UpdateProduct'
 
 const App = withRouter(({location}) => {
 	return (
@@ -37,6 +39,16 @@ const App = withRouter(({location}) => {
 				<AdminRoute path="/admin/category/add" exact component={AddCategory} />
 				<AdminRoute path="/admin/product/add" exact component={AddProduct} />
 				<AdminRoute path="/admin/product/orders" exact component={Orders} />
+				<AdminRoute
+					path="/admin/product/manage"
+					exact
+					component={ManageProduct}
+				/>
+				<AdminRoute
+					path="/admin/product/update/:productId"
+					exact
+					component={UpdateProduct}
+				/>
 			</Switch>
 		</Fragment>
 	)

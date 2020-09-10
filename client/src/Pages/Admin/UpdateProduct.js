@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
+import {Redirect} from 'react-router-dom'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
 
@@ -49,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const AddProduct = () => {
+const UpdateProduct = ({match}) => {
 	const classes = useStyles()
 
 	const [values, setValues] = useState({
@@ -65,6 +66,7 @@ const AddProduct = () => {
 		error: '',
 		formData: '',
 		response: '',
+		redirect: false,
 	})
 	const {
 		name,
@@ -78,6 +80,7 @@ const AddProduct = () => {
 		error,
 		formData,
 		response,
+		redirect,
 	} = values
 
 	const userID = isAuthenticated().data.user._id
@@ -105,7 +108,7 @@ const AddProduct = () => {
 			return
 		}
 
-		setValues({...values, error: false, success: false})
+		setValues({...values, error: false, success: false, redirect: true})
 	}
 
 	const showSuccess = () => {
@@ -142,10 +145,31 @@ const AddProduct = () => {
 		)
 	}
 
-	const fetchAddProduct = body => {
+	const fetchSingleProduct = productID => {
 		axios
-			.post(
-				process.env.REACT_APP_BASE_URL + `products/create/${userID}`,
+			.get(process.env.REACT_APP_BASE_URL + `products/${productID}`)
+			.then(data => {
+				setValues({
+					...values,
+					name: data.data.name,
+					description: data.data.description,
+					price: data.data.price,
+					category: data.data.category._id,
+					shipping: data.data.shipping,
+					quantity: data.data.quantity,
+					formData: new FormData(),
+				})
+				fetchListCategory()
+			})
+			.catch(err => {
+				setValues({...values, error: true, response: err.response.data.err})
+			})
+	}
+
+	const fetchUpdateProduct = (productID, body) => {
+		axios
+			.put(
+				process.env.REACT_APP_BASE_URL + `products/${productID}/${userID}`,
 				body,
 				{
 					headers: {
@@ -154,7 +178,11 @@ const AddProduct = () => {
 				},
 			)
 			.then(data => {
-				setValues({...values, success: true, response: data.data.message})
+				setValues({
+					...values,
+					success: true,
+					response: data.data.message,
+				})
 			})
 			.catch(err => {
 				setValues({...values, error: true, response: err.response.data.err})
@@ -166,7 +194,6 @@ const AddProduct = () => {
 			.get(process.env.REACT_APP_BASE_URL + `categories`)
 			.then(data => {
 				setValues({
-					...values,
 					categories: data.data,
 					formData: new FormData(),
 				})
@@ -177,12 +204,12 @@ const AddProduct = () => {
 	}
 
 	useEffect(() => {
-		fetchListCategory()
+		fetchSingleProduct(match.params.productId)
 	}, [])
 
 	const submit = e => {
 		e.preventDefault()
-		fetchAddProduct(formData)
+		fetchUpdateProduct(match.params.productId, formData)
 	}
 
 	const AddForm = () => {
@@ -486,7 +513,7 @@ const AddProduct = () => {
 							color="primary"
 							className={classes.submit}
 						>
-							Add
+							Update
 						</Button>
 					</form>
 				</Grid>
@@ -502,6 +529,7 @@ const AddProduct = () => {
 						{showSuccess()}
 						{showError()}
 						{AddForm()}
+						{redirect && <Redirect to="/admin/product/manage" />}
 					</Paper>
 				</Grid>
 			</Grid>
@@ -509,4 +537,4 @@ const AddProduct = () => {
 	)
 }
 
-export default AddProduct
+export default UpdateProduct

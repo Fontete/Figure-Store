@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import {isAuthenticated} from '../../General/Method/Authenticate'
-import {Link} from 'react-router-dom'
 import {
 	Typography,
 	Grid,

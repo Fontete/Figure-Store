@@ -3,6 +3,7 @@ import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Box from '@material-ui/core/Box'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
+import {Typography} from '@material-ui/core'
 
 const RadioButtonsGroup = ({prices, productFilters}) => {
 	const [value, setValue] = useState('')
@@ -18,8 +19,12 @@ const RadioButtonsGroup = ({prices, productFilters}) => {
 				prices.map(p => (
 					<RadioGroup key={p._id} aria-label="prices" value={value}>
 						<FormControlLabel
-							control={<Radio />}
-							label={<Box>{p.name}</Box>}
+							control={<Radio style={{color: '#fff'}} />}
+							label={
+								<Box>
+									<Typography color="secondary">{p.name}</Typography>
+								</Box>
+							}
 							name={p}
 							onChange={handleChange}
 							value={`${p._id}`}

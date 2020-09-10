@@ -1,7 +1,14 @@
 import React, {useState, useEffect, Fragment} from 'react'
 import axios from 'axios'
 import DropIn from 'braintree-web-drop-in-react'
-import {Grid, Button, Typography, Snackbar, TextField} from '@material-ui/core'
+import {
+	Grid,
+	Button,
+	Typography,
+	Snackbar,
+	TextField,
+	InputLabel,
+} from '@material-ui/core'
 import {Alert} from '@material-ui/lab'
 import {makeStyles} from '@material-ui/core/styles'
 import {Redirect} from 'react-router-dom'
@@ -160,10 +167,14 @@ const Checkout = props => {
 				{data.paymentToken !== null && (
 					<Grid container justify="center">
 						<Grid item xs={12}>
+							<InputLabel>
+								<Typography variant="caption" color="secondary">
+									Shipping Address
+								</Typography>
+							</InputLabel>
 							<TextField
 								color="secondary"
-								style={{backgroundColor: '#C0C0C0', marginTop: '4em'}}
-								label="Shipping Address"
+								style={{backgroundColor: '#fff'}}
 								required
 								fullWidth
 								id="address"

@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {TextField, Button, Grid} from '@material-ui/core'
+import {
+	TextField,
+	Button,
+	Grid,
+	InputLabel,
+	Typography,
+} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import {isAuthenticated, updateProfile} from '../../General/Method/Authenticate'
 import {Redirect} from 'react-router-dom'
@@ -36,7 +42,7 @@ const Profile = () => {
 	const userID = isAuthenticated().data.user._id
 	const token = isAuthenticated().data.token
 
-	const {firstName, lastName, email, password, error, open, success} = values
+	const {firstName, lastName, email, password, success} = values
 
 	const fetchUserProfile = () => {
 		axios
@@ -105,41 +111,64 @@ const Profile = () => {
 
 	const showUpdateProfile = () => (
 		<form className={classes.form}>
+			<Typography variant="h5" color="primary" style={{marginBottom: '2em'}}>
+				Update Profile
+			</Typography>
 			<Grid container spacing={2} xs={12} justify="center">
 				<Grid item xs={12}>
+					<InputLabel>
+						<Typography variant="caption" color="secondary">
+							Email
+						</Typography>
+					</InputLabel>
 					<TextField
+						style={{backgroundColor: '#fff'}}
 						fullWidth
 						type="email"
 						variant="outlined"
-						label="Email"
 						onChange={handleChange('email')}
 						value={email}
 					/>
 				</Grid>
 				<Grid item xs={6}>
+					<InputLabel>
+						<Typography variant="caption" color="secondary">
+							First Name
+						</Typography>
+					</InputLabel>
 					<TextField
+						style={{backgroundColor: '#fff'}}
 						fullWidth
 						type="text"
 						variant="outlined"
-						label="First Name"
 						onChange={handleChange('firstName')}
 						value={firstName}
 					/>
 				</Grid>
 				<Grid item xs={6}>
+					<InputLabel>
+						<Typography variant="caption" color="secondary">
+							Last Name
+						</Typography>
+					</InputLabel>
 					<TextField
+						style={{backgroundColor: '#fff'}}
 						fullWidth
 						type="text"
 						variant="outlined"
-						label="Last Name"
 						onChange={handleChange('lastName')}
 						value={lastName}
 					/>
 				</Grid>
 				<Grid item xs={12}>
+					<InputLabel>
+						<Typography variant="caption" color="secondary">
+							Password
+						</Typography>
+					</InputLabel>
 					<TextField
+						style={{backgroundColor: '#fff'}}
 						fullWidth
-						type="password"
 						variant="outlined"
 						label="Password"
 						onChange={handleChange('password')}

@@ -11,8 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import Drawer from '@material-ui/core/Drawer'
 import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
-// import Tabs from '@material-ui/core/Tabs'
-// import Tab from '@material-ui/core/Tab'
+import Fab from '@material-ui/core/Fab'
 import {withRouter, Link} from 'react-router-dom'
 import {isAuthenticated} from '../General/Method/Authenticate'
 import Grid from '@material-ui/core/Grid'
@@ -163,7 +162,16 @@ const AppSearchBar = ({history}) => {
 					<Link to="/admin/product/add" style={{textDecoration: 'none'}}>
 						<IconButton edge="end" color="inherit">
 							<DashboardIcon style={{color: '#fff'}} />
-							<Typography style={{color: '#fff'}}>Products</Typography>
+							<Typography style={{color: '#fff'}}> Add Products</Typography>
+						</IconButton>
+					</Link>
+				</MenuItem>
+				<Divider />
+				<MenuItem onClick={handleClose}>
+					<Link to="/admin/product/manage" style={{textDecoration: 'none'}}>
+						<IconButton edge="end" color="inherit">
+							<DashboardIcon style={{color: '#fff'}} />
+							<Typography style={{color: '#fff'}}>Management</Typography>
 						</IconButton>
 					</Link>
 				</MenuItem>
@@ -234,31 +242,23 @@ const AppSearchBar = ({history}) => {
 								<MenuIcon />
 							</IconButton>
 						</Grid>
-						{/* <Tabs
-							variant="fullWidth"
-							indicatorColor="primary"
-							textColor="primary"
-							aria-label="icon label tabs example"
-						>
-							<Link style={{textDecoration: 'none'}} to="/trending">
-								<Tab
-									style={{color: '#fff'}}
-									icon={<HotIcon />}
-									label="Hot & Newest"
-								/>
+						<Grid container item xs={3}>
+							<Link style={{textDecoration: 'none'}} to="/shop">
+								<Fab
+									color="secondary"
+									variant="extended"
+									style={{
+										height: 'inherit',
+										marginTop: '5px',
+										marginBottom: '5px',
+									}}
+								>
+									<Typography variant="h6" color="inherit">
+										Shop Now!
+									</Typography>
+								</Fab>
 							</Link>
-							<Tab
-								style={{color: '#fff'}}
-								icon={<NewestIcon />}
-								label="Newest"
-							/>
-							<Tab
-								style={{color: '#fff'}}
-								icon={<CategoryIcon />}
-								label="Categories"
-							/>
-						</Tabs> */}
-						<Grid container item xs={3}></Grid>
+						</Grid>
 						<Grid container item xs={7} justify="flex-end">
 							<IconButton onClick={handleCart}>
 								<Badge quantity={total()} />
