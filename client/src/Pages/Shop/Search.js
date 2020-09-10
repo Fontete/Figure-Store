@@ -112,10 +112,18 @@ const Search = () => {
 
 	const searchMessage = (isSearch, responses) => {
 		if (isSearch && responses.length > 0) {
-			return `${responses.length} results was found`
+			return (
+				<Typography variant="caption" color="secondary">
+					{responses.length} results was found
+				</Typography>
+			)
 		}
 		if (isSearch && responses.length === 0) {
-			return 'No result was found'
+			return (
+				<Typography variant="caption" color="secondary">
+					No result was found
+				</Typography>
+			)
 		}
 	}
 
