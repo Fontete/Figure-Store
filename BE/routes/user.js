@@ -23,6 +23,12 @@ router.get(
 	userController.isMember,
 	userController.profile,
 )
+router.get(
+	'/purchase/:userID',
+	method.jwtVerify,
+	userController.isMember,
+	userController.purchaseHistory,
+)
 router.put(
 	'/:userID',
 	method.jwtVerify,

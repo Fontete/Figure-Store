@@ -1,7 +1,7 @@
 const userModel = require('../models/user')
+const {Order} = require('../models/order')
 const jwt = require('jsonwebtoken')
 const error = require('../general/error')
-const method = require('../general/method')
 
 exports.register = async (req, res) => {
 	const user = new userModel(req.body)
@@ -129,13 +129,13 @@ exports.update = (req, res) => {
 		{_id: req.profile._id},
 		{$set: req.body},
 		{new: true},
-		err => {
+		(err, user) => {
 			if (err) {
 				return res.status(400).json({
 					err: 'Unauthorize',
 				})
 			}
-			res.json({message: 'Update successfully'})
+			res.json(user)
 		},
 	)
 }
@@ -166,4 +166,16 @@ exports.orderHistory = (req, res, next) => {
 			next()
 		},
 	)
+}
+
+exports.purchaseHistory = (req, res) => {
+	Order.find({user: req.profile._id})
+		.populate('user', '_id name')
+		.sort()
+		.exec((err, orders) => {
+			if (err) {
+				return res.status(400).json({err: error.errorHandler(err)})
+			}
+			res.json(orders)
+		})
 }
