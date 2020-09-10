@@ -100,22 +100,34 @@ const Detail = props => {
 					</Grid>
 					<Grid container item lg={6} spacing={4}>
 						<Grid item xs={6}>
-							<CardImg className={classes.Card}>
+							<CardImg
+								className={classes.Card}
+								style={{border: '1px solid #C0C0C0'}}
+							>
 								<CardMedia image={url2} className={classes.media}></CardMedia>
 							</CardImg>
 						</Grid>
 						<Grid item xs={6}>
-							<CardImg className={classes.card}>
+							<CardImg
+								className={classes.card}
+								style={{border: '1px solid #C0C0C0'}}
+							>
 								<CardMedia image={url3} className={classes.media}></CardMedia>
 							</CardImg>
 						</Grid>
 						<Grid item xs={6}>
-							<CardImg className={classes.card}>
+							<CardImg
+								className={classes.card}
+								style={{border: '1px solid #C0C0C0'}}
+							>
 								<CardMedia image={url4} className={classes.media}></CardMedia>
 							</CardImg>
 						</Grid>
 						<Grid item xs={6}>
-							<CardImg className={classes.card}>
+							<CardImg
+								className={classes.card}
+								style={{border: '1px solid #C0C0C0'}}
+							>
 								<CardMedia image={url5} className={classes.media}></CardMedia>
 							</CardImg>
 						</Grid>
