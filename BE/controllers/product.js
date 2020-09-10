@@ -145,18 +145,7 @@ exports.productDetail = (req, res) => {
 // }
 
 exports.delete = (req, res) => {
-	// the original is findById(id).remove(), findById is handle by prouctID middleware
-	// req.product.remove((err) => {
-	//     if (err) {
-	//         return res.status(400).json({
-	//             err: error.errorHandler
-	//         })
-	//     }
-	//     res.json({
-	//         message: "Delete successfully"
-	//     })
-	// })
-	productModel.findOnedAndDelete(req.product._id, err => {
+	req.product.remove(err => {
 		if (err) {
 			return res.status(400).json({
 				err: error.errorHandler,
@@ -179,7 +168,7 @@ exports.update = (req, res) => {
 			})
 		}
 
-		if (quantity <= 0 || price <= 0) {
+		if (form.quantity <= 0 || form.price <= 0) {
 			return res.status(400).json({
 				err: 'Number must be larger than zero',
 			})
@@ -302,6 +291,10 @@ exports.productList = (req, res) => {
 	productModel
 		.find()
 		.select('-image')
+		.select('-image2')
+		.select('-image3')
+		.select('-image4')
+		.select('-image5')
 		.populate('category')
 		.sort([[sortBy, order]])
 		.limit(limit)
@@ -320,6 +313,10 @@ exports.relatedList = (req, res) => {
 	productModel
 		.find({_id: {$ne: req.product}, category: req.product.category})
 		.select('-image')
+		.select('-image2')
+		.select('-image3')
+		.select('-image4')
+		.select('-image5')
 		.populate('category', '_id name')
 		.limit(limit)
 		.exec((err, data) => {
@@ -357,6 +354,10 @@ exports.filterList = (req, res) => {
 	productModel
 		.find(priceRange)
 		.select('-image')
+		.select('-image2')
+		.select('-image3')
+		.select('-image4')
+		.select('-image5')
 		.populate('category')
 		.sort([[sortBy, order]])
 		.skip(skip)
@@ -388,6 +389,10 @@ exports.searchList = (req, res) => {
 				res.json(products)
 			})
 			.select('-image')
+			.select('-image2')
+			.select('-image3')
+			.select('-image4')
+			.select('-image5')
 	}
 }
 
