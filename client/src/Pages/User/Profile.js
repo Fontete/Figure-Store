@@ -6,7 +6,9 @@ import {
 	Grid,
 	InputLabel,
 	Typography,
+	Snackbar,
 } from '@material-ui/core'
+import {Alert} from '@material-ui/lab'
 import {makeStyles} from '@material-ui/core/styles'
 import {isAuthenticated, updateProfile} from '../../General/Method/Authenticate'
 import {Redirect} from 'react-router-dom'
@@ -37,12 +39,23 @@ const Profile = () => {
 		password: '',
 		error: false,
 		success: false,
+		response: '',
+		redirect: false,
 	})
 
 	const userID = isAuthenticated().data.user._id
 	const token = isAuthenticated().data.token
 
-	const {firstName, lastName, email, password, success} = values
+	const {
+		firstName,
+		lastName,
+		email,
+		password,
+		success,
+		error,
+		response,
+		redirect,
+	} = values
 
 	const fetchUserProfile = () => {
 		axios
@@ -84,7 +97,7 @@ const Profile = () => {
 				})
 			})
 			.catch(err => {
-				console.log(err.response.data.err)
+				setValues({...values, error: true, response: err.response.data.err})
 			})
 	}
 
@@ -97,8 +110,58 @@ const Profile = () => {
 		fetchUpdateProfile({firstName, lastName, email, password})
 	}
 
-	const redirect = success => {
-		if (success) {
+	const handleCloseSuccess = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+
+		setValues({...values, error: false, success: false, redirect: true})
+	}
+
+	const handleCloseError = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+
+		setValues({...values, error: false, success: false, redirect: false})
+	}
+
+	const showSuccess = () => {
+		return (
+			<div className={classes.root}>
+				<Snackbar
+					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+					open={success}
+					autoHideDuration={3000}
+					onClose={handleCloseSuccess}
+				>
+					<Alert onClose={handleCloseSuccess} severity="success">
+						Update Profile Successfully
+					</Alert>
+				</Snackbar>
+			</div>
+		)
+	}
+
+	const showError = () => {
+		return (
+			<div className={classes.root}>
+				<Snackbar
+					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+					open={error}
+					autoHideDuration={3000}
+					onClose={handleCloseError}
+				>
+					<Alert onClose={handleCloseError} severity="error">
+						{response}
+					</Alert>
+				</Snackbar>
+			</div>
+		)
+	}
+
+	const redirectTo = redirect => {
+		if (redirect) {
 			if (isAuthenticated().data.user.role === 1) {
 				return <Redirect to="/user/profile" />
 			} else return <Redirect to="/admin/profile" />
@@ -167,6 +230,7 @@ const Profile = () => {
 						</Typography>
 					</InputLabel>
 					<TextField
+						type="password"
 						style={{backgroundColor: '#fff'}}
 						fullWidth
 						variant="outlined"
@@ -196,7 +260,9 @@ const Profile = () => {
 			<Grid container spacing={2} justify="center">
 				<Grid item xs={12}>
 					{showUpdateProfile()}
-					{redirect(success)}
+					{redirectTo(redirect)}
+					{showSuccess()}
+					{showError()}
 				</Grid>
 			</Grid>
 		</div>
