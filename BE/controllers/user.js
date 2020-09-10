@@ -135,7 +135,28 @@ exports.update = (req, res) => {
 					err: 'Unauthorize',
 				})
 			}
-			res.json(user)
+
+			if (req.body.password) {
+				if (req.body.password.length < 6) {
+					return res.status(400).json({
+						error: 'Password should be min 6 characters long',
+					})
+				} else {
+					user.password = req.body.password
+				}
+			}
+
+			user.save((err, updatedUser) => {
+				if (err) {
+					console.log('USER UPDATE ERROR', err)
+					return res.status(400).json({
+						err: 'User update failed',
+					})
+				}
+				updatedUser.hashed_password = undefined
+				updatedUser.salt = undefined
+				res.json(updatedUser)
+			})
 		},
 	)
 }

@@ -31,6 +31,7 @@ router.get(
 )
 router.put(
 	'/:userID',
+	method.updateValidator,
 	method.jwtVerify,
 	userController.isMember,
 	userController.update,

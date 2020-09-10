@@ -29,6 +29,26 @@ exports.Validator = (req, res, next) => {
 	next()
 }
 
+exports.updateValidator = (req, res, next) => {
+	req.check('firstName', 'First name is required').notEmpty()
+	req.check('lastName', 'Last name is required').notEmpty()
+	req
+		.check('email', 'Email must be between 3 to 32 characters')
+		.matches(/.+\@.+\..+/) // regular expression for email type as abc@xyz.com
+		.withMessage('Wrong email type')
+		.isLength({
+			max: 32,
+		})
+	const errors = req.validationErrors()
+	if (errors) {
+		const firstError = errors.map(error => error.msg)[0]
+		return res.status(400).json({
+			err: firstError,
+		})
+	}
+	next()
+}
+
 exports.jwtVerify = expressJwt({
 	secret: process.env.JWT,
 	userProperty: 'authenticate',
