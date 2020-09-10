@@ -193,7 +193,7 @@ const Checkout = props => {
 										flow: 'checkout',
 										amount: '10.00',
 										currency: 'USD',
-										enableShippingAddress: true,
+										// enableShippingAddress: true,
 										buttonStyle: {
 											color: 'gold',
 											shape: 'rect',

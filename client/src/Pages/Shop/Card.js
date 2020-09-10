@@ -28,6 +28,40 @@ const useStyles = makeStyles(theme => ({
 	typography: {
 		padding: theme.spacing(2),
 	},
+	title: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: 'auto',
+			height: '100px',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			height: '100px',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: 'auto',
+			height: 'auto',
+		},
+	},
+	desc: {
+		[theme.breakpoints.up('xs')]: {
+			width: 'auto',
+		},
+		[theme.breakpoints.up('sm')]: {
+			width: 'auto',
+			height: '50px',
+		},
+		[theme.breakpoints.up('md')]: {
+			width: 'auto',
+			height: '50px',
+		},
+		[theme.breakpoints.up('lg')]: {
+			width: 'auto',
+			height: 'auto',
+		},
+	},
 }))
 
 const ProductCard = ({
@@ -75,15 +109,17 @@ const ProductCard = ({
 				/>
 			</Link>
 			<CardContent>
-				<Typography
-					style={{wordWrap: 'break-word'}}
-					align="center"
-					variant="h4"
-					color="secondary"
-					component="p"
-				>
-					{name}
-				</Typography>
+				<div className={classes.title}>
+					<Typography
+						style={{wordWrap: 'break-word'}}
+						align="center"
+						variant="h4"
+						color="secondary"
+						component="p"
+					>
+						{name}
+					</Typography>
+				</div>
 				<Typography align="center" variant="h6" color="primary" component="p">
 					${price}
 				</Typography>
@@ -95,17 +131,19 @@ const ProductCard = ({
 				>
 					{showSTock(quantity)}
 				</Typography>
-				<Typography
-					style={{wordWrap: 'break-word'}}
-					align="center"
-					variant="subtitle2"
-					color="textPrimary"
-					component="p"
-				>
-					{description.length > 50
-						? `${description.substring(0, 50)} ...`
-						: description}
-				</Typography>
+				<div className={classes.desc}>
+					<Typography
+						style={{wordWrap: 'break-word'}}
+						align="center"
+						variant="subtitle2"
+						color="textPrimary"
+						component="p"
+					>
+						{description.length > 50
+							? `${description.substring(0, 50)} ...`
+							: description}
+					</Typography>
+				</div>
 				<Typography
 					align="center"
 					variant="caption"
