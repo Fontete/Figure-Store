@@ -245,15 +245,17 @@ const AppSearchBar = ({history}) => {
 						<Grid container item xs={3}>
 							<Link style={{textDecoration: 'none'}} to="/shop">
 								<Fab
+									size="small"
 									color="secondary"
 									variant="extended"
 									style={{
-										height: 'inherit',
+										width: '100px',
+
 										marginTop: '5px',
 										marginBottom: '5px',
 									}}
 								>
-									<Typography variant="h6" color="inherit">
+									<Typography variant="caption" color="inherit">
 										Shop Now!
 									</Typography>
 								</Fab>
