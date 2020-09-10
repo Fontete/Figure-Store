@@ -5,12 +5,13 @@ import Grid from '@material-ui/core/Grid'
 import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import Typography from '@material-ui/core/Typography'
+import Drawer from '@material-ui/core/Drawer'
 
 import Card from './Card'
 import Checkbox from './Checkbox'
 import Radio from './Radio'
 import {prices} from './PriceRange'
-import {Hidden} from '@material-ui/core'
+import {Hidden, Button} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -33,6 +34,14 @@ const useStyles = makeStyles(theme => ({
 		},
 		overflowX: 'hidden',
 	},
+	paper: {
+		maxWidth: '100%',
+		backgroundColor: '#A9A9A9',
+		color: '#fff',
+		width: '100%',
+		maxHeight: '75%',
+		justifyContent: 'space-strech',
+	},
 }))
 
 const ShopPage = () => {
@@ -43,6 +52,20 @@ const ShopPage = () => {
 	const [categories, setCategories] = useState()
 	const [product, setProduct] = useState()
 	const [filter, setFilter] = useState({filters: {category: [], price: []}})
+
+	//Drawer
+	const [anchorEl, setAnchorEl] = useState(null)
+
+	const handleClick = e => {
+		setAnchorEl(e.currentTarget)
+	}
+
+	const handleClose = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+		setAnchorEl(false)
+	}
 
 	const fetchListCategory = () => {
 		axios
@@ -62,6 +85,7 @@ const ShopPage = () => {
 			.then(data => {
 				setProduct(data.data)
 				setSkip(0)
+				setAnchorEl(false)
 			})
 			.catch(err => {
 				console.log(err.response.data.err)
@@ -116,6 +140,43 @@ const ShopPage = () => {
 		setFilter(newFilters)
 	}
 
+	const filterDrawer = () => {
+		return (
+			<Drawer
+				classes={{paper: classes.paper}}
+				docked={false}
+				open={anchorEl}
+				onClose={handleClose}
+			>
+				<Grid container item sm={2}>
+					<FormControl
+						component="fieldset"
+						style={{position: 'fixed', margin: '2em'}}
+					>
+						<FormLabel component="legend" style={{color: '#fff'}}>
+							<Typography variant="h5" color="primary">
+								Categories
+							</Typography>
+						</FormLabel>
+						<Checkbox
+							categories={categories}
+							productFilters={filters => productFilter(filters, 'category')}
+						/>
+						<FormLabel component="legend" style={{color: '#fff'}}>
+							<Typography variant="h5" color="primary">
+								Prices
+							</Typography>
+						</FormLabel>
+						<Radio
+							prices={prices}
+							productFilters={filters => productFilter(filters, 'price')}
+						/>
+					</FormControl>
+				</Grid>
+			</Drawer>
+		)
+	}
+
 	useEffect(() => {
 		fetchListCategory()
 		loadFilterProduct(skip, limit, filter.filters)
@@ -123,6 +184,21 @@ const ShopPage = () => {
 
 	return (
 		<div className={classes.root} onScroll={handleScroll}>
+			{filterDrawer()}
+			<Hidden lgUp={true}>
+				<Grid container xs={12} justity="center">
+					<Button
+						style={{marginBottom: '2em'}}
+						fullWidth
+						type="submit"
+						variant="contained"
+						color="primary"
+						onClick={handleClick}
+					>
+						Filter
+					</Button>
+				</Grid>
+			</Hidden>
 			<Grid container justify="center">
 				<Hidden xsDown={true} mdDown={true}>
 					<Grid container item sm={2}>
