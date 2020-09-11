@@ -231,7 +231,7 @@ const AppSearchBar = ({history}) => {
 			<AppBar className={classes.appBar} position="fixed">
 				<Toolbar>
 					<Grid container spacing={4}>
-						<Grid container item xs={2}>
+						<Grid container item xs={5}>
 							<IconButton
 								edge="start"
 								className={classes.menuButton}
@@ -241,8 +241,6 @@ const AppSearchBar = ({history}) => {
 							>
 								<MenuIcon />
 							</IconButton>
-						</Grid>
-						<Grid container item xs={3}>
 							<Link style={{textDecoration: 'none'}} to="/shop">
 								<Fab
 									size="small"

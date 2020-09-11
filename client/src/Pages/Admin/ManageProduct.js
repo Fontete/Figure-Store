@@ -189,7 +189,11 @@ const ManageProduct = () => {
 														</Button>
 													</Link>
 													<Button
-														style={{marginTop: '1em', backgroundColor: 'red'}}
+														style={{
+															marginTop: '1em',
+															marginLeft: '1em',
+															backgroundColor: 'red',
+														}}
 														onClick={() => fetchDeleteProduct(p._id)}
 													>
 														Delete

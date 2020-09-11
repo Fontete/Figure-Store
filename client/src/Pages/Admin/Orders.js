@@ -180,7 +180,7 @@ const Orders = () => {
 		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
 			<Grid container spacing={2}>
 				<Grid item xs={12}>
-					<Paper className={classes.paper} style={{backgroundColor: '#3282b8'}}>
+					<Paper className={classes.paper} style={{backgroundColor: '#fff'}}>
 						{length()}
 						<Divider style={{marginBottom: '2em'}} />
 						{orders &&

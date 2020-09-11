@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	card: {
 		minWidth: 275,
-		backgroundColor: '#3282b8',
+		backgroundColor: '#fff',
 	},
 	bullet: {
 		display: 'inline-block',
@@ -185,19 +185,22 @@ const Dashboard = () => {
 								history.map((p, i) => {
 									return (
 										<div key={i}>
-											<MenuItem>
+											<MenuItem style={{borderBottom: '3px solid black'}}>
 												<Typography className={classes.typography} variant="h4">
 													OrderID: {p._id}
 												</Typography>
 											</MenuItem>
-											<div style={{border: '1px solid indigo', width: '100%'}}>
+											<div>
 												<MenuList>
 													<Typography variant="h5">Products</Typography>
 												</MenuList>
 												{p.products &&
 													p.products.map((item, index) => {
 														return (
-															<div key={index}>
+															<div
+																key={index}
+																style={{borderBottom: '1px solid black'}}
+															>
 																<Typography
 																	style={{paddingLeft: '3px'}}
 																	variant="h6"
@@ -215,7 +218,6 @@ const Dashboard = () => {
 																		Quantity: {item.count}
 																	</Typography>
 																</MenuItem>
-																<Divider />
 															</div>
 														)
 													})}

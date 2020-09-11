@@ -248,7 +248,7 @@ const Profile = () => {
 						className={classes.submit}
 						onClick={submit}
 					>
-						Submit
+						Update
 					</Button>
 				</Grid>
 			</Grid>

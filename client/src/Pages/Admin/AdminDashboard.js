@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 		},
 
 		minWidth: 275,
-		backgroundColor: '#3282b8',
+		backgroundColor: '#fff',
 	},
 	bullet: {
 		display: 'inline-block',

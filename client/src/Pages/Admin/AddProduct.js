@@ -199,7 +199,7 @@ const AddProduct = () => {
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
-									style={{backgroundColor: '#bbe1fa', height: '4em'}}
+									style={{backgroundColor: '#fff', height: '4em'}}
 									required
 									fullWidth
 									id="name"
@@ -220,7 +220,7 @@ const AddProduct = () => {
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
-									style={{backgroundColor: '#bbe1fa', height: '4em'}}
+									style={{backgroundColor: '#fff', height: '4em'}}
 									required
 									fullWidth
 									id="price"
@@ -241,7 +241,7 @@ const AddProduct = () => {
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Input
-									style={{backgroundColor: '#bbe1fa', height: '4em'}}
+									style={{backgroundColor: '#fff', height: '4em'}}
 									required
 									fullWidth
 									id="quantity"
@@ -264,7 +264,7 @@ const AddProduct = () => {
 								<Select
 									style={{
 										width: '100%',
-										backgroundColor: '#bbe1fa',
+										backgroundColor: '#fff',
 									}}
 									label="Category"
 									variant="filled"
@@ -294,7 +294,7 @@ const AddProduct = () => {
 								<Select
 									style={{
 										width: '100%',
-										backgroundColor: '#bbe1fa',
+										backgroundColor: '#fff',
 									}}
 									label="Category"
 									variant="filled"
@@ -318,7 +318,7 @@ const AddProduct = () => {
 							<Grid item xs={11}></Grid>
 							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
 								<Grid item xs={12}>
-									<Card style={{height: '80px', backgroundColor: '#e8ded2'}}>
+									<Card style={{height: '80px', backgroundColor: '#fff'}}>
 										<Grid container xs={12} justify="center">
 											<Grid item xs={2}>
 												<Typography
@@ -366,7 +366,12 @@ const AddProduct = () => {
 												</Typography>
 											</Grid>
 										</Grid>
-										<Grid container xs={12} justify="center">
+										<Grid
+											container
+											xs={12}
+											justify="center"
+											style={{backgroundColor: '#fff'}}
+										>
 											<Grid item xs={2}>
 												<label for="file">
 													<img
@@ -468,7 +473,7 @@ const AddProduct = () => {
 								<TextareaAutosize
 									style={{
 										width: '99%',
-										backgroundColor: '#bbe1fa',
+										backgroundColor: '#fff',
 										height: '8em',
 									}}
 									aria-label="minimum height"

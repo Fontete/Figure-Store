@@ -132,7 +132,7 @@ const AddCategory = () => {
 				<Grid item xs={12}>
 					<form className={classes.form} noValidate>
 						<TextField
-							style={{backgroundColor: '#bbe1fa'}}
+							style={{backgroundColor: '#fff'}}
 							variant="filled"
 							required
 							fullWidth
