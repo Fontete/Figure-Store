@@ -232,32 +232,36 @@ const AppSearchBar = ({history}) => {
 				<Toolbar>
 					<Grid container spacing={4}>
 						<Grid container item xs={5}>
-							<IconButton
-								edge="start"
-								className={classes.menuButton}
-								color="inherit"
-								aria-label="open drawer"
-								onClick={handleClick}
-							>
-								<MenuIcon />
-							</IconButton>
-							<Link style={{textDecoration: 'none'}} to="/shop">
-								<Fab
-									size="small"
-									color="secondary"
-									variant="extended"
-									style={{
-										width: '100px',
-
-										marginTop: '5px',
-										marginBottom: '5px',
-									}}
+							<Grid item sm={2} md={2} lg={1} xs={4}>
+								<IconButton
+									edge="start"
+									className={classes.menuButton}
+									color="inherit"
+									aria-label="open drawer"
+									onClick={handleClick}
 								>
-									<Typography variant="caption" color="inherit">
-										Shop Now!
-									</Typography>
-								</Fab>
-							</Link>
+									<MenuIcon />
+								</IconButton>
+							</Grid>
+							<Grid item sm={10} md={10} lg={11} xs={8}>
+								<Link style={{textDecoration: 'none'}} to="/shop">
+									<Fab
+										size="small"
+										color="secondary"
+										variant="extended"
+										style={{
+											width: '100px',
+
+											marginTop: '5px',
+											marginBottom: '5px',
+										}}
+									>
+										<Typography variant="caption" color="inherit">
+											Shop Now!
+										</Typography>
+									</Fab>
+								</Link>
+							</Grid>
 						</Grid>
 						<Grid container item xs={7} justify="flex-end">
 							<IconButton onClick={handleCart}>
