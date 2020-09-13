@@ -4,6 +4,7 @@ const expressJwt = require('express-jwt')
 exports.Validator = (req, res, next) => {
 	req.check('firstName', 'First name is required').notEmpty()
 	req.check('lastName', 'Last name is required').notEmpty()
+	req.check('email', 'Email is required').notEmpty()
 	req
 		.check('email', 'Email must be between 3 to 32 characters')
 		.matches(/.+\@.+\..+/) // regular expression for email type as abc@xyz.com
@@ -32,6 +33,7 @@ exports.Validator = (req, res, next) => {
 exports.updateValidator = (req, res, next) => {
 	req.check('firstName', 'First name is required').notEmpty()
 	req.check('lastName', 'Last name is required').notEmpty()
+	req.check('email', 'Email is required').notEmpty()
 	req
 		.check('email', 'Email must be between 3 to 32 characters')
 		.matches(/.+\@.+\..+/) // regular expression for email type as abc@xyz.com

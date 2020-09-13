@@ -132,7 +132,7 @@ exports.update = (req, res) => {
 		(err, user) => {
 			if (err) {
 				return res.status(400).json({
-					err: 'Unauthorize',
+					err: 'Email is already exist',
 				})
 			}
 
