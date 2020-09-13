@@ -136,10 +136,15 @@ exports.update = (req, res) => {
 				})
 			}
 
+			const strongRegex = new RegExp(
+				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})',
+			)
+
 			if (req.body.password) {
-				if (req.body.password.length < 6) {
+				if (!strongRegex.test(req.body.password)) {
 					return res.status(400).json({
-						error: 'Password should be min 6 characters long',
+						err:
+							'Password must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character,  at least one special character must be eight characters or longer',
 					})
 				} else {
 					user.password = req.body.password

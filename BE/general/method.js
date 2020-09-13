@@ -15,9 +15,9 @@ exports.Validator = (req, res, next) => {
 	req
 		.check('password')
 		.withMessage('Password must contain at least 6 characters')
-		.matches(/^(?=.*\d)(?=.*[A-Za-z])[a-zA-Z0-9]{6,32}$/) // regular expression for password
+		.matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/) // regular expression for password
 		.withMessage(
-			'Password must contain at least 6 characters and less than 32 characters. It must has at least one number, one character and not includes special character',
+			'Password must contain at least 1 lowercase alphabetical character, at least 1 uppercase alphabetical character, at least 1 numeric character, at least one special character must be eight characters or longer',
 		)
 	const errors = req.validationErrors()
 	if (errors) {
