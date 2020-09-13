@@ -97,7 +97,12 @@ const Profile = () => {
 				})
 			})
 			.catch(err => {
-				setValues({...values, error: true, response: err.response.data.err})
+				setValues({
+					...values,
+					error: true,
+					response: err.response.data.err,
+					password: '',
+				})
 			})
 	}
 
@@ -149,7 +154,7 @@ const Profile = () => {
 				<Snackbar
 					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
 					open={error}
-					autoHideDuration={3000}
+					autoHideDuration={5000}
 					onClose={handleCloseError}
 				>
 					<Alert onClose={handleCloseError} severity="error">

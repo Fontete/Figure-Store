@@ -134,7 +134,12 @@ const Register = () => {
 				})
 			})
 			.catch(err => {
-				setValues({...values, error: err.response.data.err, success: false})
+				setValues({
+					...values,
+					error: err.response.data.err,
+					success: false,
+					password: '',
+				})
 			})
 	}
 
