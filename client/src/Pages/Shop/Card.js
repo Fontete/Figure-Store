@@ -34,11 +34,11 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('sm')]: {
 			width: 'auto',
-			height: '100px',
+			height: '50px',
 		},
 		[theme.breakpoints.up('md')]: {
 			width: 'auto',
-			height: '100px',
+			height: '75px',
 		},
 		[theme.breakpoints.up('lg')]: {
 			width: 'auto',

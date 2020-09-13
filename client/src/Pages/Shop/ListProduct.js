@@ -42,6 +42,17 @@ const useStyles = makeStyles(theme => ({
 		maxHeight: '75%',
 		justifyContent: 'space-strech',
 	},
+	button: {
+		[theme.breakpoints.up('xs')]: {
+			margin: '0em 1em 2em 1em',
+		},
+		[theme.breakpoints.up('sm')]: {
+			margin: '0em 6em 2em 6em',
+		},
+		[theme.breakpoints.up('md')]: {
+			margin: '0em 8em 2em 8em',
+		},
+	},
 }))
 
 const ShopPage = () => {
@@ -188,7 +199,7 @@ const ShopPage = () => {
 			<Hidden lgUp={true}>
 				<Grid container xs={12} justity="center">
 					<Button
-						style={{marginBottom: '2em'}}
+						className={classes.button}
 						fullWidth
 						type="submit"
 						variant="contained"
