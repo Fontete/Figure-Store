@@ -179,69 +179,78 @@ const Dashboard = () => {
 				</CardContent>
 				<Divider />
 				<Grid container xs={12}>
-					<CardContent>
-						<MenuList style={{margin: '0 0 2em 0'}}>
-							{history &&
-								history.map((p, i) => {
-									return (
-										<div key={i}>
-											<MenuItem style={{borderBottom: '3px solid black'}}>
-												<Typography className={classes.typography} variant="h4">
-													OrderID: {p._id}
-												</Typography>
-											</MenuItem>
-											<div>
-												<MenuList>
-													<Typography variant="h5">Products</Typography>
-												</MenuList>
-												{p.products &&
-													p.products.map((item, index) => {
-														return (
-															<div
-																key={index}
-																style={{borderBottom: '1px solid black'}}
-															>
-																<Typography
-																	style={{paddingLeft: '3px'}}
-																	variant="h6"
-																>
-																	Item {index + 1}
-																</Typography>
-																<MenuItem>
-																	<Typography>Name: {item.name}</Typography>
-																</MenuItem>
-																<MenuItem>
-																	<Typography>Price: ${item.price}</Typography>
-																</MenuItem>
-																<MenuItem>
-																	<Typography>
-																		Quantity: {item.count}
-																	</Typography>
-																</MenuItem>
-															</div>
-														)
-													})}
-
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography>Status: {p.status}</Typography>
-												</MenuItem>
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography>Total: ${p.amount}</Typography>
-												</MenuItem>
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography>
-														Purchase at: {moment(p.createdAt).fromNow()}
+					<Grid xs={12}>
+						<CardContent>
+							<MenuList style={{margin: '0 0 2em 0'}}>
+								{history &&
+									history.map((p, i) => {
+										return (
+											<div key={i} style={{border: '3px solid black'}}>
+												<MenuItem style={{borderBottom: '3px solid black'}}>
+													<Typography
+														className={classes.typography}
+														variant="h4"
+													>
+														OrderID: {p._id}
 													</Typography>
 												</MenuItem>
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography>Shipping address: {p.address}</Typography>
-												</MenuItem>
+												<div>
+													<MenuList>
+														<Typography variant="h5">Products</Typography>
+													</MenuList>
+													{p.products &&
+														p.products.map((item, index) => {
+															return (
+																<div
+																	key={index}
+																	style={{borderBottom: '1px solid black'}}
+																>
+																	<Typography
+																		style={{paddingLeft: '3px'}}
+																		variant="h6"
+																	>
+																		Item {index + 1}
+																	</Typography>
+																	<MenuItem>
+																		<Typography>Name: {item.name}</Typography>
+																	</MenuItem>
+																	<MenuItem>
+																		<Typography>
+																			Price: ${item.price}
+																		</Typography>
+																	</MenuItem>
+																	<MenuItem>
+																		<Typography>
+																			Quantity: {item.count}
+																		</Typography>
+																	</MenuItem>
+																</div>
+															)
+														})}
+
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography>Status: {p.status}</Typography>
+													</MenuItem>
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography>Total: ${p.amount}</Typography>
+													</MenuItem>
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography>
+															Purchase at: {moment(p.createdAt).fromNow()}
+														</Typography>
+													</MenuItem>
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography>
+															Shipping address: {p.address}
+														</Typography>
+													</MenuItem>
+												</div>
 											</div>
-										</div>
-									)
-								})}
-						</MenuList>
-					</CardContent>
+										)
+									})}
+							</MenuList>
+						</CardContent>
+					</Grid>
 				</Grid>
 			</Card>
 		)
