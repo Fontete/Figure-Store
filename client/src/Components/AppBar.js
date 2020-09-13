@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
 			width: 0,
 		},
 		overflowX: 'hidden',
-		backgroundColor: '#696969',
+		backgroundColor: '#fff',
 	},
 }))
 
