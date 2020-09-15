@@ -388,6 +388,7 @@ exports.searchList = (req, res) => {
 				}
 				res.json(products)
 			})
+			.populate('category')
 			.select('-image')
 			.select('-image2')
 			.select('-image3')
