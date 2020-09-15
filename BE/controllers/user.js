@@ -44,7 +44,7 @@ exports.logIn = async (req, res) => {
 				process.env.JWT,
 			)
 			res.cookie('token', token, {
-				expire: new Date(),
+				expire: 60 * 60 * 24,
 			})
 
 			const {_id, firstName, lastName, email, role} = user
