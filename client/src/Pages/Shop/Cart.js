@@ -49,7 +49,7 @@ const Cart = () => {
 				) : (
 					<Grid item xs={12}>
 						<Link style={{textDecorationColor: 'red'}} to="/shop">
-							<Typography style={{color: '#fff'}} align="center" variant="h3">
+							<Typography style={{color: '#000'}} align="center" variant="h3">
 								Shop Now!
 							</Typography>
 						</Link>
