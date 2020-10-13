@@ -58,3 +58,18 @@ exports.updateStatus = (req, res) => {
 		},
 	)
 }
+
+exports.search = (req, res) => {
+	if (req.params.search) {
+		Order.findById({_id: req.params.search})
+			.populate('user')
+			.exec((err, orders) => {
+				if (err) {
+					return res.status(400).json({
+						err: 'No result was found',
+					})
+				}
+				res.json(orders)
+			})
+	}
+}

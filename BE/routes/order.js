@@ -14,6 +14,8 @@ router.get(
 	orderController.list,
 )
 
+router.get('/list/search/:search', orderController.search)
+
 router.get(
 	'/status/:userID',
 	method.jwtVerify,
