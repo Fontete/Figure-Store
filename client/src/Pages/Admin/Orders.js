@@ -9,9 +9,12 @@ import {
 	MenuItem,
 	Divider,
 	FormControl,
+	InputBase,
 } from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
+import SearchIcon from '@material-ui/icons/Search'
+import {makeStyles, fade} from '@material-ui/core/styles'
 import moment from 'moment'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -20,18 +23,22 @@ const useStyles = makeStyles(theme => ({
 	paper: {
 		[theme.breakpoints.up('xs')]: {
 			width: 'auto',
+			marginLeft: '0.5em',
+			marginRight: '0.5em',
 		},
 		[theme.breakpoints.up('sm')]: {
 			width: 'auto',
+			marginLeft: '0.5em',
+			marginRight: '0.5em',
 		},
 		[theme.breakpoints.up('md')]: {
 			width: 'auto',
-			marginLeft: '5em',
-			marginRight: '5em',
+			marginLeft: '0.5em',
+			marginRight: '0.5em',
 		},
 		[theme.breakpoints.up('lg')]: {
-			marginLeft: '20em',
-			marginRight: '20em',
+			marginLeft: '10em',
+			marginRight: '10em',
 		},
 		padding: theme.spacing(2),
 		textAlign: 'center',
@@ -61,10 +68,48 @@ const useStyles = makeStyles(theme => ({
 			fontSize: 18,
 		},
 	},
+	search: {
+		position: 'relative',
+		borderRadius: theme.shape.borderRadius,
+		backgroundColor: fade(theme.palette.common.white, 0.8),
+		'&:hover': {
+			backgroundColor: fade(theme.palette.common.white, 0.25),
+		},
+		marginRight: theme.spacing(2),
+		marginLeft: 0,
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			marginLeft: theme.spacing(3),
+			width: 'auto',
+		},
+	},
+	searchIcon: {
+		padding: theme.spacing(0, 2),
+		height: '100%',
+		position: 'absolute',
+		pointerEvents: 'none',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	inputRoot: {
+		color: 'inherit',
+	},
+	inputInput: {
+		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
+		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+		// transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('md')]: {
+			width: '60ch',
+		},
+	},
 }))
 
 const Orders = () => {
 	const classes = useStyles()
+	// const [data, setData] = useState([])
 	const [orders, setOrders] = useState([])
 	const [status, setStatus] = useState([])
 	const userID = isAuthenticated().data.user._id
@@ -153,6 +198,7 @@ const Orders = () => {
 	const listStatus = o => (
 		<Fragment style={{justifyContent: 'flex-start'}}>
 			<Typography color="secondary" variant="inherit" align="center">
+				{console.log(o)}
 				{o.status}
 			</Typography>
 			<FormControl style={{marginLeft: '5px'}}>
@@ -171,126 +217,311 @@ const Orders = () => {
 		</Fragment>
 	)
 
+	//Search
+	const [data, setData] = useState({
+		search: '',
+		responses: '',
+		isSearch: false,
+		isHide: false,
+	})
+	const {search, responses, isSearch, isHide} = data
+
+	const fetchSearchOrder = orderID => {
+		axios
+			.get(process.env.REACT_APP_BASE_URL + `orders/list/search/${orderID}`)
+			.then(data => {
+				setData({...data, responses: data.data, isSearch: true, isHide: true})
+			})
+			.catch(err => {
+				console.log(err.response.data.err)
+			})
+	}
+
+	const searchForm = () => (
+		<form className={classes.form} noValidate onSubmit={submit}>
+			<div
+				className={classes.search}
+				style={{
+					height: '100%',
+					marginTop: '0.75em',
+					marginBottom: '0.75em',
+				}}
+			>
+				<div className={classes.searchIcon}>
+					<SearchIcon />
+				</div>
+				<InputBase
+					autoFocus
+					placeholder="Input the orderID you want to find"
+					classes={{
+						root: classes.inputRoot,
+						input: classes.inputInput,
+					}}
+					inputProps={{'aria-label': 'search'}}
+					onChange={handleChange('search')}
+				/>
+			</div>
+		</form>
+	)
+
+	const submit = e => {
+		e.preventDefault()
+		fetchSearchOrder(search)
+	}
+
+	const handleChange = orderID => event => {
+		setData({
+			...data,
+			[orderID]: event.target.value,
+			isSearch: true,
+			isHide: false,
+			responses: null,
+		})
+	}
+
+	const searchedProducts = responses => {
+		if (responses) {
+			return (
+				<Fragment>
+					<Paper className={classes.paper} style={{backgroundColor: '#fff'}}>
+						<Grid container spacing={4} justify="center">
+							<strong>
+								<Typography
+									style={{paddingTop: '5px'}}
+									className={classes.typography}
+									variant="h4"
+									align="center"
+								>
+									OrderID: {responses._id}
+								</Typography>
+							</strong>
+
+							<Grid item xs={12}>
+								<MenuList style={{margin: '0 0 2em 0'}}>
+									<div style={{border: '1px solid indigo'}}>
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											{listStatus(responses)}
+										</MenuItem>
+
+										<Divider />
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											<Typography variant="inherit" align="center">
+												TransactionID: {responses.transaction_id}
+											</Typography>
+										</MenuItem>
+										<Divider />
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											<Typography variant="inherit" align="center">
+												Amount: ${responses.amount}
+											</Typography>
+										</MenuItem>
+										<Divider />
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											<Typography variant="inherit" align="center">
+												Order By:
+												{/* {`${responses.user.firstName} ${responses.user.lastName}`} */}
+											</Typography>
+										</MenuItem>
+										<Divider />
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											<Typography variant="inherit" align="center">
+												{/* Ordered on: {moment(orders.createdAt).fromNow()} */}
+											</Typography>
+										</MenuItem>
+										<Divider />
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											<Typography variant="inherit" align="center">
+												{/* Shipping address: {orders.address} */}
+											</Typography>
+										</MenuItem>
+										<Divider />
+										<MenuItem style={{justifyContent: 'flex-start'}}>
+											<strong>
+												<Typography
+													className={classes.typography2}
+													variant="h5"
+													align="center"
+												>
+													{/* Total items in the orders: {orders.products.length} */}
+												</Typography>
+											</strong>
+										</MenuItem>
+										{/* <div style={{justifyContent: 'flex-start'}}>
+								{orders.products &&
+									orders.products.map(p => {
+										return (
+											<MenuList key={p._id}>
+												<MenuItem>
+													<strong>{showProducts('ProductID: ', p._id)}</strong>
+												</MenuItem>
+												<div
+													style={{
+														border: '1px solid black',
+														margin: '5px',
+													}}
+												>
+													<MenuItem>{showProducts('Name: ', p.name)}</MenuItem>
+													<MenuItem>
+														{showProducts('Price: ', p.price)}
+													</MenuItem>
+													<MenuItem>
+														{showProducts('Quantity: ', p.count)}
+													</MenuItem>
+													<MenuItem>
+														{showProducts('Total: ', `$${p.count * p.price}`)}
+													</MenuItem>
+												</div>
+											</MenuList>
+										)
+									})}
+							</div> */}
+									</div>
+								</MenuList>
+							</Grid>
+						</Grid>
+						<Grid item xs={12}></Grid>
+					</Paper>
+				</Fragment>
+			)
+		}
+	}
+
 	useEffect(() => {
 		fetchOrdersList()
 		fetchListStatus()
 	}, [])
 
 	return (
-		<div className={classes.root} style={{padding: '8em 0.5em 3em 0.5em'}}>
-			<Grid container spacing={2}>
+		<Fragment>
+			<Grid
+				container
+				spacing={2}
+				className={classes.root}
+				style={{padding: '8em 0 3em 0'}}
+			>
+				<Grid item sm={2} md={3}></Grid>
+				<Grid item sm={8} md={6} xs={12}>
+					{searchForm()}
+				</Grid>
+				<Grid item sm={2} md={3}></Grid>
 				<Grid item xs={12}>
-					<Paper className={classes.paper} style={{backgroundColor: '#fff'}}>
-						{length()}
-						<Divider style={{marginBottom: '2em'}} />
-						{orders &&
-							orders.map(o => {
-								return (
-									<Fragment key={o._id}>
-										<strong>
-											<Typography
-												className={classes.typography}
-												variant="h4"
-												align="center"
-											>
-												OrderID: {o._id}
-											</Typography>
-										</strong>
+					{searchedProducts(responses)}
+				</Grid>
+				<Grid item xs={12}>
+					{!isHide && (
+						<Paper className={classes.paper} style={{backgroundColor: '#fff'}}>
+							{length()}
+							<Divider style={{marginBottom: '2em'}} />
+							{orders &&
+								orders.map(o => {
+									return (
+										<Fragment key={o._id}>
+											<strong>
+												<Typography
+													className={classes.typography}
+													variant="h4"
+													align="center"
+												>
+													OrderID: {o._id}
+												</Typography>
+											</strong>
 
-										<Divider />
-										<MenuList style={{margin: '0 0 2em 0'}}>
-											<div style={{border: '1px solid indigo'}}>
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													{listStatus(o)}
-												</MenuItem>
+											<Divider />
+											<MenuList style={{margin: '0 0 2em 0'}}>
+												<div style={{border: '1px solid indigo'}}>
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														{listStatus(o)}
+													</MenuItem>
 
-												<Divider />
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography variant="inherit" align="center">
-														TransactionID: {o.transaction_id}
-													</Typography>
-												</MenuItem>
-												<Divider />
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography variant="inherit" align="center">
-														Amount: ${o.amount}
-													</Typography>
-												</MenuItem>
-												<Divider />
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography variant="inherit" align="center">
-														Order By: {`${o.user.firstName} ${o.user.lastName}`}
-													</Typography>
-												</MenuItem>
-												<Divider />
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography variant="inherit" align="center">
-														Ordered on: {moment(o.createdAt).fromNow()}
-													</Typography>
-												</MenuItem>
-												<Divider />
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<Typography variant="inherit" align="center">
-														Shipping address: {o.address}
-													</Typography>
-												</MenuItem>
-												<Divider />
-												<MenuItem style={{justifyContent: 'flex-start'}}>
-													<strong>
-														<Typography
-															className={classes.typography2}
-															variant="h5"
-															align="center"
-														>
-															Total items in the orders: {o.products.length}
+													<Divider />
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography variant="inherit" align="center">
+															TransactionID: {o.transaction_id}
 														</Typography>
-													</strong>
-												</MenuItem>
-												<div style={{justifyContent: 'flex-start'}}>
-													{o.products &&
-														o.products.map(p => {
-															return (
-																<MenuList key={p._id}>
-																	<MenuItem>
-																		<strong>
-																			{showProducts('ProductID: ', p._id)}
-																		</strong>
-																	</MenuItem>
-																	<div
-																		style={{
-																			border: '1px solid black',
-																			margin: '5px',
-																		}}
-																	>
+													</MenuItem>
+													<Divider />
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography variant="inherit" align="center">
+															Amount: ${o.amount}
+														</Typography>
+													</MenuItem>
+													<Divider />
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography variant="inherit" align="center">
+															Order By:{' '}
+															{`${o.user.firstName} ${o.user.lastName}`}
+														</Typography>
+													</MenuItem>
+													<Divider />
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography variant="inherit" align="center">
+															Ordered on: {moment(o.createdAt).fromNow()}
+														</Typography>
+													</MenuItem>
+													<Divider />
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<Typography variant="inherit" align="center">
+															Shipping address: {o.address}
+														</Typography>
+													</MenuItem>
+													<Divider />
+													<MenuItem style={{justifyContent: 'flex-start'}}>
+														<strong>
+															<Typography
+																className={classes.typography2}
+																variant="h5"
+																align="center"
+															>
+																Total items in the orders: {o.products.length}
+															</Typography>
+														</strong>
+													</MenuItem>
+													<div style={{justifyContent: 'flex-start'}}>
+														{o.products &&
+															o.products.map(p => {
+																return (
+																	<MenuList key={p._id}>
 																		<MenuItem>
-																			{showProducts('Name: ', p.name)}
+																			<strong>
+																				{showProducts('ProductID: ', p._id)}
+																			</strong>
 																		</MenuItem>
-																		<MenuItem>
-																			{showProducts('Price: ', p.price)}
-																		</MenuItem>
-																		<MenuItem>
-																			{showProducts('Quantity: ', p.count)}
-																		</MenuItem>
-																		<MenuItem>
-																			{showProducts(
-																				'Total: ',
-																				`$${p.count * p.price}`,
-																			)}
-																		</MenuItem>
-																	</div>
-																</MenuList>
-															)
-														})}
+																		<div
+																			style={{
+																				border: '1px solid black',
+																				margin: '5px',
+																			}}
+																		>
+																			<MenuItem>
+																				{showProducts('Name: ', p.name)}
+																			</MenuItem>
+																			<MenuItem>
+																				{showProducts('Price: ', p.price)}
+																			</MenuItem>
+																			<MenuItem>
+																				{showProducts('Quantity: ', p.count)}
+																			</MenuItem>
+																			<MenuItem>
+																				{showProducts(
+																					'Total: ',
+																					`$${p.count * p.price}`,
+																				)}
+																			</MenuItem>
+																		</div>
+																	</MenuList>
+																)
+															})}
+													</div>
 												</div>
-											</div>
-										</MenuList>
-									</Fragment>
-								)
-							})}
-					</Paper>
+											</MenuList>
+										</Fragment>
+									)
+								})}
+						</Paper>
+					)}
 				</Grid>
 			</Grid>
-		</div>
+		</Fragment>
 	)
 }
 

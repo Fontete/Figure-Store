@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 		},
 		[theme.breakpoints.up('lg')]: {
 			width: 'auto',
-			padding: '6em 2em 0em 2em',
+			padding: '6em 10em 0em 10em',
 		},
 	},
 	card: {
