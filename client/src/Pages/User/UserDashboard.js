@@ -90,7 +90,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	inputRoot: {
 		color: 'inherit',
-		width:'100%'
+		width: '100%',
 	},
 	inputInput: {
 		padding: theme.spacing(1, 1, 1, 0),
@@ -147,13 +147,18 @@ const Dashboard = () => {
 	}
 
 	const searchForm = () => (
-		<form className={classes.form} noValidate>
+		<form
+			style={{marginLeft: '0.5em', marginRight: '0.75em'}}
+			className={classes.form}
+			noValidate
+		>
 			<div
 				className={classes.search}
 				style={{
 					height: '100%',
 					marginTop: '0.75em',
 					marginBottom: '0.75em',
+
 					border: '3px solid #000',
 				}}
 			>
