@@ -1,14 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {makeStyles} from '@material-ui/core/styles'
+import {makeStyles, fade} from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import EditIcon from '@material-ui/icons/Edit'
+import SearchIcon from '@material-ui/icons/Search'
 import IconButton from '@material-ui/core/IconButton'
-import {MenuList, MenuItem} from '@material-ui/core'
+import {MenuList, MenuItem, InputBase} from '@material-ui/core'
 import {Link} from 'react-router-dom'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
@@ -63,13 +64,53 @@ const useStyles = makeStyles(theme => ({
 			fontSize: 24,
 		},
 	},
+	search: {
+		position: 'relative',
+		borderRadius: theme.shape.borderRadius,
+		backgroundColor: fade(theme.palette.common.white, 0.75),
+		'&:hover': {
+			backgroundColor: fade(theme.palette.common.white, 0.5),
+		},
+		marginRight: theme.spacing(2),
+		marginLeft: 0,
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+			marginLeft: theme.spacing(3),
+			width: 'auto',
+		},
+	},
+	searchIcon: {
+		padding: theme.spacing(0, 2),
+		height: '100%',
+		position: 'absolute',
+		pointerEvents: 'none',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	inputRoot: {
+		color: 'inherit',
+		width:'100%'
+	},
+	inputInput: {
+		padding: theme.spacing(1, 1, 1, 0),
+		// vertical padding + font size from searchIcon
+		paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+		// transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('md')]: {
+			width: '60ch',
+		},
+	},
 }))
 
 const Dashboard = () => {
 	const classes = useStyles()
 	const userID = isAuthenticated().data.user._id
 	const token = isAuthenticated().data.token
+	const [data, setData] = useState([])
 	const [history, setHistory] = useState([])
+	const [searchText, setSearchText] = useState('')
 
 	const fetchPurchaseHistory = () => {
 		axios
@@ -80,11 +121,68 @@ const Dashboard = () => {
 			})
 			.then(data => {
 				setHistory(data.data)
+				setData(data.data)
 			})
 			.catch(err => {
+				setData([])
 				console.log(err.response.data.err)
 			})
 	}
+
+	const fetchSearch = search => {
+		let orderID = '0'
+		orderID = search
+		axios
+			.get(process.env.REACT_APP_BASE_URL + `orders/list/search/${orderID}`)
+			.then(data => {
+				if (data.data) {
+					// console.log(data.data)
+					setData([data.data])
+				}
+			})
+			.catch(err => {
+				setData([])
+				console.log(err.response)
+			})
+	}
+
+	const searchForm = () => (
+		<form className={classes.form} noValidate>
+			<div
+				className={classes.search}
+				style={{
+					height: '100%',
+					marginTop: '0.75em',
+					marginBottom: '0.75em',
+					border: '3px solid #000',
+				}}
+			>
+				<div className={classes.searchIcon}>
+					<SearchIcon />
+				</div>
+				<InputBase
+					autoFocus
+					placeholder="Input the orderID you want to find"
+					classes={{
+						root: classes.inputRoot,
+						input: classes.inputInput,
+					}}
+					inputProps={{'aria-label': 'search'}}
+					onChange={event => {
+						const searchText = event.target.value
+						console.log(searchText)
+						if (searchText !== '') {
+							fetchSearch(searchText)
+						} else {
+							setData(history)
+						}
+						// setSearchText('')
+						// setSearchText(event.target.value)
+					}}
+				/>
+			</div>
+		</form>
+	)
 
 	useEffect(() => {
 		fetchPurchaseHistory()
@@ -178,12 +276,13 @@ const Dashboard = () => {
 					</Typography>
 				</CardContent>
 				<Divider />
+				{searchForm()}
 				<Grid container xs={12}>
 					<Grid xs={12}>
 						<CardContent>
 							<MenuList style={{margin: '0 0 2em 0'}}>
-								{history &&
-									history.map((p, i) => {
+								{data &&
+									data.map((p, i) => {
 										return (
 											<div key={i} style={{border: '3px solid black'}}>
 												<MenuItem style={{borderBottom: '3px solid black'}}>

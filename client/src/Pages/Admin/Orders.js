@@ -94,6 +94,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	inputRoot: {
 		color: 'inherit',
+		width: '100%',
 	},
 	inputInput: {
 		padding: theme.spacing(1, 1, 1, 0),
@@ -198,7 +199,6 @@ const Orders = () => {
 	const listStatus = o => (
 		<Fragment style={{justifyContent: 'flex-start'}}>
 			<Typography color="secondary" variant="inherit" align="center">
-				{console.log(o)}
 				{o.status}
 			</Typography>
 			<FormControl style={{marginLeft: '5px'}}>
@@ -319,19 +319,19 @@ const Orders = () => {
 										<MenuItem style={{justifyContent: 'flex-start'}}>
 											<Typography variant="inherit" align="center">
 												Order By:
-												{/* {`${responses.user.firstName} ${responses.user.lastName}`} */}
+												{`${responses.user.firstName} ${responses.user.lastName}`}
 											</Typography>
 										</MenuItem>
 										<Divider />
 										<MenuItem style={{justifyContent: 'flex-start'}}>
 											<Typography variant="inherit" align="center">
-												{/* Ordered on: {moment(orders.createdAt).fromNow()} */}
+												Ordered on: {moment(responses.createdAt).fromNow()}
 											</Typography>
 										</MenuItem>
 										<Divider />
 										<MenuItem style={{justifyContent: 'flex-start'}}>
 											<Typography variant="inherit" align="center">
-												{/* Shipping address: {orders.address} */}
+												Shipping address: {responses.address}
 											</Typography>
 										</MenuItem>
 										<Divider />
@@ -342,39 +342,46 @@ const Orders = () => {
 													variant="h5"
 													align="center"
 												>
-													{/* Total items in the orders: {orders.products.length} */}
+													Total items in the orders: {responses.products.length}
 												</Typography>
 											</strong>
 										</MenuItem>
-										{/* <div style={{justifyContent: 'flex-start'}}>
-								{orders.products &&
-									orders.products.map(p => {
-										return (
-											<MenuList key={p._id}>
-												<MenuItem>
-													<strong>{showProducts('ProductID: ', p._id)}</strong>
-												</MenuItem>
-												<div
-													style={{
-														border: '1px solid black',
-														margin: '5px',
-													}}
-												>
-													<MenuItem>{showProducts('Name: ', p.name)}</MenuItem>
-													<MenuItem>
-														{showProducts('Price: ', p.price)}
-													</MenuItem>
-													<MenuItem>
-														{showProducts('Quantity: ', p.count)}
-													</MenuItem>
-													<MenuItem>
-														{showProducts('Total: ', `$${p.count * p.price}`)}
-													</MenuItem>
-												</div>
-											</MenuList>
-										)
-									})}
-							</div> */}
+										<div style={{justifyContent: 'flex-start'}}>
+											{responses.products &&
+												responses.products.map(p => {
+													return (
+														<MenuList key={p._id}>
+															<MenuItem>
+																<strong>
+																	{showProducts('ProductID: ', p._id)}
+																</strong>
+															</MenuItem>
+															<div
+																style={{
+																	border: '1px solid black',
+																	margin: '5px',
+																}}
+															>
+																<MenuItem>
+																	{showProducts('Name: ', p.name)}
+																</MenuItem>
+																<MenuItem>
+																	{showProducts('Price: ', p.price)}
+																</MenuItem>
+																<MenuItem>
+																	{showProducts('Quantity: ', p.count)}
+																</MenuItem>
+																<MenuItem>
+																	{showProducts(
+																		'Total: ',
+																		`$${p.count * p.price}`,
+																	)}
+																</MenuItem>
+															</div>
+														</MenuList>
+													)
+												})}
+										</div>
 									</div>
 								</MenuList>
 							</Grid>
