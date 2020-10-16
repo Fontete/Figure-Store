@@ -8,6 +8,8 @@ const method = require('../general/method')
 router.post('/register', method.Validator, userController.register)
 router.post('/login', userController.logIn)
 router.get('/logout', userController.logOut)
+router.post('/otp', method.otpValidator, userController.sendConfirmativeCode)
+router.post('/reset', userController.resetPassword)
 
 // User
 router.get(

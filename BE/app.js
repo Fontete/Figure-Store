@@ -45,7 +45,20 @@ app.use(
 )
 app.use(cookieParser())
 app.use(validator())
-app.use(cors())
+app.use(
+	cors({
+		credentials: true,
+		allowedHeaders: [
+			'Origin',
+			'X-Requested-With',
+			'Content-Type',
+			'Accept',
+			'X-Access-Token',
+			'Authorization',
+		],
+		methods: 'GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS',
+	}),
+)
 
 app.use('/users', userRouter)
 app.use('/categories', categoryRouter)

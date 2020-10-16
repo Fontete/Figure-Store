@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const schema = mongoose.Schema
 const crypto = require('crypto')
 const uuidv1 = require('uuidv1')
+const {stringify} = require('querystring')
 
 const userSchema = new schema(
 	{
@@ -35,6 +36,9 @@ const userSchema = new schema(
 		history: {
 			type: Array,
 			default: [],
+		},
+		otp: {
+			type: String,
 		},
 	},
 	{timestamps: true},
