@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -9,6 +9,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Fab from '@material-ui/core/Fab'
 import AddCartIcon from '@material-ui/icons/AddShoppingCart'
 import ViewDetailIcon from '@material-ui/icons/ViewList'
+import Snackbar from '@material-ui/core/Snackbar'
+import Alert from '@material-ui/lab/Alert'
 import {Link} from 'react-router-dom'
 
 import moment from 'moment'
@@ -70,6 +72,8 @@ const ProductCard = ({
 }) => {
 	const classes = useStyles()
 
+	const [isAdd, setIsAdd] = useState(false)
+
 	const time = moment(createdAt).fromNow()
 	const url = process.env.REACT_APP_BASE_URL + `products/image/${_id}`
 
@@ -97,6 +101,28 @@ const ProductCard = ({
 		) : (
 			<Badge message="Out Of Stock"></Badge>
 		)
+	}
+
+	const addToCartSuccess = () => {
+		return (
+			<Snackbar
+				anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+				open={isAdd}
+				autoHideDuration={3000}
+				onClose={handleClose}
+			>
+				<Alert onClose={handleClose} severity="success">
+					Item is added to cart
+				</Alert>
+			</Snackbar>
+		)
+	}
+
+	const handleClose = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+		setIsAdd(false)
 	}
 
 	return (
@@ -178,6 +204,7 @@ const ProductCard = ({
 								category,
 								createdAt,
 							})
+							setIsAdd(true)
 						}}
 						disabled={handleOutOfStock(quantity)}
 						color="primary"
@@ -196,6 +223,7 @@ const ProductCard = ({
 					</Link>
 				</Tooltip>
 			</CardActions>
+			{addToCartSuccess()}
 		</Card>
 	)
 }
