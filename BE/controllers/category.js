@@ -45,6 +45,7 @@ exports.categoryDetail = (req, res) => {
 
 exports.update = (req, res) => {
 	const category = req.category
+	console.log(category)
 	categoryModel.findOneAndUpdate({_id: category._id}, {$set: req.body}, err => {
 		if (err) {
 			return res.status(400).json({err: error.errorHandler(err)})
@@ -54,7 +55,7 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-	categoryModel.findOneAndDelete(req.category._id, err => {
+	categoryModel.findOneAndDelete({_id: req.category._id}, err => {
 		if (err) {
 			return res.status(400).json({
 				err: error.errorHandler,
