@@ -110,7 +110,6 @@ const Dashboard = () => {
 	const token = isAuthenticated().data.token
 	const [data, setData] = useState([])
 	const [history, setHistory] = useState([])
-	const [searchText, setSearchText] = useState('')
 
 	const fetchPurchaseHistory = () => {
 		axios
@@ -181,8 +180,6 @@ const Dashboard = () => {
 						} else {
 							setData(history)
 						}
-						// setSearchText('')
-						// setSearchText(event.target.value)
 					}}
 				/>
 			</div>

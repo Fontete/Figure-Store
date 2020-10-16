@@ -2,6 +2,7 @@ import React, {Fragment} from 'react'
 import {BrowserRouter, Switch, Route, withRouter} from 'react-router-dom'
 import Home from './Pages/Shop/Home'
 import Register from './Pages/User/Register'
+import Reset from './Pages/User/Reset'
 import Login from './Pages/User/Login'
 import AppBar from './Components/AppBar'
 import UserDashboard from './Pages/User/UserDashboard'
@@ -24,12 +25,14 @@ const App = withRouter(({location}) => {
 		<Fragment>
 			{location.pathname !== '/login' &&
 				location.pathname !== '/register' &&
+				location.pathname !== '/reset' &&
 				location.pathname !== '/checkout' && <AppBar />}
 			<style>{'body { background-color:	#000000 }'}</style>
 			<Switch>
 				<Route path="/" exact component={Home} />
 				<Route path="/login" exact component={Login} />
 				<Route path="/register" exact component={Register} />
+				<Route path="/reset" exact component={Reset} />
 				<Route path="/shop" exact component={Shop} />
 				<Route path="/product/:productId" exact component={Detail} />
 				<PrivateRoute path="/profile/:userId" exact component={Profile} />

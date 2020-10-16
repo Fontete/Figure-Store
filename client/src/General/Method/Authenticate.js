@@ -17,7 +17,6 @@ export const isAuthenticated = () => {
 }
 
 export const updateProfile = (user, next) => {
-	console.log(user)
 	if (typeof window !== 'undefined') {
 		if (localStorage.getItem('jwt')) {
 			let auth = JSON.parse(localStorage.getItem('jwt'))
