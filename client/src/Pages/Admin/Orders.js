@@ -407,7 +407,7 @@ const Orders = () => {
 				style={{padding: '8em 0 3em 0'}}
 			>
 				<Grid item sm={2} md={3}></Grid>
-				<Grid item sm={8} md={6} xs={12}>
+				<Grid item sm={8} md={6} xs={12} style={{margin: '0.5em'}}>
 					{searchForm()}
 				</Grid>
 				<Grid item sm={2} md={3}></Grid>

@@ -19,6 +19,8 @@ import Orders from './Pages/Admin/Orders'
 import Profile from './Pages/User/Profile'
 import ManageProduct from './Pages/Admin/ManageProduct'
 import UpdateProduct from './Pages/Admin/UpdateProduct'
+import ManageCategory from './Pages/Admin/ManageCategory'
+import UpdateCategory from './Pages/Admin/UpdateCategory'
 
 const App = withRouter(({location}) => {
 	return (
@@ -51,6 +53,16 @@ const App = withRouter(({location}) => {
 					path="/admin/product/update/:productId"
 					exact
 					component={UpdateProduct}
+				/>
+				<AdminRoute
+					path="/admin/category/manage"
+					exact
+					component={ManageCategory}
+				/>
+				<AdminRoute
+					path="/admin/category/update/:categoryId"
+					exact
+					component={UpdateCategory}
 				/>
 			</Switch>
 		</Fragment>

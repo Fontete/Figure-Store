@@ -147,7 +147,7 @@ const Dashboard = () => {
 
 	const searchForm = () => (
 		<form
-			style={{marginLeft: '0.5em', marginRight: '0.75em'}}
+			style={{marginLeft: '1em', marginRight: '1.5em'}}
 			className={classes.form}
 			noValidate
 		>

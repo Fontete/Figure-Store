@@ -1,11 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Grid, TextField, Button, Paper, Snackbar} from '@material-ui/core'
+import {
+	Grid,
+	Button,
+	Paper,
+	Snackbar,
+	Typography,
+	Input,
+} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
+import {Redirect} from 'react-router-dom'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
-import {Redirect} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -39,24 +46,26 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-const AddCategory = () => {
+const UpdateProduct = ({match}) => {
 	const classes = useStyles()
 
-	const [name, setName] = useState('')
-	const [response, setResponse] = useState()
-	const [error, setError] = useState(false)
-	const [success, setSuccess] = useState(false)
-	const [redirect, setRedirect] = useState(false)
+	const [values, setValues] = useState({
+		name: '',
+		success: false,
+		error: '',
+		response: '',
+		redirect: false,
+	})
+	const {name, success, error, response, redirect} = values
 
 	const userID = isAuthenticated().data.user._id
 	const token = isAuthenticated().data.token
 
-	const categoryName = {
-		name: name,
-	}
-
 	const handleInputChange = e => {
-		setName(e.target.value)
+		setValues({
+			...values,
+			name: e.target.value,
+		})
 	}
 
 	const handleClose = reason => {
@@ -64,9 +73,7 @@ const AddCategory = () => {
 			return
 		}
 
-		setSuccess(false)
-		setError(false)
-		setRedirect(true)
+		setValues({...values, error: false, success: false, redirect: true})
 	}
 
 	const handleCloseErr = reason => {
@@ -74,15 +81,7 @@ const AddCategory = () => {
 			return
 		}
 
-		setSuccess(false)
-		setError(false)
-		setRedirect(false)
-	}
-
-	const redirectToCateManagement = redirec => {
-		if (redirect) {
-			return <Redirect to="/admin/category/manage" />
-		}
+		setValues({...values, error: false, success: false, redirect: false})
 	}
 
 	const showSuccess = () => {
@@ -119,10 +118,25 @@ const AddCategory = () => {
 		)
 	}
 
-	const fetchAddCategory = body => {
+	const fetchSingleCategory = categoryID => {
 		axios
-			.post(
-				process.env.REACT_APP_BASE_URL + `categories/create/${userID}`,
+			.get(process.env.REACT_APP_BASE_URL + `categories/${categoryID}`)
+			.then(data => {
+				setValues({
+					...values,
+					name: data.data.name,
+				})
+			})
+			.catch(err => {
+				setValues({...values, error: true, response: err.response.data.err})
+			})
+	}
+
+	const fetchUpdateCategory = (categoryID, body) => {
+		console.log(categoryID)
+		axios
+			.put(
+				process.env.REACT_APP_BASE_URL + `categories/${categoryID}/${userID}`,
 				body,
 				{
 					headers: {
@@ -131,45 +145,59 @@ const AddCategory = () => {
 				},
 			)
 			.then(data => {
-				setSuccess(true)
-				setResponse(data.data.message)
+				setValues({
+					...values,
+					success: true,
+					response: data.data.message,
+				})
 			})
 			.catch(err => {
-				setError(true)
-				setResponse(err.response.data.err)
+				setValues({...values, error: true, response: err.response.data.err})
 			})
 	}
 
+	useEffect(() => {
+		fetchSingleCategory(match.params.categoryId)
+	}, [])
+
 	const submit = e => {
 		e.preventDefault()
-		fetchAddCategory(categoryName)
+		fetchUpdateCategory(match.params.categoryId, {name: name})
 	}
 
 	const AddForm = () => {
 		return (
 			<Grid container spacing={2} justify="center">
 				<Grid item xs={12}>
-					<form className={classes.form} noValidate>
-						<TextField
-							style={{backgroundColor: '#fff'}}
-							variant="filled"
-							required
-							fullWidth
-							id="name"
-							label="Category Name"
-							name="name"
-							onChange={handleInputChange}
-							value={name}
-							autoFocus
-						/>
+					<form className={classes.form} onSubmit={submit}>
+						<Grid container>
+							<Grid item xs={1}>
+								<Typography variant="h6" style={{paddingLeft: '0.3em'}}>
+									Name
+								</Typography>
+							</Grid>
+							<Grid item xs={11}></Grid>
+							<Grid item xs={12} style={{padding: '0.2 0 0.2 0'}}>
+								<Input
+									style={{backgroundColor: '#bbe1fa', height: '4em'}}
+									required
+									fullWidth
+									id="name"
+									name="name"
+									onChange={handleInputChange}
+									value={name}
+									autoFocus
+									placeholder="Category name..."
+								/>
+							</Grid>
+						</Grid>
 						<Button
 							type="submit"
 							variant="contained"
 							color="primary"
 							className={classes.submit}
-							onClick={submit}
 						>
-							Add
+							Update
 						</Button>
 					</form>
 				</Grid>
@@ -185,7 +213,7 @@ const AddCategory = () => {
 						{showSuccess()}
 						{showError()}
 						{AddForm()}
-						{redirectToCateManagement(redirect)}
+						{redirect && <Redirect to="/admin/category/manage" />}
 					</Paper>
 				</Grid>
 			</Grid>
@@ -193,4 +221,4 @@ const AddCategory = () => {
 	)
 }
 
-export default AddCategory
+export default UpdateProduct

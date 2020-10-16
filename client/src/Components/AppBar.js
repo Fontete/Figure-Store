@@ -150,7 +150,7 @@ const AppSearchBar = ({history}) => {
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<Link to="/admin/category/add" style={{textDecoration: 'none'}}>
+					<Link to="/admin/category/manage" style={{textDecoration: 'none'}}>
 						<IconButton edge="end" color="inherit">
 							<DashboardIcon style={{color: '#fff'}} />
 							<Typography style={{color: '#fff'}}>Categories</Typography>
