@@ -168,7 +168,7 @@ exports.update = (req, res) => {
 			})
 		}
 
-		if (form.quantity <= 0 || form.price <= 0) {
+		if (form.quantity < 0 || form.price <= 0) {
 			return res.status(400).json({
 				err: 'Number must be larger than zero',
 			})
