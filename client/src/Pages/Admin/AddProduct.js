@@ -16,6 +16,7 @@ import Alert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {isAuthenticated} from '../../General/Method/Authenticate'
+import {Redirect} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -65,6 +66,7 @@ const AddProduct = () => {
 		error: '',
 		formData: '',
 		response: '',
+		redirect: false,
 	})
 	const {
 		name,
@@ -78,6 +80,7 @@ const AddProduct = () => {
 		error,
 		formData,
 		response,
+		redirect,
 	} = values
 
 	const userID = isAuthenticated().data.user._id
@@ -105,7 +108,15 @@ const AddProduct = () => {
 			return
 		}
 
-		setValues({...values, error: false, success: false})
+		setValues({...values, error: false, success: false, redirect: true})
+	}
+
+	const handleCloseErr = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+
+		setValues({...values, error: false, success: false, redirect: false})
 	}
 
 	const showSuccess = () => {
@@ -132,14 +143,20 @@ const AddProduct = () => {
 					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
 					open={error}
 					autoHideDuration={3000}
-					onClose={handleClose}
+					onClose={handleCloseErr}
 				>
-					<Alert onClose={handleClose} severity="error">
+					<Alert onClose={handleCloseErr} severity="error">
 						{response}
 					</Alert>
 				</Snackbar>
 			</div>
 		)
+	}
+
+	const redirectToProductsManagenent = redirect => {
+		if (redirect) {
+			return <Redirect to="/admin/product/manage" />
+		}
 	}
 
 	const fetchAddProduct = body => {
@@ -494,6 +511,7 @@ const AddProduct = () => {
 							Add
 						</Button>
 					</form>
+					{redirectToProductsManagenent(redirect)}
 				</Grid>
 			</Grid>
 		)

@@ -111,6 +111,14 @@ const UpdateProduct = ({match}) => {
 		setValues({...values, error: false, success: false, redirect: true})
 	}
 
+	const handleCloseErr = reason => {
+		if (reason === 'clickaway') {
+			return
+		}
+
+		setValues({...values, error: false, success: false, redirect: false})
+	}
+
 	const showSuccess = () => {
 		return (
 			<div className={classes.root}>
@@ -135,9 +143,9 @@ const UpdateProduct = ({match}) => {
 					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
 					open={error}
 					autoHideDuration={3000}
-					onClose={handleClose}
+					onClose={handleCloseErr}
 				>
-					<Alert onClose={handleClose} severity="error">
+					<Alert onClose={handleCloseErr} severity="error">
 						{response}
 					</Alert>
 				</Snackbar>

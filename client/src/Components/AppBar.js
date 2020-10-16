@@ -159,25 +159,16 @@ const AppSearchBar = ({history}) => {
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<Link to="/admin/product/add" style={{textDecoration: 'none'}}>
-						<IconButton edge="end" color="inherit">
-							<DashboardIcon style={{color: '#fff'}} />
-							<Typography style={{color: '#fff'}}> Add Products</Typography>
-						</IconButton>
-					</Link>
-				</MenuItem>
-				<Divider />
-				<MenuItem onClick={handleClose}>
 					<Link to="/admin/product/manage" style={{textDecoration: 'none'}}>
 						<IconButton edge="end" color="inherit">
 							<DashboardIcon style={{color: '#fff'}} />
-							<Typography style={{color: '#fff'}}>Management</Typography>
+							<Typography style={{color: '#fff'}}>Products</Typography>
 						</IconButton>
 					</Link>
 				</MenuItem>
 				<Divider />
 				<MenuItem onClick={handleClose}>
-					<Link to="/admin/product/orders" style={{textDecoration: 'none'}}>
+					<Link to="/admin/product/order" style={{textDecoration: 'none'}}>
 						<IconButton edge="end" color="inherit">
 							<DashboardIcon style={{color: '#fff'}} />
 							<Typography style={{color: '#fff'}}>Orders</Typography>

@@ -53,25 +53,6 @@ const ManageProduct = () => {
 			})
 	}
 
-	const fetchUpdateProduct = (productID, body) => {
-		axios
-			.put(
-				process.env.REACT_APP_BASE_URL + `products/${productID}/${userID}`,
-				body,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				},
-			)
-			.then(() => {
-				fetchListProducts()
-			})
-			.catch(err => {
-				console.log(err.response.data.err)
-			})
-	}
-
 	const handleClose = reason => {
 		if (reason === 'clickaway') {
 			return
@@ -116,11 +97,24 @@ const ManageProduct = () => {
 	}, [])
 
 	return (
-		<div style={{padding: '8em 0.5em 3em 0.5em'}}>
+		<div style={{padding: '5em 0.5em 3em 0.5em'}}>
 			{showSuccess()}
 			{showError()}
 			<Grid container spacing={2} justify="center">
 				<Grid item xs={12}>
+					<Link style={{textDecoration: 'none'}} to="/admin/product/add">
+						<Button
+							type="submit"
+							variant="filled"
+							style={{
+								marginBottom: '1em',
+								backgroundColor: 'gray',
+							}}
+						>
+							Add Product
+						</Button>
+					</Link>
+
 					<Paper>
 						<MenuList>
 							<MenuItem style={{borderBottom: '3px solid black'}}>

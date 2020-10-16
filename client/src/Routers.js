@@ -41,7 +41,7 @@ const App = withRouter(({location}) => {
 				<AdminRoute path="/admin/profile" exact component={AdminDashboard} />
 				<AdminRoute path="/admin/category/add" exact component={AddCategory} />
 				<AdminRoute path="/admin/product/add" exact component={AddProduct} />
-				<AdminRoute path="/admin/product/orders" exact component={Orders} />
+				<AdminRoute path="/admin/product/order" exact component={Orders} />
 				<AdminRoute
 					path="/admin/product/manage"
 					exact
