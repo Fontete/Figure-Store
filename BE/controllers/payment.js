@@ -36,7 +36,7 @@ exports.purchaseProcess = (req, res) => {
 					service: 'gmail',
 					auth: {
 						user: 'pipi.esd@gmail.com',
-						pass: 'pp@fpt.com.vn',
+						pass: 'p!p!$e3qK7GYQ@',
 					},
 				})
 				const mailOptions = {
