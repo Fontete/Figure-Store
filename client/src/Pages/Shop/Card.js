@@ -67,7 +67,16 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProductCard = ({
-	product: {_id, name, description, quantity, price, category, createdAt},
+	product: {
+		_id,
+		name,
+		description,
+		quantity,
+		price,
+		category,
+		createdAt,
+		shipping,
+	},
 	showViewButton = true,
 }) => {
 	const classes = useStyles()
@@ -96,7 +105,13 @@ const ProductCard = ({
 	}
 
 	const showSTock = quantity => {
-		return quantity > 0 ? (
+		return !shipping ? (
+			quantity > 1 ? (
+				<Badge message=" Order Slots" quantity={quantity}></Badge>
+			) : (
+				<Badge message=" Order Slot" quantity={quantity}></Badge>
+			)
+		) : quantity > 0 ? (
 			<Badge message=" In Stock" quantity={quantity}></Badge>
 		) : (
 			<Badge message="Out Of Stock"></Badge>
@@ -135,12 +150,19 @@ const ProductCard = ({
 				/>
 			</Link>
 			<CardContent>
+				<Typography align="center" variant="h4" color="secondary" component="p">
+					{!shipping
+						? '[ Pre-order ]'
+						: shipping && quantity > 0
+						? '[ Available ]'
+						: '[ Unavailable ]'}
+				</Typography>
 				<div className={classes.title}>
 					<Typography
 						style={{wordWrap: 'break-word'}}
 						align="center"
-						variant="h4"
-						color="secondary"
+						variant="h5"
+						color="inherit"
 						component="p"
 					>
 						{name}
