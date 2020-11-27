@@ -172,6 +172,7 @@ const AddProduct = () => {
 			)
 			.then(data => {
 				setValues({...values, success: true, response: data.data.message})
+				axios.post(process.env.REACT_APP_BASE_URL + `notifications/pushnoti`)
 			})
 			.catch(err => {
 				setValues({...values, error: true, response: err.response.data.err})

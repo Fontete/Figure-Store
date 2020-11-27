@@ -92,6 +92,9 @@ const ProductCard = ({
 				<Fab color="secondary" className={classes.fab}>
 					<ViewDetailIcon />
 				</Fab>
+			// 	<button style={{height: '56px', width: '56px', borderRadius: '50%'}}>
+			// 	<span class="fa fa-eye  fa-2x "></span>
+			// </button>
 			)
 		)
 	}

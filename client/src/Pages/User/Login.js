@@ -80,7 +80,7 @@ const Login = () => {
 	const redirectUser = () => {
 		if (redirectToAuth) {
 			if (isAuthenticated() && isAuthenticated().data.user.role === 0) {
-				return <Redirect to="/admin/profile" />
+				return <Redirect to="/admin/product/order" />
 			} else {
 				return <Redirect to="/user/profile" />
 			}
