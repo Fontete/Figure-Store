@@ -12,6 +12,7 @@ const categoryRouter = require('./routes/categoy')
 const productRouter = require('./routes/product')
 const paymentRouter = require('./routes/payment')
 const orderRouter = require('./routes/order')
+const notiRouter = require('./routes/notification')
 
 const app = express()
 
@@ -65,6 +66,7 @@ app.use('/categories', categoryRouter)
 app.use('/products', productRouter)
 app.use('/payments', paymentRouter)
 app.use('/orders', orderRouter)
+app.use('/notifications',notiRouter)
 
 const port = process.env.PORT
 

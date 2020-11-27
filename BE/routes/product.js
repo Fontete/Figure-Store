@@ -5,7 +5,7 @@ const productController = require('../controllers/product')
 const userController = require('../controllers/user')
 const method = require('../general/method')
 
-router.get('/:productID/', productController.productDetail)
+router.get('/:productID', productController.productDetail)
 router.post(
 	'/create/:userID',
 	method.jwtVerify,
