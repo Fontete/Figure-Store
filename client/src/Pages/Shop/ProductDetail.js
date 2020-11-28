@@ -81,6 +81,7 @@ const Detail = props => {
 		setUrl4(process.env.REACT_APP_BASE_URL + `products/image4/${productId}`)
 		setUrl5(process.env.REACT_APP_BASE_URL + `products/image5/${productId}`)
 		fetchProductDetail(productId)
+		window.scrollTo(0, 0)
 	}, [props])
 
 	console.log(url2)
