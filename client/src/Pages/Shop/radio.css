@@ -1,0 +1,25 @@
+.priceText{
+   font-size: 1 em; 
+   color: white;
+}
+
+.priceText :hover{
+    color: cyan;
+}
+
+.priceText :active{
+    color: lightblue;
+}
+
+.categoryText{
+    font-size: 1 em;
+    color: white;
+}
+
+.categoryText :hover{
+    color: cyan;
+}
+
+.categoryText :active{
+    color: lightblue;
+}

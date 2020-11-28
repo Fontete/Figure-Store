@@ -4,6 +4,7 @@ import RadioGroup from '@material-ui/core/RadioGroup'
 import Box from '@material-ui/core/Box'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import {Typography} from '@material-ui/core'
+import './radio.css';
 
 const RadioButtonsGroup = ({prices, productFilters}) => {
 	const [value, setValue] = useState('')
@@ -17,12 +18,12 @@ const RadioButtonsGroup = ({prices, productFilters}) => {
 		<Fragment>
 			{prices &&
 				prices.map(p => (
-					<RadioGroup key={p._id} aria-label="prices" value={value}>
-						<FormControlLabel
+					<RadioGroup className="priceText" key={p._id} aria-label="prices" value={value}>
+						<FormControlLabel 
 							control={<Radio style={{color: '#fff'}} />}
 							label={
 								<Box>
-									<Typography color="secondary">{p.name}</Typography>
+									<p>{p.name}</p>
 								</Box>
 							}
 							name={p}

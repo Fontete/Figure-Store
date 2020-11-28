@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Fab from '@material-ui/core/Fab'
 import Typography from '@material-ui/core/Typography'
+import './blink.css';
 
 import Card from './Card'
 import Search from './Search'
@@ -85,7 +86,7 @@ const Home = () => {
 						}}
 					>
 						<Typography color="inherit" variant="h4" align="center">
-							Hot
+							<span className="blink">Hot</span>
 						</Typography>
 					</Fab>
 					<Grid container spacing={4}>
@@ -106,7 +107,7 @@ const Home = () => {
 						}}
 					>
 						<Typography color="inherit" variant="h4" align="center">
-							Newest
+							<span className="blink">Newest</span>
 						</Typography>
 					</Fab>
 					<Grid container spacing={4}>

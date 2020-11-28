@@ -20,6 +20,7 @@ import Popover from '@material-ui/core/Popover'
 import {total} from '../General/Method/CartHandler'
 import Badge from '../Pages/Shop/AddToCartBadge'
 import Cart from '../Pages/Shop/Cart'
+import '../Pages/Shop/blink.css'
 
 const useStyles = makeStyles(theme => ({
 	grow: {
@@ -248,7 +249,7 @@ const AppSearchBar = ({history}) => {
 										}}
 									>
 										<Typography variant="caption" color="inherit">
-											Shop Now!
+											<span className="blink">Shop Now!</span>
 										</Typography>
 									</Fab>
 								</Link>

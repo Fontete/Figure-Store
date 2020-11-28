@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import Tooltip from '@material-ui/core/Tooltip'
 import Fab from '@material-ui/core/Fab'
 import AddCartIcon from '@material-ui/icons/AddShoppingCart'
-import ViewDetailIcon from '@material-ui/icons/ViewList'
+import ListAltOutlinedIcon from '@material-ui/icons/ListAltOutlined'
 import Snackbar from '@material-ui/core/Snackbar'
 import Alert from '@material-ui/lab/Alert'
 import {Link} from 'react-router-dom'
@@ -16,6 +16,7 @@ import {Link} from 'react-router-dom'
 import moment from 'moment'
 import Badge from './InStockBadge'
 import {addProduct} from '../../General/Method/CartHandler'
+import {lime, yellow} from '@material-ui/core/colors'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -89,12 +90,9 @@ const ProductCard = ({
 	const showProductButton = showViewButton => {
 		return (
 			showViewButton && (
-				<Fab color="secondary" className={classes.fab}>
-					<ViewDetailIcon />
+				<Fab color="primary" className={classes.fab}>
+					<ListAltOutlinedIcon />
 				</Fab>
-			// 	<button style={{height: '56px', width: '56px', borderRadius: '50%'}}>
-			// 	<span class="fa fa-eye  fa-2x "></span>
-			// </button>
 			)
 		)
 	}
@@ -144,112 +142,141 @@ const ProductCard = ({
 	}
 
 	return (
-		<Card style={{border: '3px solid #C0C0C0'}} className={classes.root}>
-			<Link to={`/product/${_id}`}>
-				<CardMedia
-					style={{borderBottom: '1px solid #C0C0C0'}}
-					image={url}
-					className={classes.media}
-				/>
-			</Link>
-			<CardContent>
-				<Typography align="center" variant="h4" color="secondary" component="p">
-					{!shipping
-						? '[ Pre-order ]'
-						: shipping && quantity > 0
-						? '[ Available ]'
-						: '[ Unavailable ]'}
-				</Typography>
-				<div className={classes.title}>
+		<div className="grow">
+			<Card style={{border: '3px solid #C0C0C0'}} className={classes.root}>
+				<Link to={`/product/${_id}`}>
+					<CardMedia
+						style={{borderBottom: '1px solid #C0C0C0'}}
+						image={url}
+						className={classes.media}
+					/>
+				</Link>
+				<CardContent>
+					<div className={classes.title}>
+						<Typography
+							style={{wordWrap: 'break-word'}}
+							align="center"
+							variant="h4"
+							color="inherit"
+							component="p"
+						>
+							{name}
+						</Typography>
+					</div>
+					<Typography align="center" variant="h6" color="primary" component="p">
+						${price}
+					</Typography>
+					<Typography align="center" variant="h8" component="p">
+						{!shipping ? (
+							<p
+								style={{
+									backgroundColor: 'blue',
+									color: 'white',
+									borderRadius: '10px',
+									fontSize: '18px',
+									fontWeight: 'bold',
+								}}
+							>
+								Pre-order
+							</p>
+						) : shipping && quantity > 0 ? (
+							<p
+								style={{
+									backgroundColor: '#32cd32',
+									color: 'white',
+									borderRadius: '10px',
+									fontSize: '18px',
+									fontWeight: 'bold',
+								}}
+							>
+								Available
+							</p>
+						) : (
+							<p
+								style={{
+									backgroundColor: 'grey',
+									color: 'white',
+									borderRadius: '10px',
+									fontSize: '18px',
+									fontWeight: 'bold',
+								}}
+							>
+								Unavailable
+							</p>
+						)}
+					</Typography>
+					<Typography align="center" variant="caption" component="p">
+						{showSTock(quantity)}
+					</Typography>
+					<div className={classes.desc}>
+						<Typography
+							style={{wordWrap: 'break-word'}}
+							align="center"
+							variant="subtitle2"
+							color="textPrimary"
+							component="p"
+						>
+							{description.length > 50
+								? `${description.substring(0, 50)} ...`
+								: description}
+						</Typography>
+					</div>
 					<Typography
-						style={{wordWrap: 'break-word'}}
 						align="center"
-						variant="h5"
-						color="inherit"
+						variant="caption"
+						color="primary"
 						component="p"
 					>
-						{name}
+						Category: {category.name}
 					</Typography>
-				</div>
-				<Typography align="center" variant="h6" color="primary" component="p">
-					${price}
-				</Typography>
-				<Typography
-					align="center"
-					variant="caption"
-					color="secondary"
-					component="p"
-				>
-					{showSTock(quantity)}
-				</Typography>
-				<div className={classes.desc}>
 					<Typography
-						style={{wordWrap: 'break-word'}}
 						align="center"
 						variant="subtitle2"
-						color="textPrimary"
+						color="primary"
 						component="p"
 					>
-						{description.length > 50
-							? `${description.substring(0, 50)} ...`
-							: description}
+						Added on {time}
 					</Typography>
-				</div>
-				<Typography
-					align="center"
-					variant="caption"
-					color="primary"
-					component="p"
-				>
-					Category: {category.name}
-				</Typography>
-				<Typography
-					align="center"
-					variant="subtitle2"
-					color="primary"
-					component="p"
-				>
-					Added on {time}
-				</Typography>
-			</CardContent>
-			<CardActions style={{justifyContent: 'center'}} disableSpacing>
-				<Tooltip
-					title="Add to cart"
-					aria-label="add"
-					style={{marginRight: '0.5em'}}
-				>
-					<Fab
-						onClick={() => {
-							addProduct({
-								_id,
-								name,
-								description,
-								quantity,
-								price,
-								category,
-								createdAt,
-							})
-							setIsAdd(true)
-						}}
-						disabled={handleOutOfStock(quantity)}
-						color="primary"
-						className={classes.fab}
+				</CardContent>
+				<CardActions style={{justifyContent: 'center'}} disableSpacing>
+					<Tooltip
+						title="Add to cart"
+						aria-label="add"
+						style={{marginRight: '0.5em'}}
 					>
-						<AddCartIcon />
-					</Fab>
-				</Tooltip>
-				<Tooltip
-					title="View detail"
-					aria-label="view"
-					style={{marginLeft: '0.5em'}}
-				>
-					<Link to={`/product/${_id}`}>
-						{showProductButton(showViewButton)}
-					</Link>
-				</Tooltip>
-			</CardActions>
-			{addToCartSuccess()}
-		</Card>
+						<Fab
+							onClick={() => {
+								addProduct({
+									_id,
+									name,
+									description,
+									quantity,
+									price,
+									category,
+									createdAt,
+								})
+								setIsAdd(true)
+							}}
+							disabled={handleOutOfStock(quantity)}
+							color="primary"
+							className={classes.fab}
+						>
+							<AddCartIcon />
+						</Fab>
+					</Tooltip>
+					<Tooltip
+						title="View detail"
+						aria-label="view"
+						style={{marginLeft: '0.5em'}}
+					>
+						<Link to={`/product/${_id}`}>
+							{showProductButton(showViewButton)}
+						</Link>
+					</Tooltip>
+				</CardActions>
+				{addToCartSuccess()}
+			</Card>
+		</div>
 	)
 }
 export default ProductCard

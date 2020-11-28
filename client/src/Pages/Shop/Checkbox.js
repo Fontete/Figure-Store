@@ -26,7 +26,7 @@ const CheckboxLabels = ({categories, productFilters}) => {
 		<Fragment>
 			{categories &&
 				categories.map(c => (
-					<FormGroup column>
+					<FormGroup className="categoryText" column>
 						<FormControlLabel
 							control={
 								<Checkbox
@@ -38,7 +38,7 @@ const CheckboxLabels = ({categories, productFilters}) => {
 							}
 							label={
 								<Box>
-									<Typography color="secondary">{c.name}</Typography>
+									<p>{c.name}</p>
 								</Box>
 							}
 						/>

@@ -85,6 +85,7 @@ const Checkout = props => {
 				},
 			)
 			.then(res => {
+				console.log(res.data)
 				setData({loading: true})
 				const orderData = {
 					products: props.location.state,
@@ -97,7 +98,7 @@ const Checkout = props => {
 				fetchCreateOrder({order: orderData})
 			})
 			.catch(err => {
-				console.log(err.response.data.err)
+				console.log(err)
 			})
 	}
 
