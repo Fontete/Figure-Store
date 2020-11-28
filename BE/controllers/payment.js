@@ -19,6 +19,8 @@ exports.generateToken = (req, res) => {
 	})
 }
 
+//https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4MzCzD2bOAyKGTH5briX0QpoQwQ0hABhEf1XPFcOUvUVKyRtuhR8aO6YwfH1et50gIblcuVZTnqF_1ywDvWmGNZFVkEaA
+//https://accounts.google.com/b/0/DisplayUnlockCaptcha?fbclid=IwAR3FEJmYDufvpIrEEndSjBXAJ_FbCxmM95Ws-of3w8ZG1jEPTP7Jmllh8IA
 exports.purchaseProcess = (req, res) => {
 	gateway.transaction.sale(
 		{
@@ -35,8 +37,8 @@ exports.purchaseProcess = (req, res) => {
 				const transporter = nodemailer.createTransport({
 					service: 'gmail',
 					auth: {
-						user: 'pipi.esd@gmail.com',
-						pass: 'p!p!$e3qK7GYQ@',
+						user: 'kazefigurestore@gmail.com',
+						pass: 'phong12345',
 					},
 				})
 				const mailOptions = {

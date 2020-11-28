@@ -217,8 +217,8 @@ exports.sendConfirmativeCode = (req, res) => {
 			const transporter = nodemailer.createTransport({
 				service: 'gmail',
 				auth: {
-					user: 'pipi.esd@gmail.com',
-					pass: 'p!p!$e3qK7GYQ@',
+					user: 'kazefigurestore@gmail.com',
+					pass: 'phong12345',
 				},
 			})
 			let confirmativeCode = ''
