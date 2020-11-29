@@ -291,9 +291,9 @@ const AppSearchBar = ({history}) => {
 					</Grid>
 				</Toolbar>
 			</AppBar>
-			{isAuthenticated() && isAuthenticated().data.user.role === 1
-				? UserDrawer()
-				: AdminDrawer()}
+			{isAuthenticated() && isAuthenticated().data.user.role === 0
+				? AdminDrawer()
+				: UserDrawer()}
 		</div>
 	)
 }
