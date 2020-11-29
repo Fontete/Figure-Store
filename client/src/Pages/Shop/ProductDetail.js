@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardImg from '@material-ui/core/Card'
 import {makeStyles} from '@material-ui/core/styles'
+import './blink.css'
 
 import Card from './Card'
 
@@ -145,7 +146,7 @@ const Detail = props => {
 							}}
 						>
 							<Typography color="inherit" variant="h4" align="center">
-								Related
+								<span className="blink">Related</span>
 							</Typography>
 						</Fab>
 						<Grid container spacing={4}>
