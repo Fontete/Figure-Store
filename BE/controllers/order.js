@@ -1,5 +1,6 @@
 const {Order, cartItem} = require('../models/order')
 const error = require('../general/error')
+const nodemailer = require('nodemailer')
 
 exports.orderByID = (req, res, next, id) => {
 	Order.findById(id)
@@ -54,7 +55,32 @@ exports.updateStatus = (req, res) => {
 					err: error.errorHandler(err),
 				})
 			}
-			res.json(order)
+			const transporter = nodemailer.createTransport({
+				service: 'gmail',
+				auth: {
+					user: 'kazefigurestore@gmail.com',
+					pass: 'phong12345',
+				},
+			})
+			const mailOptions = {
+				from: '"Kaze Figures Store"' + '<' + 'PhongTT' + ' > ',
+				to: req.profile.email,
+				subject: 'Status Order',
+				text:
+					'The order: ' +
+					req.params.orderId +
+					'\n' +
+					'is updated in process handling.',
+			}
+			transporter.sendMail(mailOptions, function (error, info) {
+				if (error) {
+					console.log(error)
+					res.status(400).send('Error.')
+				} else {
+					console.log('Email sent: ' + info.response)
+					res.json(result)
+				}
+			})
 		},
 	)
 }
